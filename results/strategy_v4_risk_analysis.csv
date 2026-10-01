@@ -1,0 +1,20 @@
+metric,value,unit,interpretation
+trades,43,count,Complete four-leg entries with complete expiry exits
+skips,49,count,Excluded because at least one required source observation was unavailable
+coverage,0.4673913043,share,43 of 92 candidate expiries produced complete trades
+terminal_win_rate,1.0,share,43 of 43 accepted trades had positive net expiry P&L
+mean_net_pnl,1969.736901968751,INR/trade,Average realized net result after modeled costs
+median_net_pnl,733.6202859755002,INR/trade,Median realized net result
+std_net_pnl,3468.471729103231,INR/trade,Trade-level standard deviation
+total_net_pnl,84698.6867846563,INR,Aggregate net P&L for accepted trades
+gross_total_pnl,93250.35,INR,Aggregate P&L before modeled costs
+total_costs,8551.6632153437,INR,Brokerage plus modeled exchange/SEBI/STT/stamp/GST
+cost_share_of_gross,0.0917064999,share,Modeled costs were 9.17 percent of gross P&L
+mean_cost_per_trade,198.87588872892326,INR/trade,Average modeled cost
+best_trade,16743.4575412705,INR,Best accepted terminal net P&L
+worst_trade,38.26719411609997,INR,Worst accepted terminal net P&L
+profit_factor,inf,ratio,Undefined/infinite because there were no terminal net losses
+worst_intratrade_gross_mtm,-24394.5,INR,Worst observed one-minute gross MTM across accepted trades
+max_peak_to_trough_gross_mtm,29113.5,INR,Largest within-trade peak-to-trough gross MTM swing
+negative_mtm_trades,43,count,All accepted trades experienced at least one negative gross MTM observation
+mean_entry_credit_points,34.46837209302326,points,Average positive entry cash credit normalized by lot size
