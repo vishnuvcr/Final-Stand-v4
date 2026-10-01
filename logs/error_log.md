@@ -17,3 +17,9 @@
 - 2026-10-01: 2025 option processing completed through all 52 candidate expiries, but the run failed when the spot repository's 2026 directory used two date-range CSV filenames rather than `NIFTY50_1min_2026.csv`. Fixed by supporting both actual 2026 files and deduplicating their overlap.
 
 - 2026-10-01: Data-quality output showed systematic missing entry legs for many early expiries. Root cause identified: candidate strikes for the filtered Parquet read were initially derived from the first 09:15 spot bar while the strategy enters at 10:00. The engine has been corrected to derive initial candidates from the actual 10:00 spot row; the next run is required to validate the correction.
+
+
+## Phase 6 start — 2026-10-01
+- V3 research restarted on a separate branch to prevent contamination of the completed V2 baseline.
+- A new unit-tested cash-flow realization path is being used for V3 expiry liquidation.
+- Any implementation or data issue found during V3 will be appended here before the phase is accepted.
