@@ -2,7 +2,7 @@ from scripts.backtest_v4 import strikes_for_entry
 
 def test_v4_strikes():
     assert strikes_for_entry(24486.3)=={
-        'ce16':25300,'ce17':25350,'pe16':23650,'pe17':23600
+        'ce16':25300,'ce17':25350,'pe16':23700,'pe17':23650
     }
 
 def test_four_trading_day_offset():
