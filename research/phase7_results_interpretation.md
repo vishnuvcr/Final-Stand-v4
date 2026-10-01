@@ -93,6 +93,9 @@ The put side is symmetric:
 
 Therefore the terminal payoff can become negative once NIFTY moves beyond approximately **A±900**. The observed 100% terminal win rate is consistent with the accepted sample's expiries not finishing far enough into the unbounded-loss tails after accounting for the positive entry credit; it does not establish that the ratio structure has bounded downside.
 
+## Brokerage sensitivity
+The baseline run uses ₹20 brokerage per executed order for historical consistency. A separate sensitivity using ₹10 per executed order, while keeping all other modeled costs unchanged, raises aggregate net P&L from ₹84,698.69 to approximately **₹88,757.89**. This sensitivity is included because Paytm Money's current F&O FAQ and an official pricing announcement present different brokerage figures; the historical baseline was not silently changed.
+
 ## Interpretation
 The accepted historical sample shows a strong positive realized P&L profile after the modeled costs, but the data also show large transient mark-to-market losses on every accepted trade. The most important empirical feature is therefore **positive terminal expectancy paired with substantial path risk**, not the terminal win rate alone.
 
