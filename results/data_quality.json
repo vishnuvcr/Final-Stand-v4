@@ -3,7 +3,7 @@
     2025,
     2026
   ],
-  "trades": 77,
+  "trades": 84,
   "skips": [
     [
       "2025-01-07",
@@ -338,26 +338,6 @@
       "missing_entry_leg"
     ],
     [
-      "2025-11-04",
-      "PE",
-      "missing_entry_leg"
-    ],
-    [
-      "2025-12-02",
-      "PE",
-      "missing_entry_leg"
-    ],
-    [
-      "2025-12-23",
-      "PE",
-      "missing_entry_leg"
-    ],
-    [
-      "2026-02-10",
-      "CE",
-      "missing_entry_leg"
-    ],
-    [
       "2026-03-30",
       "entry_not_trading_day"
     ],
@@ -370,23 +350,8 @@
       "entry_not_trading_day"
     ],
     [
-      "2026-05-19",
-      "PE",
-      "missing_entry_leg"
-    ],
-    [
-      "2026-06-16",
-      "CE",
-      "missing_entry_leg"
-    ],
-    [
       "2026-06-30",
       "entry_not_trading_day"
-    ],
-    [
-      "2026-07-14",
-      "PE",
-      "missing_entry_leg"
     ],
     [
       "2026-07-28",
