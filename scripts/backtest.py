@@ -16,7 +16,7 @@ TARGET_FRAC=float(os.getenv('TARGET_FRAC','1.0'))
 START=pd.Timestamp(os.getenv('START_DATE','2025-01-01')).date()
 END=pd.Timestamp(os.getenv('END_DATE','2026-12-31')).date()
 DATA=Path('data_cache'); DATA.mkdir(exist_ok=True)
-OUT=Path('results'); OUT.mkdir(exist_ok=True)
+OUT=Path(os.getenv('OUT_DIR','results')); OUT.mkdir(exist_ok=True)
 
 def opt_file(y):
     return Path(hf_hub_download(repo_id='rissin/nse-options-intraday', filename=f'upstox_intraday/NIFTY/NIFTY_{y}.parquet', repo_type='dataset', token=os.getenv('HF_TOKEN'), cache_dir=str(DATA)))
