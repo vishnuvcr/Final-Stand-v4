@@ -2,8 +2,8 @@
 
 ## Research Status
 - Phase 0 — Strategy specification: **COMPLETED**
-- Current strategy revision: **V2 — dynamic OTM8 re-centering**
-- Backtest: **RESEARCH PHASES 0–5 COMPLETED**
+- Current research strategy revision: **V3 — static OTM8 reversal hedge** (V2 remains the frozen prior baseline)
+- Backtest: **PHASES 0–5 COMPLETED; PHASE 6 V3 COMPLETED**
 - Data validation: **COMPLETED FOR AVAILABLE SAMPLE; COVERAGE LIMITATION DOCUMENTED**
 
 ## Current Research Files
@@ -71,3 +71,11 @@ Unit tests have passed. The corrected 2025–2026 candidate backtest completed s
 - [V3 call/put comparison](results/strategy_v3_call_put_comparison.csv)
 - [V3 statistical tests](results/strategy_v3_call_put_tests.csv)
 - [V3 data quality](results/strategy_v3_data_quality.json)
+
+
+## Phase 6 — V3 final result
+- **COMPLETED** on branch `phase-6-reversal-otm8`.
+- Strategy 1 (Put): 42 trades; total net P&L ₹-58,006.84; mean ₹-1,381.12; win rate 83.33%; profit factor 0.50; roll rate 21.43%.
+- Strategy 2 (Call): 42 trades; total net P&L ₹29,527.08; mean ₹703.03; win rate 69.05%; profit factor 2.71; roll rate 9.52%.
+- Call-vs-put tests: Mann–Whitney p=0.9893; paired sign-permutation p=0.2704.
+- The result is descriptive for the validated available sample; the 2025–2026 option dataset has the same coverage limitations documented in the data-quality record.
