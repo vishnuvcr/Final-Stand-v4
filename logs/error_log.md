@@ -28,3 +28,9 @@
 ## Preventive rule for V4
 - Do not accept performance outputs until unit tests, data-quality checks and the final ledger are all present.
 - Documentation-only commits are excluded from the V4 workflow push-path trigger to avoid redundant long backtests.
+
+
+## Phase 7 CI test error — 2026-10-02
+- GitHub Actions run 36928921436 failed in the V4 unit-test stage before the backtest because the expected PE strike values in test_v4_strategy.py were incorrect for entry spot 24,486.3.
+- Actual V4 mapping is ATM 24,500; PE16 = 23,700 and PE17 = 23,650. The erroneous test expected 23,650 and 23,600.
+- No performance output was produced by this failed run. The test expectation is corrected before rerun.
