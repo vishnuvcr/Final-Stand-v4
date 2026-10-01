@@ -169,6 +169,26 @@ These intervals are descriptive and do not establish future performance.
 
 The aggregate result is heavily influenced by the accepted 2026 sample.
 
+### 9.3 Monthly net P&L chart
+
+```mermaid
+xychart-beta
+    title "Monthly net P&L (INR)"
+    x-axis ["2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07"]
+    y-axis "INR" 0 --> 33000
+    bar [1520,989,2012,1059,1741,4690,31629,28214,7986,3725,1133]
+```
+
+### 9.4 Cumulative net P&L chart
+
+```mermaid
+xychart-beta
+    title "Cumulative net P&L (INR)"
+    x-axis ["2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07"]
+    y-axis "INR" 0 --> 90000
+    line [1520,2509,4521,5580,7321,12011,43640,71854,79840,83565,84699]
+```
+
 ### 9.3 Monthly concentration
 The largest monthly net P&L contributions were:
 - March 2026: ₹31,629.34
