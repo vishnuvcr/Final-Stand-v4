@@ -55,7 +55,7 @@ Unit tests have passed. The corrected 2025–2026 candidate backtest completed s
 
 
 ## Phase 6 — Strategy V3 restart
-- **IN PROGRESS** on branch `phase-6-reversal-otm8`.
+- **COMPLETED** on branch `phase-6-reversal-otm8`.
 - Strategy 1: long OTM6 PE, short OTM7 PE, short OTM8 PE; static OTM8 trigger; on breach, buy back OTM8 PE and sell the opposite CE at the same initial OTM8 strike.
 - Strategy 2: long OTM6 CE, short OTM7 CE, short OTM8 CE; static OTM8 trigger; on breach, buy back OTM8 CE and sell the opposite PE at the same initial OTM8 strike.
 - No profit target; exit at expiry using the frozen 15:29 bar-open convention.
