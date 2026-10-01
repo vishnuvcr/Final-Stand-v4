@@ -1,7 +1,7 @@
 # Research Status
 
 ## Phase 0 — Strategy specification
-**Status: IN PROGRESS**
+**Status: COMPLETED**
 
 ### Completed
 - Captured Strategy V2 initial legs.
@@ -10,10 +10,9 @@
 - Identified the key implementation ambiguity: exact OTM strike-selection convention when current spot is between strikes.
 
 ### Pending
-- Confirm exact strike-selection convention.
-- Acquire/validate historical NIFTY spot and option-chain data.
-- Define executable timestamp/price model and costs.
-- Implement backtest and validation tests.
+- Extend validation beyond the current candidate sample.
+- Validate exact execution-cost schedule against historical Paytm Money/NSE/SEBI rates.
+- Add intrabar high/low trigger sensitivity.
 
 ## Phase transition rule
 Phase 1 should begin only after the specification and execution conventions are frozen.
@@ -76,3 +75,25 @@ The specification is implementable. The backtest will use the actual historical 
 - Expiries discovered: None
 - Trades produced: 84
 - Skips: 92
+
+
+## Corrected Phase 1 result — 2026-10-01
+- GitHub Actions corrected run: **SUCCESS**.
+- Unit tests: **PASSED**.
+- Statistical analysis: **PASSED**.
+- Empirical sample actually represented by the available validated option data: **84 trades (42 CE, 42 PE)**, not all 2025–2026 expiries.
+- Major coverage gap: many 2025 expiries before September are unavailable in the selected intraday option dataset; these are recorded as skips and are not imputed.
+- Lot size is modeled as 75 through the 30-Dec-2025 expiry and 65 thereafter, consistent with the NSE lot-size revision. See NSE circular source in the manuscript/data-source register.
+- Target exit is modeled at the next available minute after the target is observed, avoiding same-bar look-ahead.
+
+### Preliminary descriptive result — not final robustness conclusion
+- CE: 42 trades; 92.86% target-hit; mean net P&L ₹282.38; median ₹356.88; total ₹11,860; profit factor 1.48.
+- PE: 42 trades; 78.57% target-hit; mean net P&L -₹1,131.67; median ₹335.62; total -₹47,530.15; profit factor 0.40.
+- Aligned CE-vs-PE permutation test p=0.1449; Mann–Whitney p=0.6514. These are descriptive, not a basis for a trading recommendation.
+- Bootstrap 95% CI for mean net P&L: CE approximately ₹-858 to ₹1,121; PE approximately ₹-2,732 to ₹259.
+
+### Phase 1 conclusion
+The initial sample shows materially different observed aggregate P&L and tail-loss behavior between the two variants, but the sample is incomplete and the uncertainty intervals are wide. The result is therefore **not sufficient for a final research conclusion**. Phase 2 must validate trigger/expiry mechanics and Phase 3 must run the predefined robustness grid.
+
+### Phase 2 status
+**READY TO START — engine validation and synthetic-path tests.**
