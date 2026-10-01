@@ -134,7 +134,7 @@ def main():
         exps=[e for e in expiry_candidates(spot,y) if START<=e<=END]
         print(f'{y}: {len(exps)} candidate expiries',flush=True)
         for n,ex in enumerate(exps,1):
-            entry=(pd.Timestamp(ex)-pd.Timedelta(days=4)).date()
+            entry=(pd.Timestamp(ex)-pd.Timedelta(value=4, unit='D')).date()
             day=spot[spot.timestamp.dt.date==entry]
             if day.empty: skips.append([str(ex),'entry_not_trading_day']); continue
             window=spot[(spot.timestamp.dt.date>=entry)&(spot.timestamp.dt.date<=ex)]
