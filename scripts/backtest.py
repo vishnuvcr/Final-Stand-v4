@@ -134,7 +134,7 @@ def main():
             candidates=set()
             for side in ('CE','PE'):
                 candidates.update(strike(float(day.iloc[0].close),side,n) for n in (6,7,8))
-                candidates.update(otm8(float(x),side) for x in window.close.iloc[::max(1,len(window)//200)].tolist())
+                candidates.update(otm8(float(x),side) for x in window.close.tolist())
             start_ts=pd.Timestamp(entry).replace(hour=10,minute=0); end_ts=pd.Timestamp(ex).replace(hour=15,minute=29)
             od=load_option_window(path,ex,start_ts,end_ts,candidates)
             idx={(r.timestamp,float(r.strike),r.option_type):(r.open,r.high,r.low,r.close) for r in od.itertuples(index=False)}
