@@ -16,14 +16,22 @@ OUT=Path('results'); OUT.mkdir(exist_ok=True)
 def opt_file(y):
     return Path(hf_hub_download(repo_id='rissin/nse-options-intraday', filename=f'upstox_intraday/NIFTY/NIFTY_{y}.parquet', repo_type='dataset', token=os.getenv('HF_TOKEN'), cache_dir=str(DATA)))
 
-def spot_file(y):
-    p=DATA/f'NIFTY50_1min_{y}.csv'
-    if not p.exists():
-        urllib.request.urlretrieve(f'https://raw.githubusercontent.com/technovusin/nifty50-historical-data/main/1min/{y}/NIFTY50_1min_{y}.csv',p)
-    return p
+def spot_files(y):
+    if y==2026:
+        names=['NIFTY50_1min_20260101_to_20260908.csv','NIFTY50_1min_20260901_to_20260930.csv']
+    else:
+        names=[f'NIFTY50_1min_{y}.csv']
+    out=[]
+    for name in names:
+        p=DATA/name
+        if not p.exists():
+            urllib.request.urlretrieve(f'https://raw.githubusercontent.com/technovusin/nifty50-historical-data/main/1min/{y}/{name}',p)
+        out.append(p)
+    return out
 
 def load_spot(y):
-    s=pd.read_csv(spot_file(y),usecols=['Timestamp','Open','High','Low','Close'])
+    frames=[pd.read_csv(p,usecols=['Timestamp','Open','High','Low','Close']) for p in spot_files(y)]
+    s=pd.concat(frames,ignore_index=True).drop_duplicates(subset=['Timestamp'])
     s['timestamp']=pd.to_datetime(s['Timestamp'])
     s=s.rename(columns={'Open':'open','High':'high','Low':'low','Close':'close'})
     return s[['timestamp','open','high','low','close']].sort_values('timestamp')
