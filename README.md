@@ -3,8 +3,8 @@
 ## Research Status
 - Phase 0 — Strategy specification: **COMPLETED**
 - Current strategy revision: **V2 — dynamic OTM8 re-centering**
-- Backtest: **PHASE 1 COMPLETED — PRELIMINARY RESULTS**
-- Data validation: **PARTIAL — COVERAGE LIMITATION DOCUMENTED**
+- Backtest: **RESEARCH PHASES 0–5 COMPLETED**
+- Data validation: **COMPLETED FOR AVAILABLE SAMPLE; COVERAGE LIMITATION DOCUMENTED**
 
 ## Current Research Files
 - [Strategy V2 specification](research/strategy_spec_v2.md)
@@ -32,3 +32,23 @@ Unit tests have passed. The corrected 2025–2026 candidate backtest completed s
 
 ## Phase 3 sensitivity output
 - [Robustness grid](results/phase3_sensitivity.csv)
+
+
+## Final research status
+- Phase 0: completed.
+- Phase 1: corrected data/backtest completed.
+- Phase 2: engine validation completed.
+- Phase 3: robustness grid completed.
+- Phase 4: statistical analysis completed.
+- Phase 5: manuscript and conclusion completed.
+
+## Final manuscript
+- [Complete research manuscript](manuscript/final_research_manuscript.md)
+- [Research status and phase log](research/research_status.md)
+- [Robustness grid](results/phase3_sensitivity.csv)
+- [Statistical results](results/statistics.csv)
+- [CE/PE tests](results/call_put_tests.csv)
+- [Trade ledger](results/trades.csv)
+- [Data-quality record](results/data_quality.json)
+
+**Stopping rule:** the predefined computational research phases are complete. Further work is future research and will not be silently mixed into the completed baseline.
