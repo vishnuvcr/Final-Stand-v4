@@ -34,3 +34,12 @@ If the target is not hit, positions are closed at the final available intraday b
 
 ## Outputs
 Trade-level ledger, call/put summary, target-hit rate, net P&L, win rate, drawdown, average/median trade, roll count, holding time, cost sensitivity, slippage sensitivity, and data-quality diagnostics.
+
+## Contract-lot treatment
+The lot size is time-varying rather than fixed. NSE revised NIFTY 50's market lot from 75 to 65 effective after the 30-Dec-2025 expiry; therefore 2025 expiries through 30-Dec use 75 and 2026 expiries use 65 in the initial implementation. This is validated against the NSE circular before final analysis.
+
+## Current exchange references
+NSE currently specifies Tuesday expiry for NIFTY 50 index options, with the previous trading day used when Tuesday is a trading holiday; current weekly/monthly NIFTY strikes use a 50-point interval. These rules are not retroactively assumed for earlier regimes.
+
+## Execution convention correction
+A profit target detected on a minute close is executed at the next available minute open, avoiding look-ahead. Roll detection similarly uses the trigger minute close and executes the buyback/new sale on the next minute open.
