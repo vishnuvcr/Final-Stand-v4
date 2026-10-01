@@ -56,6 +56,7 @@ Important interpretation: the 100% terminal win rate did not imply low path risk
 - [V4 monthly results](results/strategy_v4_monthly.csv)
 - [V4 data-quality record](results/strategy_v4_data_quality.json)
 - [V4 risk/path analysis](results/strategy_v4_risk_analysis.csv)
+- [V4 Paytm Money brokerage sensitivity](results/strategy_v4_cost_sensitivity.csv)
 
 ## Prior frozen phases
 ### Phase 6 — V3 static OTM8 reversal
