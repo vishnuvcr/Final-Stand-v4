@@ -109,3 +109,16 @@ The initial sample shows materially different observed aggregate P&L and tail-lo
 - Slippage: 0.10 premium points per execution.
 - Brokerage: ₹20 per executed order.
 - Statistical outputs generated from the corrected trade ledger.
+
+
+## Phase 4 completion — 2026-10-01
+- GitHub Actions run 36842315280: **SUCCESS**.
+- Baseline statistical outputs regenerated after the explicit transaction-cost model was implemented.
+- Baseline CE: 42 trades; mean net P&L ₹190.35; median ₹271.06; total ₹7,994.79; profit factor 1.31; 71.43% profitable trades.
+- Baseline PE: 42 trades; mean net P&L -₹1,230.55; median ₹250.50; total -₹51,683.26; profit factor 0.36; 78.57% profitable trades.
+- Bootstrap 95% CI for mean net P&L: CE approximately ₹-956 to ₹1,030; PE approximately ₹-2,840 to ₹166.
+- CE-vs-PE tests: Mann–Whitney p=0.6579; paired sign-permutation p=0.1443. These do not establish a statistically significant difference at conventional thresholds.
+- Phase 3 robustness grid completed successfully. Across the tested target/slippage scenarios, aggregate CE net P&L remained positive while aggregate PE net P&L remained negative; this is an observed sample result, not a claim of future performance.
+
+## Phase 5 status
+**IN PROGRESS — manuscript synthesis, figures, limitations, and final research conclusion.**
