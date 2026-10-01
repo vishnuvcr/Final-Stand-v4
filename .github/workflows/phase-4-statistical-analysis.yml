@@ -1,0 +1,54 @@
+name: Phase 4 - Statistical Analysis
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-4-statistical-analysis
+
+permissions:
+  contents: write
+
+jobs:
+  analysis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      YEARS: '2025,2026'
+      TARGET_FRAC: '1.00'
+      SLIPPAGE_POINTS: '0.10'
+      BROKERAGE_PER_ORDER: '20'
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            data_cache
+            ~/.cache/huggingface
+          key: phase4-hf-${{ runner.os }}-${{ hashFiles('requirements.txt', 'scripts/backtest.py') }}
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q tests
+      - run: python scripts/backtest.py
+      - run: python scripts/analyze_results.py
+      - run: python scripts/make_charts.py
+      - name: Write manuscript results checkpoint
+        run: |
+          cat >> research/research_status.md <<'EOF'
+
+          ## Phase 4 statistical analysis — baseline scenario
+          - Target: 100% of initial flatline.
+          - Slippage: 0.10 premium points per execution.
+          - Brokerage: ₹20 per executed order.
+          - Statistical outputs generated from the corrected trade ledger.
+          EOF
+      - name: Commit Phase 4 outputs
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results research/research_status.md
+          git diff --cached --quiet || git commit -m 'Record Phase 4 statistical analysis [skip ci]'
+          git push
