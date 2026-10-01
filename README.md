@@ -24,3 +24,8 @@ This repository records the agreed research specification and implementation dec
 
 ## Phase 1 checkpoint
 Unit tests have passed. The optimized 2025–2026 data backtest is running in GitHub Actions; results are not accepted until the job completes and data-quality checks pass. The engine now uses predicate-pushed Parquet reads and historically applicable NIFTY lot sizes.
+
+## Latest Phase 1 outputs
+- [Trade results](results/trades.csv)
+- [Call/put summary](results/summary.csv)
+- [Data-quality record](results/data_quality.json)

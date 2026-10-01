@@ -43,3 +43,12 @@ The specification is implementable. The backtest will use the actual historical 
 - Historical NIFTY lot-size treatment added: 75 through 30-Dec-2025 expiry; 65 thereafter.
 - Backtest engine optimized to read only expiry/strike windows required by the strategy instead of materializing the entire option history.
 - Unit tests remain passed; performance-optimized backtest execution is in progress.
+
+
+## Phase 1 run — [2025, 2026]
+- Status: **EXECUTED IN GITHUB ACTIONS**
+- Option rows processed: None
+- Spot rows processed: None
+- Expiries discovered: None
+- Trades produced: 77
+- Skips: 99
