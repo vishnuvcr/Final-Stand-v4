@@ -7,10 +7,12 @@ from huggingface_hub import hf_hub_download
 YEARS=[int(x) for x in os.getenv('YEARS','2025,2026').split(',') if x.strip()]
 SLIP=float(os.getenv('SLIPPAGE_POINTS','0.10'))
 BROKER=float(os.getenv('BROKERAGE_PER_ORDER','20'))
-EXCHANGE_RATE=float(os.getenv('NSE_OPTIONS_EXCHANGE_RATE','0.0003553'))
+EXCHANGE_RATE=float(os.getenv('NSE_OPTIONS_EXCHANGE_RATE','0.0003503'))
+EXCHANGE_RATE_2026=float(os.getenv('NSE_OPTIONS_EXCHANGE_RATE_2026','0.0003553'))
 SEBI_RATE=float(os.getenv('SEBI_RATE','0.000001'))
 STAMP_BUY_RATE=float(os.getenv('STAMP_BUY_RATE','0.00003'))
 STT_SELL_RATE=float(os.getenv('STT_SELL_RATE','0.001'))
+STT_SELL_RATE_2026=float(os.getenv('STT_SELL_RATE_2026','0.0015'))
 GST_RATE=float(os.getenv('GST_RATE','0.18'))
 TARGET_FRAC=float(os.getenv('TARGET_FRAC','1.0'))
 START=pd.Timestamp(os.getenv('START_DATE','2025-01-01')).date()
@@ -66,13 +68,17 @@ def exec_px(open_px,action):
     if action in ('BUY','BUYBACK'): return max(0.05,float(open_px)+SLIP)
     return max(0.05,float(open_px)-SLIP)
 
-def order_cost(price, action, lot):
+def order_cost(price, action, lot, trade_date=None):
     turnover=float(price)*lot
+    if trade_date is not None and pd.Timestamp(trade_date).date() >= pd.Timestamp('2026-03-01').date():
+        exchange_rate=EXCHANGE_RATE_2026
+    else:
+        exchange_rate=EXCHANGE_RATE
     brokerage=BROKER
-    exchange=turnover*EXCHANGE_RATE
+    exchange=turnover*exchange_rate
     sebi=turnover*SEBI_RATE
     stamp=turnover*STAMP_BUY_RATE if action in ('BUY','BUYBACK') else 0.0
-    stt=turnover*STT_SELL_RATE if action=='SELL' else 0.0
+    stt=turnover*((STT_SELL_RATE_2026 if trade_date is not None and pd.Timestamp(trade_date).date() >= pd.Timestamp('2026-04-01').date() else STT_SELL_RATE)) if action=='SELL' else 0.0
     gst=GST_RATE*(brokerage+exchange+sebi)
     return brokerage+exchange+sebi+stamp+stt+gst
 
@@ -90,7 +96,7 @@ def run_trade(opt_idx, ss, ex, side):
         action='BUY' if q>0 else 'SELL'
         ep=exec_px(r[0],action)
         cash += -q*ep*lot
-        fees += order_cost(ep,action,lot)
+        fees += order_cost(ep,action,lot,t0)
         signed[(float(k),side)]=q; orders+=1
     flatline=cash; target=flatline*TARGET_FRAC; trigger=ks[2]; rolls=0
     exit_reason=None; exit_ts=None; peak=-1e18; trough=1e18
@@ -114,13 +120,13 @@ def run_trade(opt_idx, ss, ex, side):
             old=opt_idx.get((nts,float(trigger),side))
             if old is None: return None,'missing_roll_buyback'
             oldp=exec_px(old[0],'BUYBACK')
-            cash -= oldp*lot; orders+=1; fees += order_cost(oldp,'BUYBACK',lot)
+            cash -= oldp*lot; orders+=1; fees += order_cost(oldp,'BUYBACK',lot,nts)
             signed.pop((float(trigger),side),None)
             newk=otm8(float(row.close),side)
             nr=opt_idx.get((nts,float(newk),side))
             if nr is None: return None,'missing_roll_sell'
             newp=exec_px(nr[0],'SELL')
-            cash += newp*lot; orders+=1; fees += order_cost(newp,'SELL',lot)
+            cash += newp*lot; orders+=1; fees += order_cost(newp,'SELL',lot,nts)
             signed[(float(newk),side)]=-1; trigger=newk; rolls+=1
     if exit_ts is None: exit_ts=ss.iloc[-1].timestamp; exit_reason='expiry'
     final=cash
@@ -134,9 +140,9 @@ def run_trade(opt_idx, ss, ex, side):
         orders+=1
         action='SELL' if q>0 else 'BUYBACK'
         if r is not None:
-            fees += order_cost(r[0],action,lot)
+            fees += order_cost(r[0],action,lot,exit_ts)
         else:
-            fees += order_cost(intrinsic,action,lot)
+            fees += order_cost(intrinsic,action,lot,exit_ts)
     return {'side':side,'expiry':str(ex),'entry_date':str(ss.iloc[0].timestamp.date()),'lot_size':lot,'entry_spot':s0,'otm6':ks[0],'otm7':ks[1],'otm8_initial':ks[2],'flatline':flatline,'target':target,'gross_pnl':final,'fees_proxy':fees,'net_pnl':final-fees,'exit_reason':exit_reason,'exit_ts':str(exit_ts),'rolls':rolls,'orders':orders,'peak_mtm':peak,'trough_mtm':trough},None
 
 def expiry_candidates(spot,year):
