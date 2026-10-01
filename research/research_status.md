@@ -160,3 +160,12 @@ The initial sample shows materially different observed aggregate P&L and tail-lo
 - 95% bootstrap mean intervals: CE approximately ₹-116 to ₹1,450; PE approximately ₹-4,699 to ₹1,199.
 - Expiry-only exit was used; no profit target or dynamic re-centering was used.
 - The prior V2 baseline remains frozen and is not overwritten by V3.
+
+
+## Phase 6 — Strategy V3 static OTM8 reversal — execution checkpoint
+- Status: **EXECUTED IN GITHUB ACTIONS**
+- Strategy: static initial OTM8 trigger; one-time replacement of short OTM8 with opposite option at the same initial OTM8 strike.
+- Exit: 0 DTE, 15:29 bar open.
+- Trades produced: 84
+- Skips: 92
+- Full data-quality record: results/strategy_v3_data_quality.json

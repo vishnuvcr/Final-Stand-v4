@@ -79,3 +79,13 @@ Unit tests have passed. The corrected 2025–2026 candidate backtest completed s
 - Strategy 2 (Call): 42 trades; total net P&L ₹29,527.08; mean ₹703.03; win rate 69.05%; profit factor 2.71; roll rate 9.52%.
 - Call-vs-put tests: Mann–Whitney p=0.9893; paired sign-permutation p=0.2704.
 - The result is descriptive for the validated available sample; the 2025–2026 option dataset has the same coverage limitations documented in the data-quality record.
+
+
+## Phase 6 — Strategy V3
+- [Strategy V3 specification](research/strategy_spec_v3.md)
+- [V3 trade ledger](results/strategy_v3_trades.csv)
+- [V3 summary](results/strategy_v3_summary.csv)
+- [V3 statistics](results/strategy_v3_statistics.csv)
+- [V3 call/put comparison](results/strategy_v3_call_put_comparison.csv)
+- [V3 statistical tests](results/strategy_v3_call_put_tests.csv)
+- [V3 data quality](results/strategy_v3_data_quality.json)
