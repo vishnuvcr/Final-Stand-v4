@@ -97,3 +97,12 @@ The initial sample shows materially different observed aggregate P&L and tail-lo
 
 ### Phase 2 status
 **READY TO START — engine validation and synthetic-path tests.**
+
+
+## Phase 1 run — [2025, 2026]
+- Status: **EXECUTED IN GITHUB ACTIONS**
+- Option rows processed: None
+- Spot rows processed: None
+- Expiries discovered: None
+- Trades produced: 84
+- Skips: 92
