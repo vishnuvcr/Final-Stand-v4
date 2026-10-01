@@ -29,7 +29,7 @@ def load_spot(y):
     return s[['timestamp','open','high','low','close']].sort_values('timestamp')
 
 def load_option_window(path, ex, start, end, strikes):
-    filters=[('granularity','=','1min'),('expiry','=',str(ex)),('timestamp','>=',pd.Timestamp(start)),('timestamp','<=',pd.Timestamp(end)),('strike','in',[float(x) for x in sorted(set(strikes))])]
+    filters=[('granularity','=','1min'),('expiry','=',str(ex)),('timestamp','>=',pd.Timestamp(start).tz_localize('Asia/Kolkata')),('timestamp','<=',pd.Timestamp(end).tz_localize('Asia/Kolkata')),('strike','in',[float(x) for x in sorted(set(strikes))])]
     table=pq.read_table(path,columns=['timestamp','expiry','strike','option_type','open','high','low','close'],filters=filters,use_threads=True,pre_buffer=True)
     df=table.to_pandas()
     if df.empty: return df
