@@ -61,3 +61,13 @@ Unit tests have passed. The corrected 2025–2026 candidate backtest completed s
 - No profit target; exit at expiry using the frozen 15:29 bar-open convention.
 - [Strategy V3 specification](research/strategy_spec_v3.md)
 - [Phase 6 workflow](.github/workflows/phase-6-reversal-otm8.yml)
+
+
+## Phase 6 — Strategy V3
+- [Strategy V3 specification](research/strategy_spec_v3.md)
+- [V3 trade ledger](results/strategy_v3_trades.csv)
+- [V3 summary](results/strategy_v3_summary.csv)
+- [V3 statistics](results/strategy_v3_statistics.csv)
+- [V3 call/put comparison](results/strategy_v3_call_put_comparison.csv)
+- [V3 statistical tests](results/strategy_v3_call_put_tests.csv)
+- [V3 data quality](results/strategy_v3_data_quality.json)

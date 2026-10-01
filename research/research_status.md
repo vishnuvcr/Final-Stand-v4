@@ -140,3 +140,12 @@ The initial sample shows materially different observed aggregate P&L and tail-lo
 - Trigger: initial OTM8 breach using one-minute high/low; execution on the next minute open.
 - Roll: one-time replacement of the short initial OTM8 option with the opposite option at the same initial OTM8 strike.
 - Exit: 0 DTE, 15:29 bar open.
+
+
+## Phase 6 — Strategy V3 static OTM8 reversal — execution checkpoint
+- Status: **EXECUTED IN GITHUB ACTIONS**
+- Strategy: static initial OTM8 trigger; one-time replacement of short OTM8 with opposite option at the same initial OTM8 strike.
+- Exit: 0 DTE, 15:29 bar open.
+- Trades produced: 84
+- Skips: 92
+- Full data-quality record: results/strategy_v3_data_quality.json

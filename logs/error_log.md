@@ -23,3 +23,9 @@
 - V3 research restarted on a separate branch to prevent contamination of the completed V2 baseline.
 - A new unit-tested cash-flow realization path is being used for V3 expiry liquidation.
 - Any implementation or data issue found during V3 will be appended here before the phase is accepted.
+
+
+## Phase 6 strategy reset — 2026-10-01
+- The previous V2 profit-target/recentering strategy is frozen as a completed baseline and is not overwritten.
+- V3 uses no profit target, exits at expiry, and applies one static OTM8 reversal as specified in research/strategy_spec_v3.md.
+- V3 uses cash-flow-based expiry realization and explicit unit tests; this is isolated from the frozen V2 result files.
