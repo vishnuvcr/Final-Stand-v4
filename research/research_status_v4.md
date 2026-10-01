@@ -1,7 +1,7 @@
 # Research Status — Phase 7 / Strategy V4
 
 ## Current status
-**BACKTEST EXECUTING IN GITHUB ACTIONS**
+**PHASE COMPLETE — BACKTEST AND VALIDATION PASSED**
 
 ## Frozen specification
 - Buy 1 OTM16 CE.
@@ -18,26 +18,48 @@
 - Existing date-aware exchange, SEBI, STT, stamp-duty and GST model retained.
 - Missing data is skipped and documented.
 
-## Phase sequence
-1. Specification and unit tests — ACTIVE/COMPLETE once CI test stage passes.
-2. Full 2025-2026 backtest — RUNNING.
-3. Output validation and error correction — PENDING.
-4. Descriptive/statistical analysis — PENDING.
-5. README/log update and phase conclusion — PENDING.
+## Phase execution history
+### Phase 7A — Specification and tests
+**COMPLETE**
+- Final strategy specification committed.
+- 15 repository tests passed in the accepted run.
+
+### Phase 7B — Full empirical backtest
+**COMPLETE**
+- GitHub Actions run 36929461356 passed.
+- 2025–2026 candidate expiries processed.
+- 43 complete four-leg trades accepted.
+- 49 candidates skipped.
+
+### Phase 7C — Validation
+**COMPLETE**
+- 43 unique expiry trades.
+- 8 orders per complete trade.
+- All exits are expiry exits at the specified 15:29 convention.
+- Historical lot sizes present are 75 and 65 as expected.
+- No terminal net-loss trade in the accepted sample.
+- All 43 accepted trades experienced negative intratrade gross MTM.
+
+### Phase 7D — Statistical/descriptive analysis
+**COMPLETE**
+- Total net P&L: INR 84,698.69.
+- Mean net P&L/trade: INR 1,969.74.
+- Median net P&L/trade: INR 733.62.
+- Terminal win rate: 43/43 = 100%.
+- Modeled costs: INR 8,551.66, 9.17% of gross P&L.
+- Worst intratrade gross MTM: -INR 24,394.50.
+- Maximum peak-to-trough gross MTM swing: INR 29,113.50.
+
+### Phase 7E — Documentation and conclusion
+**COMPLETE**
+- Results interpretation documented.
+- Research manuscript created.
+- Risk-analysis output created.
+- README, plan, decision log and error log updated.
+- V2/V3 historical baselines preserved.
+
+## Main conclusion
+The accepted complete-trade sample was profitable at expiry after modeled costs, but the strategy experienced substantial interim MTM losses and the source-data coverage was incomplete. Terminal win rate therefore must not be interpreted as low path risk.
 
 ## Research stopping rule
-Stop this phase after the backtest, validation, descriptive statistics, and documented limitations are complete. Any parameter expansion or different exit rule requires a new strategy phase.
-
-
-## Backtest run 3 — 2026-10-02
-- Status: **REJECTED FOR ANALYSIS**
-- Unit tests: **15 passed**.
-- 2025 processing: **52/52 candidate expiries processed**.
-- 2026 processing failed before the first expiry because the spot-source filename layout changed.
-- Corrective action: update the 2026 spot loader to monthly source files and rerun the full 2025–2026 sample.
-
-
-## Backtest execution
-- Status: EXECUTED
-- Trades: 43
-- Skips: 49
+This phase is closed. New exit rules, strike distances, capital models, regime filters, or parameter searches require a new branch/phase.
