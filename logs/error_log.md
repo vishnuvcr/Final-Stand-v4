@@ -34,3 +34,9 @@
 - GitHub Actions run 36928921436 failed in the V4 unit-test stage before the backtest because the expected PE strike values in test_v4_strategy.py were incorrect for entry spot 24,486.3.
 - Actual V4 mapping is ATM 24,500; PE16 = 23,700 and PE17 = 23,650. The erroneous test expected 23,650 and 23,600.
 - No performance output was produced by this failed run. The test expectation is corrected before rerun.
+
+
+## Phase 7 data-loader error — 2026-10-02
+- GitHub Actions run 36929127871 passed all 15 unit tests and completed all 52 candidate expiries for 2025.
+- The backtest then failed at 2026 spot loading because the source repository no longer contains the previously used range filenames. The current public directory uses monthly files named NIFTY50_1min_2026-01.csv through NIFTY50_1min_2026-10.csv.
+- No V4 performance output is accepted from this run. The spot loader is being updated to the currently observed repository layout.
