@@ -121,4 +121,13 @@ The initial sample shows materially different observed aggregate P&L and tail-lo
 - Phase 3 robustness grid completed successfully. Across the tested target/slippage scenarios, aggregate CE net P&L remained positive while aggregate PE net P&L remained negative; this is an observed sample result, not a claim of future performance.
 
 ## Phase 5 status
-**IN PROGRESS — manuscript synthesis, figures, limitations, and final research conclusion.**
+**COMPLETED — manuscript synthesis, figures, limitations, and final research conclusion.**
+
+
+## Final research checkpoint — 2026-10-01
+- Phase 5 GitHub Actions run 36842855381: **SUCCESS**.
+- Date-aware NSE transaction charges and STT were incorporated before the final baseline rerun.
+- Final baseline: CE mean net ₹189.35, total ₹7,952.82; PE mean net -₹1,231.88, total -₹51,739.07.
+- CE/PE tests: Mann–Whitney p=0.6579; paired sign-permutation p=0.1444.
+- Final manuscript created at manuscript/final_research_manuscript.md.
+- Research stopping rule reached: all proposed computational phases completed; remaining items are explicitly listed as future research rather than open-ended continuation.
