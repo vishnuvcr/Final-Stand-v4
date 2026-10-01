@@ -50,6 +50,7 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python -m pytest -q tests
       - run: python scripts/backtest.py
+      - run: python scripts/analyze_results.py
       - name: Record research status
         run: |
           python - <<'PY'
@@ -61,7 +62,7 @@ jobs:
           r=Path('README.md')
           t=r.read_text()
           t=t.replace('Phase 0 — Strategy specification: **IN PROGRESS**','Phase 0 — Strategy specification: **COMPLETED**')
-          if 'results/summary.csv' not in t: t += '\n## Latest Phase 1 outputs\n- [Trade results](results/trades.csv)\n- [Call/put summary](results/summary.csv)\n- [Data-quality record](results/data_quality.json)\n'
+          if 'results/summary.csv' not in t: t += '\n## Latest Phase 1 outputs\n- [Trade results](results/trades.csv)\n- [Call/put summary](results/summary.csv)\n- [Statistical analysis](results/statistics.csv)\n- [Call/put tests](results/call_put_tests.csv)\n- [Data-quality record](results/data_quality.json)\n'
           r.write_text(t)
           PY
       - name: Commit research outputs
