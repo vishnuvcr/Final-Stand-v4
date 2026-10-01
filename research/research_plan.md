@@ -1,67 +1,59 @@
 # Final Stand V4 — Research Plan
 
-## Research question
-Does the NIFTY 50 three-leg 1:-1:-1 structure (long OTM6, short OTM7, short OTM8) entered at 4 DTE and 10:00 IST, with profit exit near the initial payoff flatline and dynamic current-spot OTM8 re-centering after each OTM8 breach, exhibit a repeatable risk-adjusted performance difference between call and put variants after realistic costs and slippage?
+## Current phase: Strategy V4 double-sided OTM16/17
 
-## Secondary questions
-1. How often is the flatline target reached before expiry?
-2. How frequently does dynamic OTM8 re-centering occur, and how does it affect P&L and drawdown?
-3. Are call and put outcomes different across market regimes?
-4. How sensitive are results to target fraction, slippage and brokerage assumptions?
-5. How much of the apparent edge survives after execution costs?
+This phase is a new branch and does not overwrite the frozen V2 or V3 result sets.
+
+## Research question
+What is the realized net P&L distribution and drawdown of the NIFTY 50 four-leg structure — buy 1 OTM16 CE, sell 2 OTM17 CE, buy 1 OTM16 PE, sell 2 OTM17 PE — entered 4 trading days before expiry at 10:00 IST and held to expiry, after modeled slippage and transaction costs?
 
 ## Aim
-Quantitatively evaluate the specified call and put strategies using reproducible historical NIFTY option data, with explicit execution and data-quality assumptions.
+Evaluate the specified four-leg NIFTY structure with reproducible historical one-minute option data and explicit execution assumptions.
 
 ## Objectives
-- Build a validated expiry/trading-date calendar.
-- Reconstruct OTM6/7/8 from entry spot using the applicable historical strike scheme.
-- Implement current-spot OTM8 re-centering without look-ahead.
-- Model entry, rolls and exits with configurable slippage and transaction costs.
-- Produce trade-level and aggregate statistics.
-- Compare call and put distributions without ranking them as a recommendation.
-- Test robustness across target fractions, slippage, brokerage and expiry-exit conventions.
-- Document data gaps, failed tests and implementation changes.
+1. Reconstruct OTM16/OTM17 strikes from the 10:00 entry spot.
+2. Use the fourth prior trading day, not a calendar-day shortcut, for entry.
+3. Execute all four legs at the 10:00 option-bar open with modeled slippage.
+4. Exit all legs at the established 15:29 expiry-bar-open convention.
+5. Account for quantity-weighted turnover, brokerage, exchange charges, SEBI fee, stamp duty, STT and GST.
+6. Produce trade-level, annual, monthly and aggregate statistics.
+7. Record all data gaps as explicit skips.
+8. Preserve V2/V3 results as immutable prior-phase baselines.
 
-## Phases
-### Phase 0 — Specification and literature/data review
-Status: COMPLETED.
-
-### Phase 1 — Data acquisition and validation
-Status: IN PROGRESS.
-- Acquire/cache NIFTY intraday options and spot.
-- Validate schema, timestamps, expiries, strike availability and missingness.
-- Reconcile samples with NSE EOD records.
-
-### Phase 2 — Backtest engine validation
-- Unit tests for strike mapping, trigger logic, no-look-ahead ordering, P&L accounting and expiry settlement.
-- Synthetic path tests covering no breach, one breach and multiple re-centering events.
-
-### Phase 3 — Full empirical backtest
-- Full available intraday sample.
-- Call and put variants.
-- 90/95/100% target sensitivity.
-- Brokerage 10/20 INR per order.
-- Multiple slippage assumptions.
-
-### Phase 4 — Statistical analysis and robustness
-- Descriptive statistics.
-- Bootstrap confidence intervals for mean/median trade P&L and win rate.
-- Difference-in-distributions tests between call and put samples.
-- Regime-stratified analysis using realized NIFTY volatility and direction.
-- Multiple-testing controls where parameter grids are expanded.
-
-### Phase 5 — Research manuscript
-- Abstract, introduction, methods, results, discussion, limitations, conclusion, future work.
-- Tables, charts, appendices, data dictionary and reproducibility instructions.
+## Methodology
+- Historical window: 2025–2026 available repository sample.
+- Data sources: existing validated NIFTY 1-minute spot and option pipeline.
+- Strike interval: 50 points for this sample.
+- Entry spot proxy: 10:00 NIFTY bar open.
+- Option execution proxy: 10:00 option bar open.
+- Exit proxy: 15:29 option bar open on expiry.
+- No profit target, trigger, roll or re-centering.
+- Baseline costs: 0.10 option-premium points slippage per execution and INR 20 brokerage per executed order; both are workflow parameters.
+- Lot size: 75 through 30-Dec-2025 expiry; 65 thereafter.
 
 ## Statistical analysis
-Primary: trade-level net P&L distribution, median/mean, win rate, profit factor, maximum drawdown, target-hit rate and bootstrap 95% confidence intervals.
+Primary: trade-level count, mean/median net P&L, win rate, profit factor, total net P&L, worst/best trade, total costs and sequential trade-level drawdown.
 
-Secondary: Mann–Whitney U for distributional differences, permutation tests for mean/median differences, effect sizes, and regime-stratified comparisons. Because trades overlap in calendar time across call/put variants, paired analyses will be considered where trade dates align; otherwise independence assumptions will not be imposed without justification.
+Secondary: annual/monthly stability, gross-versus-net P&L decomposition, distribution shape, and sensitivity to cost parameters when explicitly run.
 
-## Interpretation rule
-The research will report measured differences and uncertainty. It will not convert the comparison into a trading recommendation or claim predictive certainty.
+## Phase sequence
+### Phase 7A — Specification and unit tests
+Status: EXECUTED IN BRANCH; CI test result pending/being checked.
+
+### Phase 7B — Full empirical backtest
+Status: RUNNING IN GITHUB ACTIONS.
+
+### Phase 7C — Output validation
+Status: PENDING.
+Check trade count, skips, strike mapping, expiry exit, cost accounting, and impossible/missing values.
+
+### Phase 7D — Statistical analysis
+Status: PENDING.
+Generate summary, yearly/monthly outputs and interpret observed uncertainty without making a trading recommendation.
+
+### Phase 7E — Documentation and conclusion
+Status: PENDING.
+Update README, logs, status file and research conclusion. Stop this phase here.
 
 ## Stopping rule
-Research stops after Phase 5 and the predefined robustness grid. New exploratory branches require an explicit change to this plan and a new phase/branch.
+No new strategy variants, parameter searches or regime mining are added unless a new phase/branch is created.
