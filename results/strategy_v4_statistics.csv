@@ -1,0 +1,9 @@
+metric,value
+n_trades,43.0
+mean_net_pnl,1969.736901968751
+median_net_pnl,733.6202859755002
+std_net_pnl,3468.471729103231
+win_rate,1.0
+profit_factor,inf
+total_net_pnl,84698.6867846563
+max_drawdown,0.0

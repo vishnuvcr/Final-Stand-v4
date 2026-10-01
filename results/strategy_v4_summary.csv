@@ -1,0 +1,2 @@
+strategy,trades,win_rate,mean_net_pnl,median_net_pnl,total_net_pnl,gross_total_pnl,total_costs,avg_cost_per_trade,profit_factor,worst_trade,best_trade,max_sequential_drawdown,avg_orders,avg_entry_cashflow
+NIFTY OTM16/17 Double-Sided,43,1.0,1969.736901968751,733.6202859755002,84698.6867846563,93250.35,8551.6632153437,198.87588872892326,inf,38.26719411609997,16743.4575412705,0.0,8.0,2268.4558139534884

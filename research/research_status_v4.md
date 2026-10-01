@@ -35,3 +35,9 @@ Stop this phase after the backtest, validation, descriptive statistics, and docu
 - 2025 processing: **52/52 candidate expiries processed**.
 - 2026 processing failed before the first expiry because the spot-source filename layout changed.
 - Corrective action: update the 2026 spot loader to monthly source files and rerun the full 2025–2026 sample.
+
+
+## Backtest execution
+- Status: EXECUTED
+- Trades: 43
+- Skips: 49

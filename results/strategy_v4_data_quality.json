@@ -1,0 +1,231 @@
+{
+  "years": [
+    2025,
+    2026
+  ],
+  "trades": 43,
+  "skips": [
+    [
+      "2025-01-07",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-01-14",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-01-21",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-01-28",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-02-04",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-02-11",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-02-18",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-02-25",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-03-04",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-03-11",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-03-18",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-03-25",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-04-01",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-04-08",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-04-15",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-04-22",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-04-29",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-05-06",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-05-13",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-05-20",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-05-27",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-06-03",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-06-10",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-06-17",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-06-24",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-07-01",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-07-08",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-07-15",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-07-22",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-07-29",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-08-05",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-08-12",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-08-19",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-08-26",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-10-21",
+      "missing_entry_leg"
+    ],
+    [
+      "2025-10-28",
+      "no_10am_spot"
+    ],
+    [
+      "2025-12-30",
+      "missing_entry_leg"
+    ],
+    [
+      "2026-01-06",
+      "insufficient_prior_trading_days"
+    ],
+    [
+      "2026-07-28",
+      "missing_entry_leg"
+    ],
+    [
+      "2026-08-04",
+      "missing_entry_leg"
+    ],
+    [
+      "2026-08-11",
+      "missing_entry_leg"
+    ],
+    [
+      "2026-08-18",
+      "missing_entry_leg"
+    ],
+    [
+      "2026-08-25",
+      "missing_entry_leg"
+    ],
+    [
+      "2026-09-01",
+      "missing_entry_leg"
+    ],
+    [
+      "2026-09-08",
+      "missing_entry_leg"
+    ],
+    [
+      "2026-09-15",
+      "missing_entry_leg"
+    ],
+    [
+      "2026-09-22",
+      "missing_entry_leg"
+    ],
+    [
+      "2026-09-29",
+      "missing_entry_leg"
+    ],
+    [
+      "2026-10-01",
+      "missing_entry_leg"
+    ]
+  ],
+  "per_year": [
+    {
+      "year": 2025,
+      "spot_rows": 93060,
+      "expiry_candidates": 52
+    },
+    {
+      "year": 2026,
+      "spot_rows": 69750,
+      "expiry_candidates": 40
+    }
+  ],
+  "source": "rissin/nse-options-intraday + technovusin/nifty50-historical-data",
+  "resolution": "1min",
+  "strategy_version": "V4 double-sided OTM16/17",
+  "legs": [
+    "+1 CE16",
+    "-2 CE17",
+    "+1 PE16",
+    "-2 PE17"
+  ],
+  "entry_rule": "4 trading days before expiry at 10:00 IST; 10:00 spot open selects strikes; 10:00 option open executes",
+  "expiry_exit": "15:29 option bar open",
+  "accounting": "cash-flow based realization",
+  "slippage_points": 0.1,
+  "brokerage_per_order": 20.0
+}
