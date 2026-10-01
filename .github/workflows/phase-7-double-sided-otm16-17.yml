@@ -73,3 +73,5 @@ jobs:
           git add results research/research_status_v4.md
           git diff --cached --quiet || git commit -m 'Record Strategy V4 backtest outputs [skip ci]'
           git push
+
+# Rerun once from the fully initialized phase-7 branch state.
