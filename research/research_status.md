@@ -67,3 +67,12 @@ The specification is implementable. The backtest will use the actual historical 
 - Expiries discovered: None
 - Trades produced: 84
 - Skips: 92
+
+
+## Phase 1 run — [2025, 2026]
+- Status: **EXECUTED IN GITHUB ACTIONS**
+- Option rows processed: None
+- Spot rows processed: None
+- Expiries discovered: None
+- Trades produced: 84
+- Skips: 92
