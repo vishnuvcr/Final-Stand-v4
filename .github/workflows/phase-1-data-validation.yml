@@ -1,0 +1,72 @@
+name: Phase 1 - Data Validation and Backtest
+
+on:
+  workflow_dispatch:
+    inputs:
+      years:
+        description: Comma-separated years, e.g. 2025,2026
+        required: false
+        default: '2025,2026'
+      target_frac:
+        description: Profit-target fraction of initial flatline
+        required: false
+        default: '1.0'
+      slippage_points:
+        description: Premium slippage per option execution in points
+        required: false
+        default: '0.10'
+      brokerage_per_order:
+        description: Brokerage per executed option order in INR
+        required: false
+        default: '20'
+  push:
+    branches:
+      - phase-1-data-validation
+
+permissions:
+  contents: write
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      YEARS: ${{ github.event.inputs.years || '2025,2026' }}
+      TARGET_FRAC: ${{ github.event.inputs.target_frac || '1.0' }}
+      SLIPPAGE_POINTS: ${{ github.event.inputs.slippage_points || '0.10' }}
+      BROKERAGE_PER_ORDER: ${{ github.event.inputs.brokerage_per_order || '20' }}
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            data_cache
+            ~/.cache/huggingface
+          key: phase1-hf-${{ runner.os }}-${{ hashFiles('requirements.txt', 'scripts/backtest.py') }}-${{ env.YEARS }}
+      - run: pip install -r requirements.txt
+      - run: python scripts/backtest.py
+      - name: Record research status
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          d=json.loads(Path('results/data_quality.json').read_text())
+          p=Path('research/research_status.md')
+          p.write_text(p.read_text()+f"\n\n## Phase 1 run — {d.get('years')}\n- Status: **EXECUTED IN GITHUB ACTIONS**\n- Option rows processed: {d.get('option_rows')}\n- Spot rows processed: {d.get('spot_rows')}\n- Expiries discovered: {d.get('expiries')}\n- Trades produced: {d.get('trades')}\n- Skips: {len(d.get('skips',[]))}\n")
+          r=Path('README.md')
+          t=r.read_text()
+          t=t.replace('Phase 0 — Strategy specification: **IN PROGRESS**','Phase 0 — Strategy specification: **COMPLETED**')
+          if 'results/summary.csv' not in t: t += '\n## Latest Phase 1 outputs\n- [Trade results](results/trades.csv)\n- [Call/put summary](results/summary.csv)\n- [Data-quality record](results/data_quality.json)\n'
+          r.write_text(t)
+          PY
+      - name: Commit research outputs
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results research/research_status.md README.md
+          git diff --cached --quiet || git commit -m 'Record Phase 1 research outputs [skip ci]'
+          git push
