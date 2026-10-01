@@ -1,0 +1,70 @@
+name: Phase 6 - Static OTM8 Reversal Backtest
+
+on:
+  workflow_dispatch:
+    inputs:
+      years:
+        description: Comma-separated years
+        required: false
+        default: '2025,2026'
+      slippage_points:
+        description: Premium slippage per option execution in points
+        required: false
+        default: '0.10'
+      brokerage_per_order:
+        description: Brokerage per executed option order in INR
+        required: false
+        default: '20'
+  push:
+    branches:
+      - phase-6-reversal-otm8
+
+permissions:
+  contents: write
+
+jobs:
+  phase6:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      YEARS: ${{ github.event.inputs.years || '2025,2026' }}
+      SLIPPAGE_POINTS: ${{ github.event.inputs.slippage_points || '0.10' }}
+      BROKERAGE_PER_ORDER: ${{ github.event.inputs.brokerage_per_order || '20' }}
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            data_cache
+            ~/.cache/huggingface
+          key: phase6-hf-${{ runner.os }}-${{ hashFiles('requirements.txt','scripts/backtest_reversal.py') }}
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q tests
+      - run: python scripts/backtest_reversal.py
+      - run: python scripts/analyze_reversal.py
+      - name: Record phase status
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          d=json.loads(Path('results/strategy_v3_data_quality.json').read_text())
+          p=Path('research/research_status.md')
+          p.write_text(p.read_text()+f'\n\n## Phase 6 — Strategy V3 static OTM8 reversal — execution checkpoint\n- Status: **EXECUTED IN GITHUB ACTIONS**\n- Strategy: static initial OTM8 trigger; one-time replacement of short OTM8 with opposite option at the same initial OTM8 strike.\n- Exit: 0 DTE, 15:29 bar open.\n- Trades produced: {d.get("trades")}\n- Skips: {len(d.get("skips",[]))}\n- Full data-quality record: results/strategy_v3_data_quality.json\n')
+          r=Path('README.md')
+          t=r.read_text()
+          t += '\n\n## Phase 6 — Strategy V3\n- [Strategy V3 specification](research/strategy_spec_v3.md)\n- [V3 trade ledger](results/strategy_v3_trades.csv)\n- [V3 summary](results/strategy_v3_summary.csv)\n- [V3 statistics](results/strategy_v3_statistics.csv)\n- [V3 call/put comparison](results/strategy_v3_call_put_comparison.csv)\n- [V3 statistical tests](results/strategy_v3_call_put_tests.csv)\n- [V3 data quality](results/strategy_v3_data_quality.json)\n'
+          r.write_text(t)
+          e=Path('logs/error_log.md')
+          e.write_text(e.read_text()+'\n\n## Phase 6 strategy reset — 2026-10-01\n- The previous V2 profit-target/recentering strategy is frozen as a completed baseline and is not overwritten.\n- V3 uses no profit target, exits at expiry, and applies one static OTM8 reversal as specified in research/strategy_spec_v3.md.\n- V3 uses cash-flow-based expiry realization and explicit unit tests; this is isolated from the frozen V2 result files.\n')
+          PY
+      - name: Commit V3 outputs and status
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results research/research_status.md README.md logs/error_log.md
+          git diff --cached --quiet || git commit -m 'Run Strategy V3 static OTM8 reversal backtest [skip ci]'
+          git push
