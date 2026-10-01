@@ -3,8 +3,8 @@
 ## Research Status
 - Phase 0 — Strategy specification: **COMPLETED**
 - Current strategy revision: **V2 — dynamic OTM8 re-centering**
-- Backtest: **NOT YET RUN**
-- Data validation: **PENDING**
+- Backtest: **RUNNING / VALIDATION IN PROGRESS**
+- Data validation: **IN PROGRESS**
 
 ## Current Research Files
 - [Strategy V2 specification](research/strategy_spec_v2.md)
@@ -23,4 +23,4 @@ This repository records the agreed research specification and implementation dec
 - [Phase 1 workflow](.github/workflows/phase-1-data-validation.yml)
 
 ## Phase 1 checkpoint
-Unit tests have passed. The 2025–2026 data backtest is running in GitHub Actions; results are not accepted until the job completes and data-quality checks pass.
+Unit tests have passed. The optimized 2025–2026 data backtest is running in GitHub Actions; results are not accepted until the job completes and data-quality checks pass. The engine now uses predicate-pushed Parquet reads and historically applicable NIFTY lot sizes.
