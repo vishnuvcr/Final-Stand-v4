@@ -134,7 +134,7 @@ The initial sample shows materially different observed aggregate P&L and tail-lo
 
 
 ## Phase 6 — Strategy V3 restart — 2026-10-01
-- Status: **IN PROGRESS**.
+- Status: **COMPLETED**.
 - New strategy replaces the V2 profit-target/recentering rules for this research phase; V2 files remain frozen as the prior baseline.
 - Required tests: unit tests, full 2025–2026 backtest, call/put comparison, descriptive CE/PE ratios, statistical tests, and transaction-cost accounting.
 - Trigger: initial OTM8 breach using one-minute high/low; execution on the next minute open.
@@ -149,3 +149,14 @@ The initial sample shows materially different observed aggregate P&L and tail-lo
 - Trades produced: 84
 - Skips: 92
 - Full data-quality record: results/strategy_v3_data_quality.json
+
+
+## Phase 6 — Strategy V3 final checkpoint — 2026-10-01
+- Status: **COMPLETED**.
+- Latest successful workflow run produced 84 trades: 42 CE and 42 PE; 92 trade-side skips are documented rather than imputed.
+- Strategy 1 Put: total net ₹-58,006.84; mean ₹-1,381.12; median ₹397.00; win rate 83.33%; profit factor 0.502; worst trade ₹-56,338.09; roll rate 21.43%.
+- Strategy 2 Call: total net ₹29,527.08; mean ₹703.03; median ₹291.08; win rate 69.05%; profit factor 2.715; worst trade ₹-9,757.58; roll rate 9.52%.
+- CE/PE aligned tests: Mann–Whitney p=0.9893; paired sign-permutation p=0.2704. These do not establish a statistically significant difference.
+- 95% bootstrap mean intervals: CE approximately ₹-116 to ₹1,450; PE approximately ₹-4,699 to ₹1,199.
+- Expiry-only exit was used; no profit target or dynamic re-centering was used.
+- The prior V2 baseline remains frozen and is not overwritten by V3.
