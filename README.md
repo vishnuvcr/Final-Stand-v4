@@ -33,6 +33,7 @@ Accepted sample:
 Important interpretation: the 100% terminal win rate did not imply low path risk. All 43 accepted trades experienced negative intratrade gross MTM. The usable historical coverage was 46.74%, primarily because required entry option legs were unavailable for many candidate expiries.
 
 ## Research control files
+- [Project operating protocol](research/project_operating_protocol.md)
 - [Master research plan](research/research_plan.md)
 - [V4 strategy specification](research/strategy_spec_v4.md)
 - [V4 research status](research/research_status_v4.md)
