@@ -17,3 +17,16 @@
 
 ## Phase transition rule
 Phase 1 should begin only after the specification and execution conventions are frozen.
+
+
+## Phase 0 research evidence update — 2026-10-01
+- NSE's current NIFTY 50 specification states 50-point strike intervals for weekly/monthly index options and Tuesday expiry under the current regime. See NSE source cited in the research report.
+- NSE exposes contract-wise derivatives price/volume archives and documents historical F&O bhavcopy structure.
+- A public Hugging Face dataset was identified containing NIFTY 1-minute options from Oct 2024 onward plus long EOD history. It is a candidate source and must be validated against NSE records.
+- Public GitHub projects document alternative NIFTY 1-minute option pipelines/datasets. They are secondary/validation sources, not automatically ground truth.
+
+### Phase 0 conclusion
+The specification is implementable. The backtest will use the actual historical expiry calendar and strike availability rather than assuming today's rules across all years. Historical expiry/strike regimes must be versioned by date.
+
+### Phase 1 status
+**READY TO START — data acquisition + validation.**
