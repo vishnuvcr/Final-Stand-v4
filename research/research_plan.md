@@ -38,22 +38,22 @@ Secondary: annual/monthly stability, gross-versus-net P&L decomposition, distrib
 
 ## Phase sequence
 ### Phase 7A — Specification and unit tests
-Status: EXECUTED IN BRANCH; CI test result pending/being checked.
+Status: COMPLETE. Accepted CI run passed all 15 tests.
 
 ### Phase 7B — Full empirical backtest
-Status: RUNNING IN GITHUB ACTIONS.
+Status: COMPLETE. GitHub Actions run 36929461356 passed the full 2025–2026 available sample.
 
 ### Phase 7C — Output validation
-Status: PENDING.
-Check trade count, skips, strike mapping, expiry exit, cost accounting, and impossible/missing values.
+Status: COMPLETE.
+43 unique complete trades were validated with 8 orders per trade, expiry-only exits, expected lot sizes, and explicit skips.
 
 ### Phase 7D — Statistical analysis
-Status: PENDING.
-Generate summary, yearly/monthly outputs and interpret observed uncertainty without making a trading recommendation.
+Status: COMPLETE.
+Aggregate, yearly, monthly, cost, uncertainty and intratrade MTM metrics were generated.
 
 ### Phase 7E — Documentation and conclusion
-Status: PENDING.
-Update README, logs, status file and research conclusion. Stop this phase here.
+Status: COMPLETE.
+README, status, logs, results interpretation and manuscript were updated. This phase is closed.
 
 ## Stopping rule
 No new strategy variants, parameter searches or regime mining are added unless a new phase/branch is created.
