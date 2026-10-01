@@ -52,3 +52,9 @@ The specification is implementable. The backtest will use the actual historical 
 - Expiries discovered: None
 - Trades produced: 77
 - Skips: 99
+
+
+## Phase 1 data-quality correction — 2026-10-01
+- The first completed optimized run is **REJECTED for analysis** because its candidate-strike filter used the 09:15 spot for initial strike availability while the strategy entry is defined at 10:00.
+- Engine correction applied: initial candidate strikes are now derived from the actual 10:00 spot; dynamic OTM8 candidates continue to be derived from all observed spot closes in the holding window.
+- The 77-trade result set is therefore provisional and must not be interpreted as a research result. A corrected run is required.
