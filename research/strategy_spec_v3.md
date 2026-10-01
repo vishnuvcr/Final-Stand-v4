@@ -66,3 +66,6 @@ Compare Strategy 1 (PE) and Strategy 2 (CE) on trade count, total/mean/median ne
 - No profit-target optimization.
 - No re-centering after the reversal.
 - No forward-looking or same-bar execution.
+
+## Execution checkpoint
+- The accepted V3 implementation permits at most one static OTM8 reversal per trade and does not re-center the trigger after the reversal.
