@@ -131,3 +131,12 @@ The initial sample shows materially different observed aggregate P&L and tail-lo
 - CE/PE tests: Mann–Whitney p=0.6579; paired sign-permutation p=0.1444.
 - Final manuscript created at manuscript/final_research_manuscript.md.
 - Research stopping rule reached: all proposed computational phases completed; remaining items are explicitly listed as future research rather than open-ended continuation.
+
+
+## Phase 6 — Strategy V3 restart — 2026-10-01
+- Status: **IN PROGRESS**.
+- New strategy replaces the V2 profit-target/recentering rules for this research phase; V2 files remain frozen as the prior baseline.
+- Required tests: unit tests, full 2025–2026 backtest, call/put comparison, descriptive CE/PE ratios, statistical tests, and transaction-cost accounting.
+- Trigger: initial OTM8 breach using one-minute high/low; execution on the next minute open.
+- Roll: one-time replacement of the short initial OTM8 option with the opposite option at the same initial OTM8 strike.
+- Exit: 0 DTE, 15:29 bar open.
