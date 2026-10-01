@@ -237,6 +237,13 @@ The backtest's positive entry cash credit shifts terminal P&L upward, but does n
 ### 11.1 What the backtest shows
 The accepted sample produced positive realized net P&L on every reconstructed trade. The average net result remained positive after modeled trading costs, and the estimated mean's descriptive confidence interval remained above zero under the independence-based t calculation.
 
+### 11.2 Brokerage sensitivity and Paytm Money
+The base run uses ₹20 brokerage per executed order, preserving the project's historical cost convention. Paytm Money's current F&O FAQ states ₹10 brokerage for each unique executed F&O order, while an official Paytm Money pricing announcement states that flat ₹20 brokerage was aligned across segments from 15-Jan-2025. Because the official pages are inconsistent, the historical run is not retroactively rewritten; instead, a separate sensitivity is provided.
+
+With all other modeled charges unchanged and 8 executed orders per complete trade, replacing ₹20 brokerage with ₹10 reduces total modeled costs by ₹4,059.20 and raises aggregate net P&L from ₹84,698.69 to approximately **₹88,757.89**.
+
+Source pages: Paytm Money F&O FAQ and Paytm Money pricing announcement.
+
 ### 11.2 What the backtest does not show
 It does not establish a future 100% win rate. The acceptance rate was only 46.74% because 49 of 92 candidate expiries lacked complete source observations.
 
