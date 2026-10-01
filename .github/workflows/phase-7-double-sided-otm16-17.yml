@@ -1,0 +1,75 @@
+name: Phase 7 - Double-Sided OTM16/17 Backtest
+
+on:
+  workflow_dispatch:
+    inputs:
+      years:
+        description: Comma-separated years
+        required: false
+        default: '2025,2026'
+      slippage_points:
+        description: Premium slippage per option execution in points
+        required: false
+        default: '0.10'
+      brokerage_per_order:
+        description: Brokerage per executed option order in INR
+        required: false
+        default: '20'
+  push:
+    branches:
+      - phase-7-double-sided-otm16-17
+    paths:
+      - 'scripts/backtest_v4.py'
+      - 'scripts/analyze_v4.py'
+      - 'tests/test_v4_strategy.py'
+      - 'research/strategy_spec_v4.md'
+      - '.github/workflows/phase-7-double-sided-otm16-17.yml'
+      - 'requirements.txt'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase7-v4-backtest
+  cancel-in-progress: true
+
+jobs:
+  phase7:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      YEARS: ${{ github.event.inputs.years || '2025,2026' }}
+      SLIPPAGE_POINTS: ${{ github.event.inputs.slippage_points || '0.10' }}
+      BROKERAGE_PER_ORDER: ${{ github.event.inputs.brokerage_per_order || '20' }}
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            data_cache
+            ~/.cache/huggingface
+          key: phase7-v4-hf-${{ runner.os }}-${{ hashFiles('requirements.txt','scripts/backtest_v4.py') }}
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q tests
+      - run: python scripts/backtest_v4.py
+      - run: python scripts/analyze_v4.py
+      - name: Record phase status
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          d=json.loads(Path('results/strategy_v4_data_quality.json').read_text())
+          p=Path('research/research_status_v4.md')
+          p.write_text(p.read_text()+f"\n\n## Backtest execution\n- Status: EXECUTED\n- Trades: {d.get('trades')}\n- Skips: {len(d.get('skips',[]))}\n")
+          PY
+      - name: Commit V4 outputs
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results research/research_status_v4.md
+          git diff --cached --quiet || git commit -m 'Record Strategy V4 backtest outputs [skip ci]'
+          git push
