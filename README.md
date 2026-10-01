@@ -29,3 +29,6 @@ Unit tests have passed. The corrected 2025–2026 candidate backtest completed s
 - [Trade results](results/trades.csv)
 - [Call/put summary](results/summary.csv)
 - [Data-quality record](results/data_quality.json)
+
+## Phase 3 sensitivity output
+- [Robustness grid](results/phase3_sensitivity.csv)

@@ -97,3 +97,9 @@ The initial sample shows materially different observed aggregate P&L and tail-lo
 
 ### Phase 2 status
 **READY TO START — engine validation and synthetic-path tests.**
+
+## Phase 3 robustness grid execution
+- Target fractions: 90%, 95%, 100% of initial flatline.
+- Slippage: 0.00, 0.10, 0.25 option-premium points per execution.
+- Brokerage: ₹20 per executed order.
+- All scenarios use the validated current-spot OTM8 re-centering logic.
