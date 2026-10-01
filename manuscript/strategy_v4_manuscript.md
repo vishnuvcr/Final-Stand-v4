@@ -318,6 +318,7 @@ Output files:
 - `results/strategy_v4_monthly.csv`
 - `results/strategy_v4_data_quality.json`
 - `results/strategy_v4_risk_analysis.csv`
+- `results/strategy_v4_cost_sensitivity.csv`
 
 ## Appendix B — Cost and execution assumptions
 - Premium slippage: ₹0.10 per option premium point per execution.
