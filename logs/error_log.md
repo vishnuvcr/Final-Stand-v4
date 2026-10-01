@@ -40,3 +40,10 @@
 - GitHub Actions run 36929127871 passed all 15 unit tests and completed all 52 candidate expiries for 2025.
 - The backtest then failed at 2026 spot loading because the source repository no longer contains the previously used range filenames. The current public directory uses monthly files named NIFTY50_1min_2026-01.csv through NIFTY50_1min_2026-10.csv.
 - No V4 performance output is accepted from this run. The spot loader is being updated to the currently observed repository layout.
+
+
+## Phase 7 accepted rerun — 2026-10-02
+- GitHub Actions run 36929461356 passed all 15 tests, completed the full 2025–2026 available sample, ran analysis, and committed outputs.
+- Final accepted results: 43 complete trades, 49 documented skips, total net P&L INR 84,698.69.
+- Validation confirmed 43 unique expiry trades, 8 orders per complete trade, expiry-only exits, and expected lot sizes.
+- The remaining data-quality limitation is historical source incompleteness, not an unresolved engine error.
