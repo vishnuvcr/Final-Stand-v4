@@ -28,8 +28,7 @@ def opt_file(y):
 
 def spot_files(y):
     if y==2026:
-        names=['NIFTY50_1min_20260101_to_20260908.csv',
-               'NIFTY50_1min_20260901_to_20260930.csv']
+        names=[f'NIFTY50_1min_2026-{m:02d}.csv' for m in range(1,11)]
     else:
         names=[f'NIFTY50_1min_{y}.csv']
     out=[]
