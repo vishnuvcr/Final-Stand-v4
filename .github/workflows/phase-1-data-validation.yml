@@ -18,7 +18,7 @@ on:
       brokerage_per_order:
         description: Brokerage per executed option order in INR
         required: false
-        default: '20'
+        default: '10'
   push:
     branches:
       - phase-1-data-validation
@@ -34,7 +34,7 @@ jobs:
       YEARS: ${{ github.event.inputs.years || '2025,2026' }}
       TARGET_FRAC: ${{ github.event.inputs.target_frac || '1.0' }}
       SLIPPAGE_POINTS: ${{ github.event.inputs.slippage_points || '0.10' }}
-      BROKERAGE_PER_ORDER: ${{ github.event.inputs.brokerage_per_order || '20' }}
+      BROKERAGE_PER_ORDER: ${{ github.event.inputs.brokerage_per_order || '10' }}
       HF_TOKEN: ${{ secrets.HF_TOKEN }}
     steps:
       - uses: actions/checkout@v4
