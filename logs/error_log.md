@@ -29,3 +29,13 @@
 - The previous V2 profit-target/recentering strategy is frozen as a completed baseline and is not overwritten.
 - V3 uses no profit target, exits at expiry, and applies one static OTM8 reversal as specified in research/strategy_spec_v3.md.
 - V3 uses cash-flow-based expiry realization and explicit unit tests; this is isolated from the frozen V2 result files.
+
+
+## Phase 6 workflow concurrency — 2026-10-01
+- Four push-triggered V3 runs were started because documentation/status commits initially also matched the workflow push trigger.
+- The latest run completed successfully; three older runs completed research steps successfully but failed only at the final git push because another run had already advanced the branch (fetch-first rejection).
+- Workflow was corrected to trigger on research/code paths only and to use a concurrency group with cancel-in-progress, preventing documentation commits from launching redundant full backtests.
+
+## Phase 6 research result
+- V3 produced 84 validated trades (42 CE, 42 PE) from the available sample.
+- No data-quality issue caused the accepted V3 result; missing historical option observations remain documented as skips.
