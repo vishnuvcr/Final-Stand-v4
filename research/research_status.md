@@ -36,3 +36,10 @@ The specification is implementable. The backtest will use the actual historical 
 - Data/backtest job: **RUNNING / NOT YET ACCEPTED** at checkpoint.
 - No performance conclusion is reported until the data-processing run completes and outputs are validated.
 - Current run: GitHub Actions run 36837298146.
+
+
+## Phase 1 remediation checkpoint — 2026-10-01
+- Exchange validation updated: current NIFTY weekly/monthly strike interval is 50 points; Tuesday expiry with previous-trading-day holiday adjustment.
+- Historical NIFTY lot-size treatment added: 75 through 30-Dec-2025 expiry; 65 thereafter.
+- Backtest engine optimized to read only expiry/strike windows required by the strategy instead of materializing the entire option history.
+- Unit tests remain passed; performance-optimized backtest execution is in progress.
