@@ -3,8 +3,8 @@
 ## Research Status
 - Phase 0 — Strategy specification: **COMPLETED**
 - Current strategy revision: **V2 — dynamic OTM8 re-centering**
-- Backtest: **RUNNING / VALIDATION IN PROGRESS**
-- Data validation: **IN PROGRESS**
+- Backtest: **PHASE 1 COMPLETED — PRELIMINARY RESULTS**
+- Data validation: **PARTIAL — COVERAGE LIMITATION DOCUMENTED**
 
 ## Current Research Files
 - [Strategy V2 specification](research/strategy_spec_v2.md)
@@ -23,7 +23,7 @@ This repository records the agreed research specification and implementation dec
 - [Phase 1 workflow](.github/workflows/phase-1-data-validation.yml)
 
 ## Phase 1 checkpoint
-Unit tests have passed. The optimized 2025–2026 data backtest is running in GitHub Actions; results are not accepted until the job completes and data-quality checks pass. The engine now uses predicate-pushed Parquet reads and historically applicable NIFTY lot sizes.
+Unit tests have passed. The corrected 2025–2026 candidate backtest completed successfully. The validated empirical sample contains 84 trades (42 CE, 42 PE); many earlier 2025 expiries are unavailable in the selected intraday option source and are excluded rather than imputed. The engine uses predicate-pushed Parquet reads, historically applicable NIFTY lot sizes, and next-minute execution after target/trigger observations.
 
 ## Latest Phase 1 outputs
 - [Trade results](results/trades.csv)
