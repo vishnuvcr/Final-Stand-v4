@@ -68,7 +68,7 @@ def run_trade(opt_idx, ss, ex, side):
     if ss.empty: return None,'no_spot'
     s0=float(ss.iloc[0].close); lot=lot_size(ex)
     ks=[strike(s0,side,6),strike(s0,side,7),strike(s0,side,8)]
-    signed={}; cash=0.0; orders=0
+    signed={}; cash=0.0; orders=0; fees=0.0
     for k,q in zip(ks,[1,-1,-1]):
         r=opt_idx.get((t0,float(k),side))
         if r is None or pd.isna(r[0]) or r[0]<=0: return None,'missing_entry_leg'
