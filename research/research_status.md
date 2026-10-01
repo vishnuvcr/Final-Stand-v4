@@ -30,3 +30,9 @@ The specification is implementable. The backtest will use the actual historical 
 
 ### Phase 1 status
 **READY TO START — data acquisition + validation.**
+
+## Phase 1 execution checkpoint — 2026-10-01
+- Unit tests: **PASSED** in GitHub Actions.
+- Data/backtest job: **RUNNING / NOT YET ACCEPTED** at checkpoint.
+- No performance conclusion is reported until the data-processing run completes and outputs are validated.
+- Current run: GitHub Actions run 36837298146.
