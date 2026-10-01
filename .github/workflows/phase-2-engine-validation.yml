@@ -1,0 +1,30 @@
+name: Phase 2 - Engine Validation
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-2-engine-validation
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q tests
+      - name: Validate stored Phase 1 result invariants
+        run: |
+          python - <<'PY'
+          import pandas as pd
+          r=pd.read_csv('results/trades.csv')
+          assert set(r.side)=={'CE','PE'}
+          assert len(r)==84
+          assert (r.orders>=6).all()
+          assert (r.rolls>=0).all()
+          assert (r.lot_size.eq(75) | r.lot_size.eq(65)).all()
+          print('Phase 1 stored-result invariants passed')
+          PY
