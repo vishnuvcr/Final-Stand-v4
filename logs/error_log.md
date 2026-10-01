@@ -15,3 +15,5 @@
 - 2026-10-01: Optimized engine failed on first Parquet query because the dataset timestamp is timezone-aware IST while filter bounds were timezone-naive. Fixed by constructing Asia/Kolkata-aware filter timestamps. No trade result was produced from the failed run.
 
 - 2026-10-01: 2025 option processing completed through all 52 candidate expiries, but the run failed when the spot repository's 2026 directory used two date-range CSV filenames rather than `NIFTY50_1min_2026.csv`. Fixed by supporting both actual 2026 files and deduplicating their overlap.
+
+- 2026-10-01: Data-quality output showed systematic missing entry legs for many early expiries. Root cause identified: candidate strikes for the filtered Parquet read were initially derived from the first 09:15 spot bar while the strategy enters at 10:00. The engine has been corrected to derive initial candidates from the actual 10:00 spot row; the next run is required to validate the correction.
