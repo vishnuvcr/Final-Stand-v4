@@ -27,3 +27,11 @@
 
 ## Research stopping rule
 Stop this phase after the backtest, validation, descriptive statistics, and documented limitations are complete. Any parameter expansion or different exit rule requires a new strategy phase.
+
+
+## Backtest run 3 — 2026-10-02
+- Status: **REJECTED FOR ANALYSIS**
+- Unit tests: **15 passed**.
+- 2025 processing: **52/52 candidate expiries processed**.
+- 2026 processing failed before the first expiry because the spot-source filename layout changed.
+- Corrective action: update the 2026 spot loader to monthly source files and rerun the full 2025–2026 sample.
