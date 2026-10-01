@@ -24,3 +24,7 @@ Strike-selection decision: use the 10:00 NIFTY bar open as the entry spot proxy 
 
 Branching decision: V4 is isolated on phase-7-double-sided-otm16-17 and does not overwrite V2/V3 outputs.
 
+
+
+## 2026-10-02 — V4 backtest conclusion
+The accepted GitHub Actions rerun completed successfully. The final sample contains 43 complete four-leg trades from 92 candidate expiries. Net P&L after modeled costs is INR 84,698.69. All 43 terminal results are positive, but all 43 trades experienced negative intratrade gross MTM; the worst observed gross MTM trough is -INR 24,394.50. The phase is closed with the result interpretation and manuscript committed on the phase-7 branch. Further parameter/exit exploration requires a new phase.
