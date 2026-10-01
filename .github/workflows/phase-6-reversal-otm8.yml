@@ -18,6 +18,17 @@ on:
   push:
     branches:
       - phase-6-reversal-otm8
+    paths:
+      - 'scripts/backtest_reversal.py'
+      - 'scripts/analyze_reversal.py'
+      - 'tests/**'
+      - 'requirements.txt'
+      - 'research/strategy_spec_v3.md'
+      - '.github/workflows/phase-6-reversal-otm8.yml'
+
+concurrency:
+  group: phase6-v3-backtest
+  cancel-in-progress: true
 
 permissions:
   contents: write
