@@ -46,7 +46,7 @@ jobs:
           path: |
             data_cache
             ~/.cache/huggingface
-          key: phase1-hf-${{ runner.os }}-${{ hashFiles('requirements.txt', 'scripts/backtest.py') }}-${{ env.YEARS }}
+          key: phase1-hf-${{ runner.os }}-${{ hashFiles('requirements.txt', 'scripts/backtest.py') }}
       - run: pip install -r requirements.txt
       - run: python -m pytest -q tests
       - run: python scripts/backtest.py
