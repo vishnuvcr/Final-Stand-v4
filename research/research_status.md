@@ -103,3 +103,9 @@ The initial sample shows materially different observed aggregate P&L and tail-lo
 - Slippage: 0.00, 0.10, 0.25 option-premium points per execution.
 - Brokerage: ₹20 per executed order.
 - All scenarios use the validated current-spot OTM8 re-centering logic.
+
+## Phase 4 statistical analysis — baseline scenario
+- Target: 100% of initial flatline.
+- Slippage: 0.10 premium points per execution.
+- Brokerage: ₹20 per executed order.
+- Statistical outputs generated from the corrected trade ledger.
