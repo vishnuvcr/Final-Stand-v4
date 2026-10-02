@@ -124,3 +124,9 @@ Any new strike distance, target, stop, selection rule, regime filter, capital mo
 - Target sensitivity and single-factor cost sensitivity persisted.
 - Closure correction: full 4×3 slippage/brokerage Cartesian stress and market-context acquisition are now being executed before Phase 10 is frozen.
 - Official context sources include NSE historical India VIX, historical NIFTY/index data and FII/FPI/DII reports; these sources describe the available historical series and note that FII/FPI data are provisional. The context analysis will not create a new trading filter.
+
+
+### Phase 10 closure update — 2026-10-02
+- Corrected closure workflow now includes the full 4×3 slippage×brokerage grid, selection-margin output, official/secondary context acquisition, and a lagged context-to-trade join.
+- Context is matched to the prior available daily observation to avoid same-day close look-ahead.
+- Closure remains open until GitHub Actions execution, persistence, and remote readback are verified.
