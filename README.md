@@ -6,7 +6,7 @@
 - Phase 7 V4 double-sided OTM16/17: **COMPLETED / FROZEN**
 - Phase 8 option-data source recovery: **COMPLETED AS A SEPARATE RECOVERY TRACK**
 - Phase 9 credit-selected OTM6/7/8: **COMPLETED — reproducible archive verified 2026-10-02**
-- Phase 10 robustness/context analysis: **READY TO START on a separate branch**
+- Phase 10 robustness/context analysis: **IN CLOSURE — computational robustness complete; Cartesian cost/context acquisition running**
 
 ## Phase 7 V4 — Final Backtest Result
 Strategy:
@@ -116,3 +116,11 @@ The final research phase will produce a structured manuscript with research ques
 
 ## Frozen-phase policy
 Any new strike distance, target, stop, selection rule, regime filter, capital model or execution assumption must be introduced as a new phase and branch. Existing phase outputs are not overwritten.
+
+
+### Phase 10 current closure state
+- Computational robustness run 36971887518: **SUCCESS**.
+- 56 executable trades in the Phase 10 baseline.
+- Target sensitivity and single-factor cost sensitivity persisted.
+- Closure correction: full 4×3 slippage/brokerage Cartesian stress and market-context acquisition are now being executed before Phase 10 is frozen.
+- Official context sources include NSE historical India VIX, historical NIFTY/index data and FII/FPI/DII reports; these sources describe the available historical series and note that FII/FPI data are provisional. The context analysis will not create a new trading filter.
