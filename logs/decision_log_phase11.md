@@ -97,3 +97,12 @@ Results:
 Decision: treat call-wing ratios as a pre-specified Phase 5 research lead only. Do not promote them to trading. Freeze the candidate pair before additional robustness tests to avoid an expanding search.
 
 Full report: results/phase11_premium_combination_search.md; raw output: results/phase11_premium_combination_search.json.
+
+
+## 2026-10-02 — Robustness decision
+
+The premium search lead was frozen to two call-wing ratios before additional testing. Both ratios are algebraically close enough in this sample to produce identical 2026 classifications. Their expanding walk-forward accuracy is above 60%, but this is not sufficient evidence because the effect weakens materially after the September 2025 expiry-convention boundary and the final holdout remains 60%, below the 65% always-bearish baseline.
+
+Decision: retain as a research lead only. Next work must be replication/measurement robustness, not further unconstrained feature mining.
+
+Full report: results/phase11_robustness.md; raw output: results/phase11_robustness.json.
