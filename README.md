@@ -75,6 +75,6 @@ The leading research signal is a relative call-wing ratio: CE OTM6/OTM7 and CE O
 - [Full-chain analysis](scripts/phase12/analyze_full_chain.py)
 - [Manual workflow](.github/workflows/phase-12-full-chain-oi-direction.yml)
 
-**Phase 12 status:** The scope has been expanded from six pre-selected OTM premiums to the **complete available NIFTY option chain**, including all strikes, option premiums, open interest and volume at the exact 10:00 IST observation. Empirical execution is pending GitHub Actions. No trading translation is authorized.
+**Phase 12 status:** The scope has been expanded from six pre-selected OTM premiums to the **complete available NIFTY option chain**, including all strikes, option premiums, open interest and volume at the exact 10:00 IST observation. The first Actions execution failed before an empirical result was available; the workflow has now been hardened with step diagnostics and no pre-computation branch pushes. Empirical execution is pending a successful run. No trading translation is authorized.
 
 The primary TradeMarkk archive is being reused because it documents 1-minute NIFTY option records with strike, option type, OHLCV and open interest, while warning that far/illiquid strikes may be sparse. The phase will use ATM-relative surface features, OI walls/concentration, PCR/imbalance, volume and premium distributions, and regularized chronological models with permutation multiple-testing control.
