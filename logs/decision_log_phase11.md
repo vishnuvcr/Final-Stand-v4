@@ -22,3 +22,13 @@ User requested a separate research branch to test whether the following 4-DTE NI
 9. The inverse label mapping will be tested only as a diagnostic, not silently substituted for the user's primary rule.
 
 Hidden chain-of-thought is not stored. This log stores requirements and implementation decisions.
+
+
+## 2026-10-02 — Phase 1/2 protocol decisions
+
+1. **Primary 10:00 price:** use the 10:00:00 one-minute bar OPEN for options and NIFTY spot to prevent look-ahead from the rest of the 10:00 minute.
+2. **Four-DTE definition:** fourth distinct prior NIFTY trading session before each expiry.
+3. **Expiry outcome:** use the latest 1-minute NIFTY CLOSE on the expiry session as a provisional settlement proxy, pending official NSE settlement validation.
+4. **Missing-data treatment:** exact 10:00 snapshots are required for the six option legs and spot. No silent forward fill.
+5. **Event construction:** nearest listed strike to the 10:00 spot is used as ATM; the observed strike interval is inferred from the contemporaneous strike grid, and OTM6/7/8 are six/seven/eight intervals away on the appropriate side.
+6. **Research source plan:** cache candidate NIFTY option Parquet data from the identified Hugging Face dataset and NIFTY spot 1-minute files from the identified open GitHub dataset; cross-check selected events using an independent source before final claims.
