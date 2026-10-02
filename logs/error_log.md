@@ -96,3 +96,9 @@
 - This was a methodology-completeness error, not a numerical backtest failure. The runner was corrected to execute all 12 slippage×brokerage combinations and to persist \`results/phase10_cost_stress.csv\`.
 - The same audit found that market-context acquisition had not yet been executed. A provenance-preserving acquisition step was added for official NSE NIFTY 50/India VIX/FII-DII sources plus independent daily global/USDINR/gold validation sources.
 - No Phase 10 closure claim is accepted until the corrected workflow persists and remote-readback verifies the full outputs.
+
+
+### Phase 10 closure correction — 2026-10-02 (continued)
+- Added `scripts/phase10_context_join.py` and workflow execution step so the planned `results/phase10_market_context.csv` is actually produced when validated source files are available.
+- Context joins are lagged to the prior available daily observation; missing variables are left missing and reported through coverage flags.
+- No corporate/news regime filter is inferred when reproducible historical coverage is unavailable.
