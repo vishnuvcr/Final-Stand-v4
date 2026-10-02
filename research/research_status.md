@@ -179,3 +179,8 @@ The initial sample shows materially different observed aggregate P&L and tail-lo
 - Expiry identification now uses the historical contract expiry field and nearest-expiry test rather than assuming Tuesday across all 2025–2026 observations.
 - Primary costs use Paytm Money ₹10/order plus exchange, SEBI, stamp duty, STT, GST and 0.10-point adverse slippage.
 - No dynamic OTM8 re-centering or reversal is carried forward from V2/V3.
+
+## Phase 9 execution checkpoint — 2026-10-02
+- Run 36966020688: **REJECTED**. Unit tests passed, but the requested 2026 option file was absent at the pinned HF revision; no research outputs were accepted.
+- Run 36966241453: **CANCELLED** by the concurrency guard after the data-source correction commit; it produced no accepted outputs.
+- Current run 36966258307: **IN PROGRESS** with HF revision resolution fixed and exit-date cost accounting fixed.
