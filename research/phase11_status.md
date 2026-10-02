@@ -36,3 +36,8 @@ No Phase 11 numerical result has been accepted. The previous candidate-grid summ
 - Run 37035419480 completed the corrected computation with nonzero expiry-date validation/test partitions (11/12), but its final push was rejected because the remote branch advanced during the run.
 - The computed numbers remain unaccepted until the outputs are persisted and remotely read back.
 - The workflow commit/push stage has been hardened with repeated fetch/rebase/push attempts. The rerun is intended to reproduce the same frozen 16-candidate computation and archive the outputs.
+
+
+## Rerun trigger — 2026-10-03
+- The first persistence-hardening push-triggered run was cancelled by workflow concurrency before the computational job could complete.
+- No result is accepted from that run. The hardened workflow remains the execution path; a fresh push-triggered run is being initiated from the current branch head.
