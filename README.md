@@ -6,7 +6,7 @@
 - Phase 7 V4 double-sided OTM16/17: **COMPLETED / FROZEN**
 - Phase 8 option-data source recovery: **COMPLETED AS A SEPARATE RECOVERY TRACK**
 - Phase 9 credit-selected OTM6/7/8: **COMPLETED — reproducible archive verified 2026-10-02**
-- Phase 10 robustness/context analysis: **IN CLOSURE — computational robustness complete; Cartesian cost/context acquisition running**
+- Phase 10 robustness/context analysis: **IN CLOSURE — computational robustness complete; validated context fallback executing**
 
 ## Phase 7 V4 — Final Backtest Result
 Strategy:
@@ -134,3 +134,10 @@ Any new strike distance, target, stop, selection rule, regime filter, capital mo
 
 ### Phase 10 execution-control correction — 2026-10-02
 The closure workflow was blocked by a stale long-running Actions run because concurrency used `cancel-in-progress: false`. This was changed to `true` so the newest corrected closure execution can supersede stale runs. This changes execution control only; Phase 9/10 scientific parameters remain frozen.
+
+
+## Phase 10 closure correction — validated context fallback
+- The first successful closure run completed the full 4×3 slippage×brokerage grid and persisted the robustness outputs.
+- Remote readback showed that the first context join had no usable context columns because the acquired NSE/Stooq payloads did not parse into validated daily series.
+- A no-methodology-change correction now uses validated NSE/Nifty-Indices interfaces for NIFTY 50 and India VIX plus a public historical FII/DII archive. The corrected workflow caches normalized context inputs and applies the same prior-observation/no-look-ahead join.
+- No context variable is used as a new trading filter. Phase 10 remains open until the corrected workflow succeeds and its context outputs are remotely read back.
