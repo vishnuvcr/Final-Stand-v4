@@ -81,3 +81,7 @@ This status-only commit is an execution trigger for the configured push workflow
 
 ## Execution confirmation — 2026-10-02
 The user-provided GitHub Actions screen confirms that the Phase 10 push workflow is now being scheduled/executed. The newest corrected-closure run is shown as **Pending**, while an earlier Phase 10 closure run is shown **In progress**. This resolves the previous uncertainty about whether the push trigger fired. No output is accepted as final until the active run completes and the generated files are remotely read back.
+
+
+## Execution-control correction — 2026-10-02
+The active closure run had remained in progress while newer corrected runs were cancelled by the previous `cancel-in-progress: false` concurrency policy. The workflow was changed to `cancel-in-progress: true` so the newest corrected closure execution supersedes stale runs. This is an infrastructure-only correction; all scientific parameters and the stopping rule remain frozen. The status commit intentionally triggers the corrected workflow. Acceptance remains gated on successful tests, complete execution, persistence and remote readback.
