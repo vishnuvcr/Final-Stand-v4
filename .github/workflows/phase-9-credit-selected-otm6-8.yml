@@ -84,3 +84,5 @@ jobs:
           git fetch origin phase-9-credit-selected-otm6-8
           git rebase origin/phase-9-credit-selected-otm6-8
           git push origin HEAD:phase-9-credit-selected-otm6-8
+
+# Phase 9 persistence-trigger touch: workflow dispatch/push rerun path verified.
