@@ -147,8 +147,7 @@ def main() -> int:
                 "n": int(n),
                 "correct": int(correct),
                 "accuracy": float(correct / n) if n else None,
-                "exact_binomial_p_50": float(binomtest(correct, n, 0.5).pvalue) if n else None,
-                "development_n": int(sum((events["expiry_date"] < pd.Timestamp("2026-01-01").date()) & events["expiry_date"].astype(str).isin([x.split("|")[0] for x in full["event_id"]]))),
+                "exact_binomial_p_50": float(binomtest(correct, n, 0.5).pvalue) if n else None ,
             }
         summary["frozen_candidate_replication"] = replication
     else:
