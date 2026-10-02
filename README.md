@@ -1,6 +1,8 @@
 # Final Stand v4
 
 ## Research Status
+- Phase 8 option-data source recovery: **IN PROGRESS — SOURCE DISCOVERY COMPLETE; ACQUISITION PENDING**
+- [Phase 8 source audit](research/phase8_data_source_audit.md)
 - Phase 0–5 baseline research: **COMPLETED**
 - Phase 6 V3 static OTM8 reversal: **COMPLETED**
 - Phase 7 V4 double-sided OTM16/17: **COMPLETED**
@@ -70,3 +72,7 @@ The V2 and V3 baselines are preserved and are not overwritten by V4.
 
 ## Stopping rule
 Phase 7 is closed after specification, backtest, validation, descriptive/statistical analysis, error logging and manuscript documentation. Any new exit rule, strike-distance search, regime filter, capital model or parameter optimization requires a new phase/branch.
+
+
+## Phase 8 — Option Data Source Recovery
+The Phase 7 sample contains 49 skipped candidate expiries because required option observations were unavailable in the accepted source. Phase 8 is investigating independent sources before accepting that coverage limitation as final. No Phase 7 result has been changed yet.
