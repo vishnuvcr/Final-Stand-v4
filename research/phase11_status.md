@@ -16,3 +16,10 @@ Can NIFTY spot movement define a useful stop-loss trigger for the Phase 9 strate
 - 11.6 Synthesis and closure: PENDING
 
 No Phase 11 numerical result has been accepted. A directional-sign error was corrected before the rerun.
+
+
+## Latest execution audit — 2026-10-02
+- Run 37028523476 failed after approximately 24 minutes in the validation/test partitioning stage.
+- Unit tests passed (4/4); no numerical output was accepted or committed.
+- Root cause was candidate variable val shadowing the validation-date set. Corrected in commit f797baefe597969d2241971f6ea15095a92d911a.
+- A new workflow run is expected from the correction commit. Acceptance remains gated on successful completion, persisted outputs, and remote readback.
