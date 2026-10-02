@@ -53,3 +53,12 @@ Actions taken:
 9. Current decision: do not promote the directional predictor to trading translation; continue with Phase 5 robustness/falsification.
 
 Only decision summaries and user-visible requirements are recorded here; hidden chain-of-thought is not stored.
+
+
+## 2026-10-02 — Formal premium-combination search checkpoint
+
+User instruction: “Ok proceed”.
+
+Visible research action completed: the pending GitHub Actions search was allowed to finish rather than stopping at the preliminary screen. It evaluated 78 engineered premium features, all 63 non-empty raw-premium subsets, 156 threshold/mapping candidates, and a 5,000-permutation maximum-accuracy diagnostic. The leading threshold structures were CE OTM6/OTM7 and CE OTM6/OTM8 log-ratios, each 59.41% on 2024–2025 development and 60% (12/20) on the 2026 holdout. The selected subset logistic model had 50.38% development CV accuracy and 60% holdout accuracy. The multiple-testing permutation diagnostic was p=0.5118. These results are recorded as a research lead, not as a trading conclusion.
+
+The workflow's derived-result commit initially failed to push because the branch advanced concurrently. The result files were reconstructed from the completed workflow log and persisted directly to the branch. The workflow was then hardened with fetch/rebase/retry logic. Hidden chain-of-thought is not stored; this log records the user-visible research actions and decisions.
