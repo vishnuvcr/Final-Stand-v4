@@ -14,46 +14,38 @@ PRICE_COLS = [
 ]
 
 
-def ist_ts(value: str) -> pd.Timestamp:
-    ts = pd.Timestamp(value)
-    return ts.tz_localize(IST) if ts.tzinfo is None else ts.tz_convert(IST)
+def normalize_ts(series: pd.Series) -> pd.Series:
+    ts = pd.to_datetime(series, errors="coerce")
+    if ts.dt.tz is None:
+        return ts.dt.tz_localize(IST)
+    return ts.dt.tz_convert(IST)
 
 
-def load_secondary(root: Path) -> pd.DataFrame:
-    frames = []
-    for path in sorted((root / "options_secondary").glob("NIFTY_*.parquet")):
-        df = pd.read_parquet(path)
-        required = {"timestamp", "expiry", "strike", "option_type", "open"}
-        missing = required.difference(df.columns)
-        if missing:
-            raise ValueError(f"{path}: missing {sorted(missing)}")
-        df["ts"] = pd.to_datetime(df["timestamp"], errors="coerce")
-        if df["ts"].dt.tz is None:
-            df["ts"] = df["ts"].dt.tz_localize(IST)
-        else:
-            df["ts"] = df["ts"].dt.tz_convert(IST)
-        df["expiry_date"] = pd.to_datetime(df["expiry"], errors="coerce").dt.date
-        df["strike"] = pd.to_numeric(df["strike"], errors="coerce")
-        df["open"] = pd.to_numeric(df["open"], errors="coerce")
-        df["option_type"] = df["option_type"].astype(str).str.upper()
-        frames.append(df[["ts", "expiry_date", "strike", "option_type", "open"]].dropna())
-    if not frames:
-        raise FileNotFoundError("No secondary NIFTY option files found")
-    return pd.concat(frames, ignore_index=True)
+def audit_file(path: Path, events: pd.DataFrame) -> list[dict]:
+    # Stream one year at a time to avoid holding the multi-year secondary
+    # archive alongside the primary archive in memory.
+    df = pd.read_parquet(
+        path,
+        columns=["timestamp", "expiry", "strike", "option_type", "open"],
+    )
+    df["ts"] = normalize_ts(df["timestamp"])
+    df["expiry_date"] = pd.to_datetime(df["expiry"], errors="coerce").dt.date
+    df["strike"] = pd.to_numeric(df["strike"], errors="coerce")
+    df["open"] = pd.to_numeric(df["open"], errors="coerce")
+    df["option_type"] = df["option_type"].astype(str).str.upper()
+    df = df.dropna(subset=["ts", "expiry_date", "strike", "open"])
 
+    event_keys = set(zip(events["expiry_date"], events["observation_timestamp_ist"]))
+    df = df[df.apply(lambda r: (r["expiry_date"], r["ts"].isoformat()) in event_keys, axis=1)]
+    if df.empty:
+        return []
 
-def main() -> int:
-    root = Path("data_cache/phase11")
-    events = pd.read_csv("results/phase11_events.csv")
-    events["observation_date"] = pd.to_datetime(events["observation_date"]).dt.date
-    events["expiry_date"] = pd.to_datetime(events["expiry_date"]).dt.date
-    secondary = load_secondary(root)
-
-    eligible = events[events["observation_date"] >= pd.Timestamp("2024-10-01").date()].copy()
-    matched = []
-    for _, e in eligible.iterrows():
-        ts = ist_ts(e["observation_timestamp_ist"])
-        snap = secondary[(secondary["expiry_date"] == e["expiry_date"]) & (secondary["ts"] == ts)]
+    out = []
+    for _, e in events.iterrows():
+        snap = df[
+            (df["expiry_date"] == e["expiry_date"])
+            & (df["ts"] == pd.Timestamp(e["observation_timestamp_ist"]))
+        ]
         if snap.empty:
             continue
         diffs = []
@@ -71,7 +63,7 @@ def main() -> int:
                 "rel": abs(primary - secondary_price) / max(abs(primary), 1e-9),
             })
         if diffs:
-            matched.append({
+            out.append({
                 "expiry_date": str(e["expiry_date"]),
                 "observation_date": str(e["observation_date"]),
                 "matched_legs": len(diffs),
@@ -80,23 +72,39 @@ def main() -> int:
                 "median_abs_price_diff": float(np.median([d["abs"] for d in diffs])),
                 "mean_relative_price_diff": float(np.mean([d["rel"] for d in diffs])),
             })
+    return out
+
+
+def main() -> int:
+    root = Path("data_cache/phase11")
+    events = pd.read_csv("results/phase11_events.csv")
+    events["observation_date"] = pd.to_datetime(events["observation_date"]).dt.date
+    events["expiry_date"] = pd.to_datetime(events["expiry_date"]).dt.date
+    events = events[events["observation_date"] >= pd.Timestamp("2024-10-01").date()].copy()
+    events["observation_timestamp_ist"] = events["observation_timestamp_ist"].map(
+        lambda x: pd.Timestamp(x).isoformat()
+    )
+
+    matched = []
+    for path in sorted((root / "options_secondary").glob("NIFTY_*.parquet")):
+        matched.extend(audit_file(path, events))
 
     if matched:
         m = pd.DataFrame(matched)
         summary = {
-            "eligible_events": int(len(eligible)),
+            "eligible_events": int(len(events)),
             "events_with_any_secondary_match": int(len(m)),
-            "event_match_rate": float(len(m) / len(eligible)),
+            "event_match_rate": float(len(m) / len(events)),
             "mean_abs_price_diff": float(m["mean_abs_price_diff"].mean()),
             "median_abs_price_diff": float(m["median_abs_price_diff"].median()),
             "mean_relative_price_diff": float(m["mean_relative_price_diff"].mean()),
             "median_relative_price_diff": float(m["mean_relative_price_diff"].median()),
             "events_with_all_six_legs": int((m["matched_legs"] == 6).sum()),
-            "all_six_leg_rate_among_eligible": float((m["matched_legs"] == 6).mean()),
+            "all_six_leg_rate_among_matched": float((m["matched_legs"] == 6).mean()),
         }
     else:
         summary = {
-            "eligible_events": int(len(eligible)),
+            "eligible_events": int(len(events)),
             "events_with_any_secondary_match": 0,
             "event_match_rate": 0.0,
             "mean_abs_price_diff": None,
@@ -104,10 +112,12 @@ def main() -> int:
             "mean_relative_price_diff": None,
             "median_relative_price_diff": None,
             "events_with_all_six_legs": 0,
-            "all_six_leg_rate_among_eligible": 0.0,
+            "all_six_leg_rate_among_matched": 0.0,
         }
 
-    Path("results/phase11_cross_source_audit.json").write_text(json.dumps(summary, indent=2) + "\n")
+    Path("results/phase11_cross_source_audit.json").write_text(
+        json.dumps(summary, indent=2) + "\n"
+    )
     print(json.dumps(summary, indent=2))
     return 0
 
