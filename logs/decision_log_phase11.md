@@ -44,3 +44,12 @@ Hidden chain-of-thought is not stored. This log stores requirements and implemen
 ## 2026-10-02 — Acquisition gate decision
 
 The Phase 11 primary hypothesis requires point-in-time 10:00 option premiums. EOD option archives cannot answer it. Therefore no EOD-derived proxy, synthetic reconstruction, or unrelated prior backtest result will be used as a substitute. The research remains at the Phase 1 gate until the specified intraday data can actually be acquired and validated.
+
+
+## 2026-10-02 — Primary data-source decision
+
+TradeMarkk's `thetrademarkk/india-index-options-1m` is adopted as the current primary candidate because it exposes expiry-partitioned NIFTY 1-minute Parquet files plus a NIFTY 1-minute spot file, with IST timestamps and OHLCV+OI. Its documentation explicitly warns that far/illiquid strike coverage can be sparse. This is therefore a provisional source selection pending empirical coverage and cross-source price validation.
+
+The Rissin `nse-options-intraday` Upstox-derived archive is retained as an independent secondary source. OptionsData.shop, MoneyTicks, Shoonya/Cloud Trader Pro, Unfluke, Breeze, NSE, TrueData and GDFL remain documented alternatives.
+
+The primary event builder must use the TradeMarkk source without silently substituting the secondary source. Cross-source agreement will be assessed separately.
