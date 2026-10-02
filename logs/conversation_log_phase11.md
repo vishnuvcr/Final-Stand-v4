@@ -26,3 +26,12 @@ Specified mapping:
 
 ## Research-policy note
 Only decision summaries and research records are stored here; hidden chain-of-thought is not stored.
+
+
+## 2026-10-02 — Research progress checkpoint
+
+- Source review identified a primary intraday option candidate (Hugging Face) and an independent NIFTY 1-minute spot dataset (GitHub).
+- Implemented the predictor formula and exact user-specified directional mapping.
+- Implemented a 4-DTE event builder using the 10:00 bar OPEN to avoid look-ahead.
+- Added manual GitHub Actions validation/acquisition/build workflow.
+- No historical performance result has been generated yet.
