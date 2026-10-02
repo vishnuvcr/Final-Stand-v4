@@ -11,8 +11,10 @@ from urllib.request import Request, urlopen
 from huggingface_hub import hf_hub_download
 
 
-HF_DATASET = "rissin/nse-options-intraday"
-NIFTY_OPTION_TEMPLATE = "upstox_intraday/NIFTY/NIFTY_{year}.parquet"
+HF_DATASET_PRIMARY = "thetrademarkk/india-index-options-1m"
+HF_DATASET_SECONDARY = "rissin/nse-options-intraday"
+NIFTY_OPTION_TEMPLATE_PRIMARY = "options/NIFTY/{expiry}.parquet"
+NIFTY_OPTION_TEMPLATE_SECONDARY = "upstox_intraday/NIFTY/NIFTY_{year}.parquet"
 SPOT_BASE = "https://raw.githubusercontent.com/technovusin/nifty50-historical-data/main/nifty/1min"
 
 
@@ -31,20 +33,50 @@ def parse_years(value: str) -> list[int]:
     return sorted(set(years))
 
 
-def download_option_year(year: int, out_dir: Path, token: str | None) -> Path:
-    target = out_dir / "options" / f"NIFTY_{year}.parquet"
-    target.parent.mkdir(parents=True, exist_ok=True)
+def download_option_year(year: int, out_dir: Path, token: str | None) -> list[Path]:
+    saved: list[Path] = []
+    primary_dir = out_dir / "options_primary"
+    primary_dir.mkdir(parents=True, exist_ok=True)
+    # TradeMarkk stores one parquet per NIFTY expiry date. Select files whose
+    # expiry year matches the requested year; the repository directory is
+    # enumerated by the acquisition job before downloading.
+    from huggingface_hub import list_repo_files
+    files = list_repo_files(repo_id=HF_DATASET_PRIMARY, repo_type="dataset", token=token)
+    prefix = "options/NIFTY/"
+    expiry_files = [f for f in files if f.startswith(prefix) and f.endswith(".parquet")
+                    and f"{year}-" in f]
+    if not expiry_files:
+        raise RuntimeError(f"No TradeMarkk NIFTY expiry files found for {year}")
+    for filename in expiry_files:
+        downloaded = hf_hub_download(
+            repo_id=HF_DATASET_PRIMARY,
+            filename=filename,
+            repo_type="dataset",
+            token=token,
+            local_dir=str(out_dir / "hf_primary"),
+        )
+        src = Path(downloaded)
+        target = primary_dir / Path(filename).name
+        if src.resolve() != target.resolve():
+            target.write_bytes(src.read_bytes())
+        saved.append(target)
+
+    # Keep the original Upstox-derived source available as an independent
+    # cross-check, not as an implicit replacement for the primary source.
+    secondary_target = out_dir / "options_secondary" / f"NIFTY_{year}.parquet"
+    secondary_target.parent.mkdir(parents=True, exist_ok=True)
     downloaded = hf_hub_download(
-        repo_id=HF_DATASET,
-        filename=NIFTY_OPTION_TEMPLATE.format(year=year),
+        repo_id=HF_DATASET_SECONDARY,
+        filename=NIFTY_OPTION_TEMPLATE_SECONDARY.format(year=year),
         repo_type="dataset",
         token=token,
-        local_dir=str(out_dir / "hf"),
+        local_dir=str(out_dir / "hf_secondary"),
     )
-    source = Path(downloaded)
-    if source.resolve() != target.resolve():
-        target.write_bytes(source.read_bytes())
-    return target
+    src = Path(downloaded)
+    if src.resolve() != secondary_target.resolve():
+        secondary_target.write_bytes(src.read_bytes())
+    saved.append(secondary_target)
+    return saved
 
 
 def download_url(url: str, target: Path) -> bool:
