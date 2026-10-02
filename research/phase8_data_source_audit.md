@@ -76,3 +76,35 @@ Phase 8A — source discovery: COMPLETE
 Phase 8B — source acquisition: NOT STARTED
 
 No Phase 7 result has been changed by this audit.
+## Phase 8B source acquisition assessment — 2026-10-02
+
+### Public source result
+The public TradeMarkk/Hugging Face route was implemented as an isolated recovery workflow, but the workflow result is not accessible through the connected GitHub Actions interface in this session. No recovered trade is therefore accepted on the basis of an unverified run.
+
+### Strongest complete archive identified
+OptionsData.shop currently advertises NIFTY 1-minute full-chain history with every strike and expiry, including expired contracts, through September 2026. Its published archive description states that the data are contract-level OHLC, volume and open interest in Parquet, with NIFTY options covering June 2021 through September 2026. It also states that the archive is derived from the ICICI Breeze API.
+
+Web evidence:
+- NIFTY 1-minute full chain: https://optionsdata.shop/data/nifty-options-historical-data
+- Expired option contracts: https://optionsdata.shop/data/expired-option-contracts-data
+- 2025 pack: https://optionsdata.shop/packs/nifty-options-1-minute-2025
+- 2026 last-three-month pack: https://optionsdata.shop/packs/nifty-options-1-minute-last-3-months
+
+### Independent API route
+ICICI Direct's official Breeze documentation confirms that historical NFO options can be requested at 1-minute resolution by expiry date, option right and strike price. The documented API limit is 100 calls/minute and 5,000 calls/day.
+
+Web evidence:
+- https://api.icicidirect.com/breezeapi/documents/index.html
+
+### Acquisition blocker
+No ICICI Breeze credentials or purchased commercial archive are available to this session. Therefore Phase 8 cannot legitimately claim recovery of the 49 skipped trades yet.
+
+### Decision
+Do not alter the Phase 7 accepted ledger.
+Do not impute missing prices.
+Do not claim public-source recovery without a verifiable CI result.
+The next executable recovery route is either:
+1. provide/use an authorized Breeze API credential through a secure repository secret, or
+2. acquire the relevant OptionsData.shop archive and place it in the repository's protected/cached data workflow.
+
+Phase 8 remains open until acquisition and validation are completed.
