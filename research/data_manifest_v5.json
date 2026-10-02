@@ -2,7 +2,7 @@
   "strategy": "V5_credit_selected_otm6_8",
   "option_source": {
     "repo_id": "rissin/nse-options-intraday",
-    "revision": "78b1c54",
+    "revision": "main (resolved to dataset commit SHA at runtime and recorded in data-quality output)",
     "files": [
       "upstox_intraday/NIFTY/NIFTY_2025.parquet",
       "upstox_intraday/NIFTY/NIFTY_2026.parquet"
