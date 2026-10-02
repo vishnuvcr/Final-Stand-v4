@@ -83,3 +83,10 @@
 - The workflow created output commit d03d7a1 and successfully pushed it to phase-9-credit-selected-otm6-8 after fetch/rebase.
 - All 11 expected Phase 9 result files are now present on the remote branch and were re-read successfully, closing the persistence error.
 - Preventive rule retained: numerical outputs are not accepted until both the workflow persistence step and remote file readback succeed.
+
+
+## Phase 10 initialization — 2026-10-02
+- Phase 10 was opened on separate branch phase-10-v5-robustness-context so Phase 9 remains frozen.
+- Plan, source register, status file, robustness runner, tests and manual workflow were committed.
+- Initial GitHub Actions discovery for the new branch returned no workflow run. The connected GitHub interface does not expose workflow-dispatch POST, so no unverified computation is being claimed.
+- Preventive rule: do not mark Phase 10 computational outputs complete until a workflow run passes tests, executes the runner, persists outputs and remote readback succeeds.
