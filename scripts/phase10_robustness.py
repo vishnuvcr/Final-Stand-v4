@@ -51,35 +51,34 @@ target_rows = []
 cost_rows = []
 selection_rows = []
 
+# Run each target scenario once. The 90%/0.10/₹10 case is retained as the
+# baseline data set for temporal/path-risk analysis.
+target_frames = {}
 for target in TARGETS:
     df = run_case(target, 0.10, 10.0, "target_grid")
+    target_frames[target] = df.copy()
     s = summarize(df)
     s["target_fraction"] = target
     target_rows.append(s)
 
+# Slippage requires a fresh execution because slippage changes executable
+# prices and therefore can change target triggering. Brokerage does not affect
+# target triggering or path prices, so ₹20/₹40 are derived from the ₹10 ledger
+# by adjusting brokerage plus its GST component.
+slippage_frames = {}
 for slippage in SLIPPAGES:
-    df = run_case(0.90, slippage, 10.0, "slippage_grid")
-    s = summarize(df)
-    s["slippage_points"] = slippage
-    s["brokerage_per_order"] = 10.0
-    cost_rows.append(s)
+    df = run_case(0.90, slippage, 10.0, "cost_cartesian")
+    slippage_frames[slippage] = df.copy()
 
-for brokerage in BROKERAGES:
-    df = run_case(0.90, 0.10, brokerage, "brokerage_grid")
-    s = summarize(df)
-    s["slippage_points"] = 0.10
-    s["brokerage_per_order"] = brokerage
-    cost_rows.append(s)
-
-# Full Cartesian execution-cost stress: 4 slippage x 3 brokerage scenarios.
-for slippage in SLIPPAGES:
+for slippage, df10 in slippage_frames.items():
     for brokerage in BROKERAGES:
-        df = run_case(0.90, slippage, brokerage, "cost_cartesian")
+        df = df10.copy()
+        delta = (float(brokerage) - 10.0) * (1.0 + 0.18) * df["orders"].astype(float)
+        df["net_pnl"] = df10["net_pnl"].astype(float) - delta
         s = summarize(df)
         s["slippage_points"] = slippage
         s["brokerage_per_order"] = brokerage
         cost_rows.append(s)
-
 pd.DataFrame(target_rows).to_csv(OUT / "phase10_target_sensitivity.csv", index=False)
 pd.DataFrame(cost_rows).drop_duplicates(
     subset=["slippage_points", "brokerage_per_order"]
