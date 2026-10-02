@@ -33,4 +33,4 @@ This repository records the agreed research specification and implementation dec
 - [Conversation/decision summary](logs/conversation_log_phase11.md)
 - [Manual workflow](.github/workflows/phase-11-premium-direction-predictor.yml)
 
-**Phase 11 status:** protocol initialized; literature review started; historical 10:00 option data not yet acquired or tested.
+**Phase 11 status:** multi-source 1-minute acquisition pipeline enabled; TradeMarkk NIFTY archive is the provisional primary source, with Rissin/Upstox retained for independent cross-checking. Event data and predictive results are still pending successful GitHub Actions execution.
