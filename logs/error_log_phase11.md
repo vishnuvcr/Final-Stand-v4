@@ -21,3 +21,9 @@
 - This is an environment/network limitation, not a detected research-code failure.
 - The same tests are wired into the Phase 11 GitHub Actions workflow, where validation is intended to run.
 - No market-data result was generated or inferred from the failed local execution.
+
+
+## 2026-10-02 — Tooling/editing mistake
+
+- One early attempt to write the acquisition/build code failed due to an unescaped template/interpolation token in the orchestration script; no repository file was corrupted by that attempt.
+- The write was corrected and the intended files were committed successfully.
