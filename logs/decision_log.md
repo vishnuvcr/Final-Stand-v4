@@ -28,3 +28,22 @@ Branching decision: V4 is isolated on phase-7-double-sided-otm16-17 and does not
 
 ## 2026-10-02 — V4 backtest conclusion
 The accepted GitHub Actions rerun completed successfully. The final sample contains 43 complete four-leg trades from 92 candidate expiries. Net P&L after modeled costs is INR 84,698.69. All 43 terminal results are positive, but all 43 trades experienced negative intratrade gross MTM; the worst observed gross MTM trough is -INR 24,394.50. The phase is closed with the result interpretation and manuscript committed on the phase-7 branch. Further parameter/exit exploration requires a new phase.
+
+
+## 2026-10-02 — Strategy V5 credit-selected OTM6/7/8
+User requested:
+1. Put: buy OTM6 PE, sell OTM7 PE, sell OTM8 PE.
+2. Call: buy OTM6 CE, sell OTM7 CE, sell OTM8 CE.
+3. At 4 DTE and 10:00, compute both credits and trade the side with the higher credit.
+4. Exit near the payoff flatline if reached; otherwise exit at expiry.
+5. Find a stop-loss criterion.
+
+Frozen implementation decisions for this phase:
+- Entry is the fourth prior trading session before the actual nearest listed expiry.
+- OTM levels use the 50-point NIFTY strike grid and the nearest-50-point ATM rule, with midpoint ties rounded upward.
+- Both side credits must be observable at 10:00; non-positive winning credit is not treated as a credit trade.
+- Primary target is 90% of the post-entry-slippage credit flatline.
+- Stop grid is 0, 0.50, 0.75, 1.00, 1.25 and 1.50 times initial net credit.
+- Target/stop triggers are detected on minute closes and executed on the first common next-minute option-bar open.
+- Expiry fallback remains the 15:29 IST option-bar open.
+- The stop is selected only on a chronological validation segment; the final 20% of trades is held untouched.
