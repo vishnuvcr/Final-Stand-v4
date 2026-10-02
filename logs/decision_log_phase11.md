@@ -67,3 +67,18 @@ Evidence:
 - Independent source audit: 81/82 eligible overlapping events matched, with all six legs present for all matched events and mean relative price difference 0.3045%.
 
 Decision: treat the Pearson relationship as exploratory/non-robust. Continue to Phase 5 robustness/falsification; do not construct a live or historical trading strategy from this predictor yet.
+
+
+## 2026-10-02 — Premium-combination search initiated
+
+The next hypothesis tests whether the information content is concentrated in a single option premium or in relative/combined premium structure rather than the original call-vs-put score.
+
+Preliminary development/holdout screening on the committed 121-event table found:
+- CE OTM6 / CE OTM7 median-threshold signal: 59.4% development accuracy, 60.0% (12/20) 2026 holdout.
+- CE OTM6 / CE OTM8: 59.4% development, 60.0% holdout.
+- CE OTM7 / CE OTM8: 57.4% development, 60.0% holdout.
+- CE OTM7 / PE OTM8: 57.4% development, 60.0% holdout.
+
+These are screening observations only. 12/20 has a two-sided exact binomial p-value around 0.50, and many candidate formulas are being searched, so no predictive edge is claimed. The formal multi-premium search in GitHub Actions will apply development-only model selection, chronological 2026 holdout testing, and a multiple-testing diagnostic.
+
+Literature review supports testing option-implied skew/relative-premium structures rather than only raw premiums: published research reports predictive information in IV skew/spreads and option-implied state-price measures, while also showing that predictive effects depend on horizon and construction. citeturn0search0turn0search5turn0search13
