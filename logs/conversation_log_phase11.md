@@ -35,3 +35,21 @@ Only decision summaries and research records are stored here; hidden chain-of-th
 - Implemented a 4-DTE event builder using the 10:00 bar OPEN to avoid look-ahead.
 - Added manual GitHub Actions validation/acquisition/build workflow.
 - No historical performance result has been generated yet.
+
+
+## 2026-10-02 — Workflow execution and empirical checkpoint
+
+User instructed: “Ok proceed” and supplied a GitHub Actions screenshot showing repeated failed Phase 11 runs.
+
+Actions taken:
+1. Accessed the actual Phase 11 check-run/job logs rather than relying on the screenshot alone.
+2. Diagnosed and fixed the initial `ModuleNotFoundError: No module named 'scripts'`.
+3. Confirmed 8/8 unit tests passed after adding Python package markers and `PYTHONPATH`.
+4. Diagnosed and fixed the invalid Actions cache key containing commas.
+5. Successfully acquired the TradeMarkk primary archive plus Rissin/Upstox secondary archive and built 121 valid events from 132 expiry candidates.
+6. Ran the primary statistical analysis and chronological 2026 holdout.
+7. Added an independent secondary-source audit. The first implementation caused runner shutdown through excessive memory usage; the audit was rewritten as a streaming/vectorized year-by-year comparison.
+8. Final successful Phase 11 workflow run completed acquisition, reused the event dataset, completed the independent source audit, completed statistical analysis, and committed outputs.
+9. Current decision: do not promote the directional predictor to trading translation; continue with Phase 5 robustness/falsification.
+
+Only decision summaries and user-visible requirements are recorded here; hidden chain-of-thought is not stored.
