@@ -44,8 +44,8 @@ def patched_source():
     new="""        if SPOT_STOP_KIND != 'none' and pd.notna(spot_barrier):
             sr=spot.loc[spot.timestamp==t,'close']
             if len(sr):
-                current_spot=float(sr.iloc[0])
-                adverse=(current_spot <= spot_barrier) if side=='PUT' else (current_spot >= spot_barrier)
+                bar=spot.loc[spot.timestamp==t].iloc[0]
+                adverse=(float(bar['low']) <= spot_barrier) if side=='PUT' else (float(bar['high']) >= spot_barrier)
                 if adverse:
                     trigger=t; trigger_type='spot_stop'; trigger_value=m; break
         if m>=target_rupees:
