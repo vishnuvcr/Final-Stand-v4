@@ -84,3 +84,18 @@ The Phase 7 sample contains 49 skipped candidate expiries because required optio
 - [HF recovery summary](results/strategy_v4_recovery_summary_hf.json)
 - [HF recovery errors](results/strategy_v4_recovery_errors_hf.json)
 - [HF recovery workflow](.github/workflows/phase-8-hf-recovery.yml)
+
+
+## Phase 9 — Credit-Selected OTM6/7/8
+- **Status: IN PROGRESS** on branch `phase-9-credit-selected-otm6-8`.
+- New rule: calculate `OTM7 + OTM8 - OTM6` for both put and call structures at 10:00, then select the higher positive credit.
+- Primary profit target: 90% of the initial net-credit flatline.
+- Stop-loss candidates: 0.50×, 0.75×, 1.00×, 1.25×, 1.50× of the initial net credit plus no-stop baseline.
+- Stop-loss selection is chronological: development 60%, validation 20%, untouched test 20%.
+- Historical expiry dates are derived from the option contract data, so the 2025 Thursday-to-Tuesday NIFTY expiry transition is not hard-coded.
+- [V5 specification](research/strategy_spec_v5_credit_selected.md)
+- [V5 research plan](research/research_plan_v5_credit_selected.md)
+- [V5 data manifest](research/data_manifest_v5.json)
+- [V5 backtest engine](scripts/backtest_v5_credit_selected.py)
+- [V5 stop/analysis engine](scripts/select_v5_stop_and_analyze.py)
+- [V5 workflow](.github/workflows/phase-9-credit-selected-otm6-8.yml)
