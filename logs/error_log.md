@@ -77,3 +77,9 @@
 - The engine was corrected to resolve the current dataset commit SHA from HF at runtime, then download both annual files at that same resolved revision. The resolved SHA is recorded in the output provenance.
 - During the same audit, exit transaction charges were found to be using the entry date. The engine was corrected so exit fees use the actual exit timestamp/date, which matters for the March/April 2026 fee-rate changes.
 - Preventive rule: a source revision is not accepted merely because a prior README mentioned it; the exact requested file paths must be validated at runtime.
+
+## Phase 9 result-persistence error — 2026-10-02
+- Run 36966258307 completed the full Phase 9 computation and generated 11 result files in the runner workspace.
+- The workflow's final git push failed with a non-fast-forward rejection because the remote phase branch had advanced after checkout.
+- The generated numerical outputs were therefore not persisted to the repository. No numbers from this run should be treated as reproducibly archived until the persistence rerun succeeds.
+- Workflow correction committed: rebase the runner branch against origin/phase-9-credit-selected-otm6-8 before pushing.
