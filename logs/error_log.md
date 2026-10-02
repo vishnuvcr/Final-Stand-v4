@@ -179,3 +179,11 @@
 - For +1 CE(OTM6) - 1 CE(OTM7) - 1 CE(OTM8), the payoff above all strikes has negative slope with respect to spot, so a sufficiently upward spot move is adverse.
 - The Phase 11 engine, research plan and unit tests were corrected before accepting any numerical output. The cancelled run therefore produces no accepted Phase 11 result.
 - Preventive rule: derive stop direction from the actual piecewise payoff of each multi-leg structure and unit-test the sign before execution; do not infer direction from a generic “short-option exposure” label.
+
+
+### Phase 11 validation-date variable shadowing error — 2026-10-02
+- Corrected run 37028523476 passed all four Phase 11 unit tests but failed during post-grid validation/test partitioning.
+- Root cause: the loop variable val for candidate barrier values overwrote the val set containing validation dates. The subsequent DataFrame.isin() call therefore received the final numeric ATR candidate instead of a date collection.
+- No Phase 11 numerical result was accepted or committed from this failed run.
+- Corrected by renaming the date sets to dev_dates, val_dates, and test_dates and using those names explicitly throughout partitioning and summary generation.
+- Preventive rule: use distinct names for candidate parameter values and dataset split collections; add a unit/integration assertion that development/validation/test split objects are list/set-like before isin().
