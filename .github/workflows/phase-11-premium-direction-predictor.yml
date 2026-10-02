@@ -76,7 +76,7 @@ jobs:
           python scripts/phase11/acquire.py --years "${{ inputs.years || '2024,2025,2026' }}" --output data_cache/phase11
 
       - name: Build Phase 11 event dataset
-        if: inputs.action == 'build' || github.event_name == 'push'
+        if: inputs.action == 'build' || (github.event_name == 'push' && hashFiles('results/phase11_events.csv') == '')
         run: |
           python scripts/phase11/build_events.py --input data_cache/phase11 --output results/phase11_events.csv
 
