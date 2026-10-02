@@ -55,3 +55,10 @@ No historical event dataset has yet been executed or validated in this branch. T
 ## Research-completion rule
 
 The study stops after the defined Phase 7 package. Conclusions will distinguish statistical evidence, economic magnitude, and data-quality uncertainty.
+
+
+## 2026-10-02 — Expanded source search
+
+A broad public-web search identified multiple independent 1-minute NIFTY option sources. Strong candidates now include OptionsData.shop, Unfluke, ICICI Direct Breeze pipelines, Shoonya/Cloud Trader Pro, MoneyTicks, and community archives; institutional candidates include NSE snapshot feeds, TrueData and Global Datafeeds. Broker APIs including Zerodha, Upstox, Angel One and DhanHQ were also catalogued with their expired-contract limitations. Full inventory: research/phase11/source_inventory.md.
+
+Next gate: acquire and sample-audit at least two independent sources before selecting the Phase 11 primary dataset. Required checks are exact 10:00 IST coverage, expired contracts, CE/PE strikes, timestamp semantics, duplicates/missing bars, and cross-source price agreement.
