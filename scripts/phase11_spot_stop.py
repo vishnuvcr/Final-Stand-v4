@@ -90,10 +90,10 @@ def main():
         run_meta.append((label,kind,val,df))
     # JSON lists are easiest read directly.
     meta=json.loads((ROOT/"results"/"strategy_v5_selection_meta.json").read_text())
-    dev=set(pd.to_datetime(meta["development_dates"]).date); val=set(pd.to_datetime(meta["validation_dates"]).date); test=set(pd.to_datetime(meta["test_dates"]).date)
+    dev_dates=set(pd.to_datetime(meta["development_dates"]).date); val_dates=set(pd.to_datetime(meta["validation_dates"]).date); test_dates=set(pd.to_datetime(meta["test_dates"]).date)
     rows=[]
     for label,kind,val,df in run_meta:
-        d=df[df.entry_date.isin(dev)]; v=df[df.entry_date.isin(val)]; t=df[df.entry_date.isin(test)]
+        d=df[df.entry_date.isin(dev_dates)]; v=df[df.entry_date.isin(val_dates)]; t=df[df.entry_date.isin(test_dates)]
         m=metrics(v); tm=metrics(t)
         rows.append({"label":label,"kind":kind,"value":val,**{f"validation_{k}":v for k,v in m.items()},**{f"test_{k}":v for k,v in tm.items()}})
     grid=pd.DataFrame(rows)
@@ -105,16 +105,16 @@ def main():
     selected=grid[grid.label==chosen_label].copy()
     selected.to_csv(OUT/"phase11_validation_selection.csv",index=False)
     final_df=next(df for label,kind,val,df in run_meta if label==chosen_label)
-    test_df=final_df[final_df.entry_date.isin(test)].copy()
+    test_df=final_df[final_df.entry_date.isin(test_dates)].copy()
     test_df.to_csv(OUT/"phase11_test_trades.csv",index=False)
     summary={"chosen_label":chosen_label,"chosen_kind":chosen_kind,"chosen_value":chosen_value,
              "selection_rule":"validation mean net P&L; tie-break median net P&L then max drawdown",
-             "validation":metrics(final_df[final_df.entry_date.isin(val)]),"untouched_test":metrics(test_df),
+             "validation":metrics(final_df[final_df.entry_date.isin(val_dates)]),"untouched_test":metrics(test_df),
              "candidate_count":len(CANDIDATES),"control_no_spot_stop":"Phase 9 0x/no-stop remains the frozen control",
              "note":"No candidate was selected using the untouched test."}
     (OUT/"phase11_final_summary.json").write_text(json.dumps(summary,indent=2,default=str))
     quality={"candidate_families":{"fixed_points":[50,75,100,125,150,200],"percent":[0.0025,0.004,0.005,0.0075,0.01],"atr":[0.5,0.75,1,1.25,1.5]},
-             "target_fraction":0.90,"development_n":len(dev),"validation_n":len(val),"test_n":len(test),"completed_candidates":len(CANDIDATES)}
+             "target_fraction":0.90,"development_n":len(dev_dates),"validation_n":len(val_dates),"test_n":len(test_dates),"completed_candidates":len(CANDIDATES)}
     (OUT/"phase11_data_quality.json").write_text(json.dumps(quality,indent=2))
     print(json.dumps(summary,indent=2,default=str))
 
