@@ -57,3 +57,9 @@
 ## Phase 8B recovery execution — 2026-10-02
 - Added targeted recovery against the independent public TradeMarkk/Hugging Face NIFTY expiry-file dataset.
 - Recovery outputs are intentionally separate from Phase 7 and will not be merged until contract/timestamp validation passes.
+
+## Phase 8B acquisition/access limitation — 2026-10-02
+- The connected GitHub interface does not expose workflow dispatch/readback sufficiently to verify the newly created recovery workflow result.
+- No recovered trades were accepted from an unverified workflow.
+- Public web research identified a complete commercial NIFTY 1-minute full-chain archive through Sep-2026 and official ICICI Breeze contract-level historical API documentation, but no authorized credentials/archive are available in the current session.
+- Preventive rule: never manufacture a recovery result or silently replace Phase 7 observations.
