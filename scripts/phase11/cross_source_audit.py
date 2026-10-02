@@ -52,6 +52,7 @@ def audit_file(path: Path, events: pd.DataFrame) -> list[dict]:
                 "option_type": typ,
                 "strike": strike,
                 "primary_price": float(e[col]),
+                "feature": col,
                 "event_id": f"{e['expiry_date']}|{e['observation_timestamp_ist']}",
             })
     targets = pd.DataFrame(targets)
@@ -69,24 +70,10 @@ def audit_file(path: Path, events: pd.DataFrame) -> list[dict]:
         valid = g.dropna(subset=["open"])
         if valid.empty:
             continue
-        price_map = {}
-        for _, row in valid.iterrows():
-            key = ("ce_otm" if row["option_type"] == "CE" else "pe_otm") + str(
-                int(round(abs(float(row["strike"]) - float(row["strike"])))) if False else ""
-            )
-        # Recover OTM index from the event's primary strike geometry. The merge
-        # contains exactly the six target contracts, so map by option type and
-        # distance from ATM using the original target table.
-        for _, row in valid.iterrows():
-            typ = str(row["option_type"]).upper()
-            dist = None
-            for _, t in targets[targets["event_id"] == event_id].iterrows():
-                if str(t["option_type"]).upper() == typ and abs(float(t["strike"]) - float(row["strike"])) < 1e-9:
-                    dist = int(round(abs(float(t["strike"]) - float(events.loc[events["expiry_date"].astype(str).eq(event_id.split("|")[0]), "atm_strike"].iloc[0])) / float(events.loc[events["expiry_date"].astype(str).eq(event_id.split("|")[0]), "strike_interval"].iloc[0])))
-                    break
-            if dist in (6, 7, 8):
-                price_map[("ce" if typ == "CE" else "pe") + "_otm" + str(dist)] = float(row["open"])
-
+        price_map = {
+            str(row["feature"]): float(row["open"])
+            for _, row in valid.iterrows()
+        }
         out.append({
             "event_id": event_id,
             "matched_legs": int(len(valid)),
