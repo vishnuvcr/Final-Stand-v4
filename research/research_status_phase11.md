@@ -157,3 +157,7 @@ The two pre-specified call-wing ratio candidates (CE OTM6/OTM7 and CE OTM6/OTM8 
 - 2026 exact binomial p=0.5034; the always-bearish holdout baseline is 65%.
 
 The apparent historical walk-forward signal therefore deteriorates around the expiry-convention regime boundary and does not improve the final holdout baseline. Continue Phase 5 only with independent-source replication, liquidity/quote robustness, timestamp sensitivity, and placebo/multiple-testing controls. No trading translation.
+
+
+### Single-premium result
+The six raw premiums were also screened individually using development-only median thresholds with both directional mappings. On the 2026 holdout, the call premiums reached 55% (11/20) under their better mapping, while the put premiums reached 50% (10/20). Therefore no individual premium is supported as a standalone direction predictor.
