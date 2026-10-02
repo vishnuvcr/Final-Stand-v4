@@ -1,7 +1,7 @@
 # Phase 10 Status
 
 ## Phase state
-**EXECUTION TRIGGERED — awaiting GitHub Actions**
+**ROBUSTNESS RUN COMPLETED; COST/CONTEXT CLOSURE RUN TRIGGERED**
 
 ## Step 10.1 — Plan and source register
 **COMPLETED**
@@ -14,14 +14,14 @@
 - Phase 9 strategy definition remains unchanged.
 
 ## Step 10.3 — Robustness grid
-**RUNNING / PENDING WORKFLOW RESULT**
+**COMPUTED; Cartesian cost closure pending workflow persistence**
 - Targets: 85%, 90%, 95%, 100%.
 - Slippage: 0.00, 0.10, 0.25, 0.50.
 - Brokerage stress: ₹10, ₹20, ₹40 per order.
 - Date-aware exchange/tax costs retained.
 
 ## Step 10.4 — Temporal/structural stability
-**PENDING WORKFLOW RESULT**
+**COMPUTED; final statistical synthesis pending**
 - Yearly/quarterly results.
 - Call/put selection.
 - Selection-margin distribution.
@@ -34,7 +34,7 @@
 - Capital-at-risk descriptors.
 
 ## Step 10.6 — Market-context analysis
-**PENDING**
+**RUNNING IN CLOSURE WORKFLOW**
 - India VIX.
 - NIFTY realized volatility.
 - FII/FPI and DII.
@@ -44,7 +44,7 @@
 - Corporate/news event indicators if reproducibly available.
 
 ## Step 10.7 — Statistical synthesis
-**PENDING**
+**PENDING FINAL READBACK**
 
 ## Step 10.8 — Persistence and closure
 **PENDING**
@@ -57,3 +57,7 @@ Phase 10 ends after the predefined analyses are executed once and documented. Ne
 
 ## Step 10.3 — computational robustness
 **COMPLETED** in GitHub Actions.
+
+
+## Step 10.3/10.4/10.5 closure correction
+The first computational run completed successfully, but review identified that the promised full 4x3 slippage-by-brokerage Cartesian grid had not been persisted and market-context acquisition was still pending. These are being completed before Phase 10 closure.
