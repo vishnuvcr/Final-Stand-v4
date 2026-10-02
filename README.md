@@ -33,4 +33,16 @@ This repository records the agreed research specification and implementation dec
 - [Conversation/decision summary](logs/conversation_log_phase11.md)
 - [Manual workflow](.github/workflows/phase-11-premium-direction-predictor.yml)
 
-**Phase 11 status:** multi-source 1-minute acquisition pipeline enabled; TradeMarkk NIFTY archive is the provisional primary source, with Rissin/Upstox retained for independent cross-checking. Event data and predictive results are still pending successful GitHub Actions execution.
+**Phase 11 status:** Phase 3/4 completed; Phase 5 robustness/falsification in progress. 121 valid events were tested. Primary directional accuracy is 50.41% (61/121); 2026 holdout accuracy is 45.0% (9/20). No trading translation has been authorized.
+
+
+### Phase 11 current results
+- [Statistical analysis](results/phase11_statistical_analysis.md)
+- [Statistical analysis JSON](results/phase11_statistical_analysis.json)
+- [Independent source audit](results/phase11_cross_source_audit.json)
+- [Event dataset](results/phase11_events.csv)
+- [Research status](research/research_status_phase11.md)
+- [Decision log](logs/decision_log_phase11.md)
+- [Error log](logs/error_log_phase11.md)
+
+**Current scientific inference:** the pre-specified premium-direction mapping does not demonstrate stable out-of-sample directional predictive power. The isolated overall Pearson spread/return association is treated as exploratory because it is not supported by the rank/logistic tests or the 2026 chronological holdout. Phase 5 robustness/falsification remains before any trading translation.
