@@ -1,0 +1,47 @@
+name: Phase 11 - NIFTY Spot Stop-Loss
+on:
+  workflow_dispatch:
+  push:
+    branches: ["phase-11-nifty-spot-stop"]
+permissions:
+  contents: write
+concurrency:
+  group: phase11-nifty-spot-stop
+  cancel-in-progress: true
+jobs:
+  phase11:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Tests
+        run: python -m pytest -q tests/test_phase11_spot_stop.py
+      - name: Run Phase 11 spot-stop grid
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python scripts/phase11_spot_stop.py
+      - name: Update status
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path("research/phase11_status.md")
+          s=p.read_text()
+          s=s.replace("State: **PLANNED / IMPLEMENTATION STARTED**","State: **COMPUTATION COMPLETED / PERSISTENCE IN PROGRESS**")
+          s=s.replace("11.2 Data audit: PENDING","11.2 Data audit: COMPLETED")
+          s=s.replace("11.3 Candidate grid: PENDING","11.3 Candidate grid: COMPLETED")
+          s=s.replace("11.4 Validation selection: PENDING","11.4 Validation selection: COMPLETED")
+          s=s.replace("11.5 Untouched test: PENDING","11.5 Untouched test: COMPLETED")
+          s=s.replace("11.6 Synthesis and closure: PENDING","11.6 Synthesis and closure: PENDING")
+          p.write_text(s)
+          PY
+      - name: Commit outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase11* research/phase11_status.md
+          git diff --cached --quiet || git commit -m "Phase 11: persist NIFTY spot stop results"
+          git push
