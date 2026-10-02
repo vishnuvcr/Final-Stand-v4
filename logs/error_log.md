@@ -77,8 +77,9 @@
 - The generated numerical outputs were therefore not persisted to the repository. No numbers from this run should be treated as reproducibly archived until the persistence rerun succeeds.
 - Workflow correction committed: the Phase 9 commit step now fetches and rebases against origin/phase-9-credit-selected-otm6-8 before pushing.
 
-## Phase 9 persistence-trigger limitation — 2026-10-02
-- The connected GitHub integration exposes workflow reads and reruns but does not expose the workflow-dispatch POST action.
-- A branch-ref update to commit e307247ce41eba53448f884802a26860b5d36f0c was attempted after touching the workflow file, but the new commit has no Actions check run; therefore the persistence rerun cannot be claimed as started.
-- The scientific result remains usable as an empirical checkpoint, but exact trade-level/sensitivity files are still not reproducibly archived in the repository.
-- Preventive rule: do not advance to robustness/final-manuscript closure until the exact Phase 9 output archive is present and hash-verified.
+## Phase 9 resolution — 2026-10-02
+- Hardened workflow run 36970175719 completed successfully.
+- Unit tests passed; the full computation completed with 56 executable trades and 26 skipped candidates.
+- The workflow created output commit d03d7a1 and successfully pushed it to phase-9-credit-selected-otm6-8 after fetch/rebase.
+- All 11 expected Phase 9 result files are now present on the remote branch and were re-read successfully, closing the persistence error.
+- Preventive rule retained: numerical outputs are not accepted until both the workflow persistence step and remote file readback succeed.
