@@ -83,6 +83,14 @@ def load_fii_dii(path):
 
 
 series = []
+validated_nifty = read_stooq(Path("data_cache/phase10_context_raw/nse_nifty50_validated.csv"), "nifty_close")
+validated_vix = read_stooq(Path("data_cache/phase10_context_raw/nse_india_vix_validated.csv"), "india_vix")
+if validated_nifty is not None:
+    validated_nifty["nifty_return_1d"] = validated_nifty["nifty_close"].pct_change()
+    validated_nifty["nifty_realized_vol_5d"] = validated_nifty["nifty_return_1d"].rolling(5).std() * (252 ** 0.5)
+    series.append(validated_nifty)
+if validated_vix is not None:
+    series.append(validated_vix)
 nifty = read_nse_json(Path("data_cache/phase10_context_raw/nse_nifty50_history.json"),
                       ["EOD_CLOSE_INDEX_VAL", "CLOSE", "Close", "close"], "nifty_close")
 vix = read_nse_json(Path("data_cache/phase10_context_raw/nse_india_vix_history.json"),
@@ -91,14 +99,24 @@ fii = load_fii_dii(Path("data_cache/phase10_context_raw/nse_fii_dii.json"))
 
 if nifty is None:
     nifty = read_stooq(Path("data_cache/phase10_context_raw/stooq_nifty.csv"), "nifty_close")
-if nifty is not None:
+if validated_nifty is None and nifty is not None:
     nifty["nifty_return_1d"] = nifty["nifty_close"].pct_change()
     nifty["nifty_realized_vol_5d"] = nifty["nifty_return_1d"].rolling(5).std() * (252 ** 0.5)
     series.append(nifty)
-if vix is not None:
+if validated_vix is None and vix is not None:
     series.append(vix)
 if fii is not None:
     series.append(fii)
+
+# Prefer the validated FII/DII fallback when present.
+fii_validated_path = Path("data_cache/phase10_context_raw/fii_dii_history.csv")
+if fii_validated_path.exists():
+    f = pd.read_csv(fii_validated_path)
+    f["date"] = pd.to_datetime(f["date"], errors="coerce").dt.normalize()
+    for col in ["fii_net", "dii_net"]:
+        f[col] = pd.to_numeric(f[col], errors="coerce")
+    series = [s for s in series if "fii_net" not in s.columns]
+    series.append(f[["date", "fii_net", "dii_net"]].dropna(subset=["date"]).sort_values("date"))
 
 for filename, prefix in [
     ("stooq_sp500.csv", "sp500_close"),
