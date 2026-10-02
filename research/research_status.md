@@ -169,3 +169,13 @@ The initial sample shows materially different observed aggregate P&L and tail-lo
 - Trades produced: 84
 - Skips: 92
 - Full data-quality record: results/strategy_v3_data_quality.json
+
+
+## Phase 9 — Credit-Selected OTM6/7/8 — 2026-10-02
+- Status: **IN PROGRESS — specification and implementation committed; empirical run pending**.
+- User rule implemented: compare `PE7 + PE8 - PE6` with `CE7 + CE8 - CE6` at 10:00 and select the higher positive credit.
+- Primary exit target frozen at 90% of the entry flatline after entry slippage.
+- Stop-loss candidates frozen before the run; one stop will be selected on the validation segment only.
+- Expiry identification now uses the historical contract expiry field and nearest-expiry test rather than assuming Tuesday across all 2025–2026 observations.
+- Primary costs use Paytm Money ₹10/order plus exchange, SEBI, stamp duty, STT, GST and 0.10-point adverse slippage.
+- No dynamic OTM8 re-centering or reversal is carried forward from V2/V3.
