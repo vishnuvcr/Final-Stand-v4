@@ -158,3 +158,9 @@
 - This is a data-acquisition/validation gap, not a change to the trading rule or backtest ledger. The gap is explicitly logged rather than treating an empty context join as evidence of no relationship.
 - Added a validated NSE/Nifty-Indices client fallback for NIFTY 50 and India VIX plus a public historical FII/DII JSON fallback. Normalized files are cached under `data_cache/phase10_context_raw` during the workflow and joined with the existing prior-observation, no-look-ahead rule.
 - Scientific parameters remain frozen; context remains descriptive only.
+
+
+## Phase 10 context-repair import error — 2026-10-02
+- Corrected closure run 36994239803 passed all Phase 10 tests and the full robustness/context-acquisition steps, but the validated context-repair step failed with `ModuleNotFoundError: No module named 'nseindia'`.
+- Root cause was an incorrect module name in the repair script: the installed package is `nseindiapy`, whose documented public import is `from nseindiapy import NiftyIndicesClient`.
+- The script was corrected without changing the source, strategy, parameters, or lagged context methodology. No context result from this failed run is accepted.
