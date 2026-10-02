@@ -1,19 +1,17 @@
 # Phase 12 Research Status
 
 **Branch:** phase-12-full-chain-oi-direction  
-**Status:** Phase 1 implementation complete; empirical full-chain extraction/model run is blocked pending a GitHub Actions execution visible to the repository connector.  
+**Status:** Workflow hardened after a failed Actions run; empirical full-chain extraction/model run is pending a successful GitHub Actions execution.  
 **Last updated:** 2026-10-02
 
 ## Scope
-
 This phase expands the prior six-premium search to **all available NIFTY strikes at 4-DTE/10:00 IST**, including option premium, open interest and volume surfaces.
 
 ## Phase status
-
 | Phase | Status |
 |---|---|
 | 0 — Scope/protocol expansion | COMPLETE |
-| 1 — Full-chain extraction | CODE COMPLETE; CI EXECUTION NOT YET OBSERVED |
+| 1 — Full-chain extraction | CODE COMPLETE; EXECUTION PENDING |
 | 2 — Feature engineering | CODE COMPLETE |
 | 3 — Model screening | CODE COMPLETE |
 | 4 — Holdout/multiple-testing | CODE COMPLETE |
@@ -22,7 +20,6 @@ This phase expands the prior six-premium search to **all available NIFTY strikes
 | 7 — Manuscript | NOT STARTED |
 
 ## Frozen protocol
-
 - 4 trading sessions before weekly expiry.
 - 10:00:00 IST one-minute bar OPEN.
 - All available strikes for the target expiry.
@@ -35,33 +32,12 @@ This phase expands the prior six-premium search to **all available NIFTY strikes
 - Multiple-testing permutation diagnostic.
 - No trading translation without robust holdout evidence.
 
-## Feature families
-
-1. Full ATM-relative surface vectors from -30 to +30 strike-grid units.
-2. Total CE/PE premium, OI and volume.
-3. PCR and call/put imbalance.
-4. OI/volume/premium-weighted strike location and dispersion.
-5. Maximum OI/volume/premium wall location and concentration.
-6. Full-chain aggregate and surface models.
-
-## Current data source
-
-The primary acquisition reuses the validated Phase 11 TradeMarkk NIFTY 1-minute option archive. Its dataset documentation states that the option records contain timestamp, OHLCV, open interest, strike and option type and warns that illiquid/far strikes can be sparse.
-
-The extraction produces a compact event-level feature table; raw archives remain in the GitHub Actions cache rather than being copied into Git.
-
 ## Current gate
+The previous Actions attempt failed, as shown in the user's GitHub Actions screenshot, before any empirical Phase 12 result became available through the repository connector. The exact failed step was not observable through the connector.
 
-The workflow definition is corrected and includes artifact publication, but the repository connector currently exposes no observable Phase 12 Actions run and no derived result files. No empirical result is therefore reported.
+The workflow has now been hardened to remove in-run execution-marker pushes and to upload install/acquisition/extraction/analysis logs even when the run fails. The next successful run is the gate for empirical analysis.
 
 ## Next gate
-
-Execute the Phase 12 manual workflow from GitHub Actions. Once the run is observable, inspect the generated manifest and analysis before proceeding. After extraction, inspect:
-- number of available strikes per event;
-- exact 10:00 coverage;
-- OI/volume missingness;
-- selected development model;
-- 2026 holdout balanced accuracy/MCC;
-- permutation p-value.
+Run/observe the hardened Phase 12 workflow. Inspect the generated artifact and/or committed result files before proceeding. Required checks: available strikes per event, exact 10:00 coverage, OI/volume missingness, selected development model, 2026 holdout balanced accuracy/MCC, and permutation p-value.
 
 Then either proceed to independent replication or close the phase as negative/inconclusive. No further unconstrained feature mining is planned.
