@@ -51,14 +51,14 @@ def main():
  xt=dev[g[best["family"]]].apply(pd.to_numeric,errors="coerce").replace([np.inf,-np.inf],np.nan);xv=hold[g[best["family"]]].apply(pd.to_numeric,errors="coerce").replace([np.inf,-np.inf],np.nan);med=xt.median();xt=xt.fillna(med);xv=xv.fillna(med);yy=(dev.realized_direction=="bullish").astype(int);mm=Pipeline([("scale",StandardScaler()),("logit",LogisticRegression(max_iter=5000,solver="liblinear",penalty="l1",C=best["C"]))]);mm.fit(xt,yy);ppred=np.where(mm.predict_proba(xv)[:,1]>=.5,"bullish","bearish");holdm["accuracy_bootstrap_95ci"]=bootstrap_accuracy(hold.realized_direction,ppred)
  holdm["tree_depth2"]=tree_holdout(dev,hold,g[best["family"]],2)
  rng=np.random.default_rng(12345);obs=best["cv_balanced_accuracy"];perm=[]
- for _ in range(250):
+ for _ in range(500):
   yp=pd.Series(rng.permutation(y.to_numpy()));mx=-np.inf
   for fam,cols in g.items():
    if not cols:continue
    for C in [.01,.1,1.0]:mx=max(mx,cv(dev,cols,C,yp))
   perm.append(mx)
  pp=(1+sum(x>=obs for x in perm))/(1+len(perm))
- res={"protocol":{"all_available_strikes":True,"surface_grid":"ATM-relative -30..+30","development":"before 2026-01-01","holdout":"2026 onward","cv":"5-fold chronological","permutations":250},"coverage":{"development":len(dev),"holdout":len(hold),"median_strikes":float(d.available_strikes.median()),"min_strikes":int(d.available_strikes.min()),"max_strikes":int(d.available_strikes.max())},"selected_model":best,"holdout":holdm,"multiple_testing_permutation_p":float(pp),"top_screen":cand[:20]}
+ res={"protocol":{"all_available_strikes":True,"surface_grid":"ATM-relative -30..+30","development":"before 2026-01-01","holdout":"2026 onward","cv":"5-fold chronological","permutations":500},"coverage":{"development":len(dev),"holdout":len(hold),"median_strikes":float(d.available_strikes.median()),"min_strikes":int(d.available_strikes.min()),"max_strikes":int(d.available_strikes.max())},"selected_model":best,"holdout":holdm,"multiple_testing_permutation_p":float(pp),"top_screen":cand[:20]}
  J.write_text(json.dumps(res,indent=2)+"\n");lines=["# Phase 12 Full-Chain Analysis","",f"Development {len(dev)} events; 2026 holdout {len(hold)} events.",f"Available strikes/event: median {d.available_strikes.median():.0f}, range {d.available_strikes.min()}–{d.available_strikes.max()}.","", "## Selected model",json.dumps(best,indent=2),"","## 2026 holdout",json.dumps(holdm,indent=2), "",f"## Multiple-testing permutation p={pp:.4f}","","This is a full-chain screen. No trading translation is authorized without independent replication and robustness."]
  lines+=["","## Top screens","| Family | C | CV balanced accuracy | Features |","|---|---:|---:|---:|"]+[f"| {r['family']} | {r['C']} | {r['cv_balanced_accuracy']:.3f} | {r['n_features']} |" for r in cand[:10]]
  M.write_text("\n".join(lines)+"\n")
