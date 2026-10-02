@@ -63,3 +63,10 @@
 - No recovered trades were accepted from an unverified workflow.
 - Public web research identified a complete commercial NIFTY 1-minute full-chain archive through Sep-2026 and official ICICI Breeze contract-level historical API documentation, but no authorized credentials/archive are available in the current session.
 - Preventive rule: never manufacture a recovery result or silently replace Phase 7 observations.
+
+
+## Phase 9 initialization — 2026-10-02
+- The first GitHub file-write attempt for the stop-analysis script passed a JavaScript array instead of a string to the repository file API. The write was rejected before repository modification. No scientific output was affected.
+- The initial Phase 9 candidate-expiry implementation risked treating every expiry-date row in the options dataset as a near-weekly candidate, which could have introduced far-dated duplicates. Before any run, this was corrected to require (a) the expiry to be the nearest listed expiry on the entry date and (b) entry-to-expiry distance no greater than eight calendar days.
+- Preventive rule: never assume the current Tuesday NIFTY expiry convention for earlier 2025 contracts; historical contract expiry dates must come from the dataset or a date-effective exchange source.
+- Preventive rule: the primary target/stop grid is frozen before reading performance outputs; no post-hoc stop selection from the final holdout.
