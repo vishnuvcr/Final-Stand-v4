@@ -53,3 +53,17 @@ TradeMarkk's `thetrademarkk/india-index-options-1m` is adopted as the current pr
 The Rissin `nse-options-intraday` Upstox-derived archive is retained as an independent secondary source. OptionsData.shop, MoneyTicks, Shoonya/Cloud Trader Pro, Unfluke, Breeze, NSE, TrueData and GDFL remain documented alternatives.
 
 The primary event builder must use the TradeMarkk source without silently substituting the secondary source. Cross-source agreement will be assessed separately.
+
+
+## 2026-10-02 — Phase 3/4 decision
+
+The primary directional hypothesis is not promoted to trading translation at this stage.
+
+Evidence:
+- 61/121 correct = 50.41%.
+- Exact binomial p = 1.000 against the 50% null.
+- 2026 chronological holdout = 9/20 = 45.0%.
+- Overall Pearson spread/expiry-return r = -0.2086 (p=0.02165), but Spearman rho = -0.1118 (p=0.22223), logistic slope p=0.22877, and 2026 holdout Pearson p=0.8154.
+- Independent source audit: 81/82 eligible overlapping events matched, with all six legs present for all matched events and mean relative price difference 0.3045%.
+
+Decision: treat the Pearson relationship as exploratory/non-robust. Continue to Phase 5 robustness/falsification; do not construct a live or historical trading strategy from this predictor yet.
