@@ -1,0 +1,74 @@
+{
+  "phase": 10,
+  "start_date": "2025-01-01",
+  "end_date": "2026-09-30",
+  "sources": [
+    {
+      "status": "ok",
+      "bytes": 22084,
+      "url": "https://www.nseindia.com/api/historical/indicesHistory?indexType=NIFTY%2050&from=01-01-2025&to=30-09-2026",
+      "file": "data_cache/phase10_context_raw/nse_nifty50_history.json"
+    },
+    {
+      "status": "ok",
+      "bytes": 22083,
+      "url": "https://www.nseindia.com/api/historical/indicesHistory?indexType=India%20VIX&from=01-01-2025&to=30-09-2026",
+      "file": "data_cache/phase10_context_raw/nse_india_vix_history.json"
+    },
+    {
+      "status": "ok",
+      "bytes": 218,
+      "url": "https://www.nseindia.com/api/fiidiiTradeReact?fromDate=01-01-2025&toDate=30-09-2026",
+      "file": "data_cache/phase10_context_raw/nse_fii_dii.json"
+    },
+    {
+      "status": "ok",
+      "bytes": 796,
+      "url": "https://stooq.com/q/d/l/?s=^nsei&d1=20250101&d2=20260930&i=d",
+      "file": "data_cache/phase10_context_raw/stooq_nifty.csv"
+    },
+    {
+      "status": "ok",
+      "bytes": 796,
+      "url": "https://stooq.com/q/d/l/?s=^spx&d1=20250101&d2=20260930&i=d",
+      "file": "data_cache/phase10_context_raw/stooq_sp500.csv"
+    },
+    {
+      "status": "ok",
+      "bytes": 796,
+      "url": "https://stooq.com/q/d/l/?s=^ndq&d1=20250101&d2=20260930&i=d",
+      "file": "data_cache/phase10_context_raw/stooq_nasdaq.csv"
+    },
+    {
+      "status": "ok",
+      "bytes": 796,
+      "url": "https://stooq.com/q/d/l/?s=^dji&d1=20250101&d2=20260930&i=d",
+      "file": "data_cache/phase10_context_raw/stooq_dow.csv"
+    },
+    {
+      "status": "ok",
+      "bytes": 796,
+      "url": "https://stooq.com/q/d/l/?s=usdinr&d1=20250101&d2=20260930&i=d",
+      "file": "data_cache/phase10_context_raw/stooq_usdinr.csv"
+    },
+    {
+      "status": "ok",
+      "bytes": 796,
+      "url": "https://stooq.com/q/d/l/?s=xauusd&d1=20250101&d2=20260930&i=d",
+      "file": "data_cache/phase10_context_raw/stooq_gold.csv"
+    }
+  ],
+  "official_nse": [
+    "NIFTY 50 historical index data",
+    "India VIX historical data",
+    "FII/FPI and DII activity"
+  ],
+  "secondary_validation": [
+    "Stooq daily S&P 500",
+    "Stooq daily Nasdaq Composite",
+    "Stooq daily Dow Jones",
+    "Stooq daily USDINR",
+    "Stooq daily gold/XAUUSD"
+  ],
+  "policy": "Context variables are descriptive/explanatory; no new trading filter is created."
+}

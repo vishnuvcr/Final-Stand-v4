@@ -18,6 +18,7 @@
     20.0,
     40.0
   ],
+  "full_cartesian_cost_cases": 12,
   "base_trades": 56,
   "note": "Market-context acquisition is separate; no context filter is applied."
 }

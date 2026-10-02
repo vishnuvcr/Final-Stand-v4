@@ -85,3 +85,6 @@ The user-provided GitHub Actions screen confirms that the Phase 10 push workflow
 
 ## Execution-control correction — 2026-10-02
 The active closure run had remained in progress while newer corrected runs were cancelled by the previous `cancel-in-progress: false` concurrency policy. The workflow was changed to `cancel-in-progress: true` so the newest corrected closure execution supersedes stale runs. This is an infrastructure-only correction; all scientific parameters and the stopping rule remain frozen. The status commit intentionally triggers the corrected workflow. Acceptance remains gated on successful tests, complete execution, persistence and remote readback.
+
+## Step 10.3 — computational robustness
+**COMPLETED** in GitHub Actions.
