@@ -74,5 +74,27 @@
     "other reputable providers"
   ],
   "cache_policy": "Keep validated historical data in repository/cache artifacts; do not redownload complete history on every workflow run.",
-  "provenance_required": true
+  "provenance_required": true,
+  "snapshot_protocol": {
+    "option_price_field": "open",
+    "spot_price_field": "open",
+    "required_timestamp": "10:00:00 Asia/Kolkata",
+    "fallback_in_primary_sample": "exclude event",
+    "fallback_reserved_for_sensitivity": true
+  },
+  "outcome_protocol": {
+    "expiry_value_field": "latest NIFTY 1-minute close on expiry trading date",
+    "status": "provisional_settlement_proxy",
+    "official_validation_required": true
+  },
+  "source_notes": {
+    "option_dataset": "rissin/nse-options-intraday",
+    "spot_dataset": "technovusin/nifty50-historical-data",
+    "initial_option_intraday_start": "2024-10"
+  },
+  "licensing": {
+    "option_dataset_license_field": "other",
+    "raw_redistribution_review_required": true,
+    "derived_event_data_can_be_committed": true
+  }
 }
