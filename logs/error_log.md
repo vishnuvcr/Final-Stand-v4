@@ -90,3 +90,9 @@
 - Plan, source register, status file, robustness runner, tests and manual workflow were committed.
 - Initial GitHub Actions discovery for the new branch returned no workflow run. The connected GitHub interface does not expose workflow-dispatch POST, so no unverified computation is being claimed.
 - Preventive rule: do not mark Phase 10 computational outputs complete until a workflow run passes tests, executes the runner, persists outputs and remote readback succeeds.
+
+## Phase 10 closure correction — 2026-10-02
+- The first Phase 10 computation completed successfully, but post-run audit found that the runner had implemented separate slippage and brokerage sensitivities rather than the full pre-specified 4×3 Cartesian cost grid.
+- This was a methodology-completeness error, not a numerical backtest failure. The runner was corrected to execute all 12 slippage×brokerage combinations and to persist \`results/phase10_cost_stress.csv\`.
+- The same audit found that market-context acquisition had not yet been executed. A provenance-preserving acquisition step was added for official NSE NIFTY 50/India VIX/FII-DII sources plus independent daily global/USDINR/gold validation sources.
+- No Phase 10 closure claim is accepted until the corrected workflow persists and remote-readback verifies the full outputs.
