@@ -1,0 +1,33 @@
+{
+  "strategy": "V5_credit_selected_otm6_8",
+  "option_source": {
+    "repo_id": "rissin/nse-options-intraday",
+    "revision": "78b1c54",
+    "files": [
+      "upstox_intraday/NIFTY/NIFTY_2025.parquet",
+      "upstox_intraday/NIFTY/NIFTY_2026.parquet"
+    ]
+  },
+  "spot_source": {
+    "repo": "technovusin/nifty50-historical-data",
+    "ref": "main",
+    "paths": [
+      "1min/2025/NIFTY50_1min_2025.csv",
+      "1min/2026/NIFTY50_1min_2026-01.csv",
+      "1min/2026/NIFTY50_1min_2026-02.csv",
+      "1min/2026/NIFTY50_1min_2026-03.csv",
+      "1min/2026/NIFTY50_1min_2026-04.csv",
+      "1min/2026/NIFTY50_1min_2026-05.csv",
+      "1min/2026/NIFTY50_1min_2026-06.csv",
+      "1min/2026/NIFTY50_1min_2026-07.csv",
+      "1min/2026/NIFTY50_1min_2026-08.csv",
+      "1min/2026/NIFTY50_1min_2026-09.csv"
+    ]
+  },
+  "window": [
+    "2025-01-01",
+    "2026-09-30"
+  ],
+  "resolution": "1min",
+  "reproducibility": "large Parquet files are retained in GitHub Actions cache keyed by this manifest; manifest and source revision are versioned in the repository"
+}
