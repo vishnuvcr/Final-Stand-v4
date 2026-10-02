@@ -187,3 +187,10 @@
 - No Phase 11 numerical result was accepted or committed from this failed run.
 - Corrected by renaming the date sets to dev_dates, val_dates, and test_dates and using those names explicitly throughout partitioning and summary generation.
 - Preventive rule: use distinct names for candidate parameter values and dataset split collections; add a unit/integration assertion that development/validation/test split objects are list/set-like before isin().
+
+
+## Phase 11 correction — 2026-10-02
+- Run 37031544256 completed technically, but its persisted Phase 11 candidate metrics showed zero validation/test trades because the frozen split metadata is keyed by **expiry date**, while the engine partitioned on `entry_date`.
+- This was a partitioning/data-label error, not an accepted scientific result. The per-candidate raw runs contained 56 trades and correctly triggered spot stops.
+- Corrected `scripts/phase11_spot_stop.py` to partition development/validation/test using `expiry_date` from each trade, matching the Phase 9 selection metadata semantics.
+- Prevention: all future split joins must use the exact date field documented by the frozen split metadata and be checked for expected nonzero counts before acceptance.
