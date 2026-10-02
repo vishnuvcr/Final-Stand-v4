@@ -28,3 +28,10 @@ The predefined multiple-testing diagnostic was increased from 250 to 500 develop
 The user-provided Actions screenshot showed the latest Phase 12 run failing after approximately 2m18s. Because the execution marker did not reach the branch and the connector cannot expose push-triggered run logs, the exact failing step could not be verified.
 
 Decision: remove pre-computation marker commits and replace them with always-uploaded step logs. Keep the scientific protocol unchanged. This is an execution/observability correction, not a research-method change.
+
+## 2026-10-02 — Analysis NaN correction
+Actions logs established that acquisition and extraction completed successfully. The failure occurred during chronological model screening because a feature can be entirely missing in an early training fold. Median imputation cannot fill an all-missing training column.
+
+Correction: within every CV fold and final train/holdout fit, remove only columns with no finite training observations, then compute medians from the training data and apply those medians to the validation/holdout data. This preserves the no-look-ahead rule and does not use labels to choose features. The same rule is used by the tree benchmark.
+
+The scientific model families, holdout boundary, permutation count, and feature definitions are unchanged.
