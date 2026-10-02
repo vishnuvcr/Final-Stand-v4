@@ -124,3 +124,23 @@ This supports cross-source consistency of the point-in-time premium observations
 The Phase 11 primary hypothesis has **not** demonstrated stable out-of-sample directional predictive power. The isolated overall Pearson relationship is treated as exploratory because it does not survive the chronological holdout and is not corroborated by the rank/logistic tests.
 
 Phase 5 robustness/falsification remains required before any trading translation.
+
+
+## 2026-10-02 — Premium combination search results
+
+The formal search completed successfully on GitHub Actions. It evaluated 78 engineered candidate features, 156 threshold/mapping models, and all 63 non-empty subsets of the six raw premiums, with a 2024–2025 development sample and 2026 chronological holdout.
+
+- Best threshold candidates: CE OTM6/OTM7 and CE OTM6/OTM8 log-ratios, development accuracy 59.41%, 2026 holdout 60% (12/20).
+- Selected subset logistic model: CE OTM6 + CE OTM7 + PE OTM7; 5-fold development CV accuracy 50.38%, 2026 holdout 60% (12/20).
+- Multiple-testing permutation diagnostic for the maximum threshold accuracy: p = 0.5118.
+- Holdout class-frequency baselines: always bullish 35%, always bearish 65%.
+
+Inference: relative call-wing premium ratios are a useful research lead, but the observed 60% holdout accuracy is not sufficient evidence of directional predictability after accounting for model search and the small 20-event holdout. No premium-only combination is promoted to trading.
+
+### Phase 5 next gate
+1. Freeze the two call-wing ratio candidates before further testing.
+2. Run rolling/expanding chronological validation.
+3. Test alternative 10:00 timestamp semantics as a robustness analysis without changing the primary convention.
+4. Split by volatility/trend/expiry-week/event regimes and liquidity/volume/OI availability.
+5. Replicate on the independent secondary source for the same eligible events.
+6. Apply placebos/permutation tests and report multiple-testing corrections before any economic/trading translation.
