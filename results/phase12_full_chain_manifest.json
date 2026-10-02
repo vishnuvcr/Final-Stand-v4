@@ -1,0 +1,613 @@
+{
+  "events": 121,
+  "extracted": 121,
+  "nonempty": 121,
+  "audit": [
+    {
+      "expiry": "2024-01-04",
+      "files": 1,
+      "rows": 234
+    },
+    {
+      "expiry": "2024-01-11",
+      "files": 1,
+      "rows": 89
+    },
+    {
+      "expiry": "2024-01-18",
+      "files": 1,
+      "rows": 100
+    },
+    {
+      "expiry": "2024-01-25",
+      "files": 1,
+      "rows": 128
+    },
+    {
+      "expiry": "2024-02-01",
+      "files": 1,
+      "rows": 92
+    },
+    {
+      "expiry": "2024-02-08",
+      "files": 1,
+      "rows": 112
+    },
+    {
+      "expiry": "2024-02-15",
+      "files": 1,
+      "rows": 118
+    },
+    {
+      "expiry": "2024-02-22",
+      "files": 1,
+      "rows": 108
+    },
+    {
+      "expiry": "2024-02-29",
+      "files": 1,
+      "rows": 131
+    },
+    {
+      "expiry": "2024-03-14",
+      "files": 1,
+      "rows": 90
+    },
+    {
+      "expiry": "2024-03-21",
+      "files": 1,
+      "rows": 107
+    },
+    {
+      "expiry": "2024-03-28",
+      "files": 1,
+      "rows": 108
+    },
+    {
+      "expiry": "2024-04-04",
+      "files": 1,
+      "rows": 84
+    },
+    {
+      "expiry": "2024-04-10",
+      "files": 1,
+      "rows": 90
+    },
+    {
+      "expiry": "2024-04-18",
+      "files": 1,
+      "rows": 88
+    },
+    {
+      "expiry": "2024-04-25",
+      "files": 1,
+      "rows": 130
+    },
+    {
+      "expiry": "2024-05-02",
+      "files": 1,
+      "rows": 81
+    },
+    {
+      "expiry": "2024-05-09",
+      "files": 1,
+      "rows": 103
+    },
+    {
+      "expiry": "2024-05-16",
+      "files": 1,
+      "rows": 119
+    },
+    {
+      "expiry": "2024-05-23",
+      "files": 1,
+      "rows": 111
+    },
+    {
+      "expiry": "2024-05-30",
+      "files": 1,
+      "rows": 127
+    },
+    {
+      "expiry": "2024-06-06",
+      "files": 1,
+      "rows": 98
+    },
+    {
+      "expiry": "2024-06-13",
+      "files": 1,
+      "rows": 132
+    },
+    {
+      "expiry": "2024-06-20",
+      "files": 1,
+      "rows": 96
+    },
+    {
+      "expiry": "2024-06-27",
+      "files": 1,
+      "rows": 140
+    },
+    {
+      "expiry": "2024-07-04",
+      "files": 1,
+      "rows": 164
+    },
+    {
+      "expiry": "2024-07-11",
+      "files": 1,
+      "rows": 116
+    },
+    {
+      "expiry": "2024-07-18",
+      "files": 1,
+      "rows": 84
+    },
+    {
+      "expiry": "2024-07-25",
+      "files": 1,
+      "rows": 141
+    },
+    {
+      "expiry": "2024-08-01",
+      "files": 1,
+      "rows": 131
+    },
+    {
+      "expiry": "2024-08-08",
+      "files": 1,
+      "rows": 114
+    },
+    {
+      "expiry": "2024-08-14",
+      "files": 1,
+      "rows": 111
+    },
+    {
+      "expiry": "2024-08-22",
+      "files": 1,
+      "rows": 123
+    },
+    {
+      "expiry": "2024-08-29",
+      "files": 1,
+      "rows": 144
+    },
+    {
+      "expiry": "2024-09-05",
+      "files": 1,
+      "rows": 115
+    },
+    {
+      "expiry": "2024-09-12",
+      "files": 1,
+      "rows": 127
+    },
+    {
+      "expiry": "2024-09-19",
+      "files": 1,
+      "rows": 124
+    },
+    {
+      "expiry": "2024-09-26",
+      "files": 1,
+      "rows": 140
+    },
+    {
+      "expiry": "2024-10-03",
+      "files": 1,
+      "rows": 91
+    },
+    {
+      "expiry": "2024-10-10",
+      "files": 1,
+      "rows": 134
+    },
+    {
+      "expiry": "2024-10-17",
+      "files": 1,
+      "rows": 119
+    },
+    {
+      "expiry": "2024-10-24",
+      "files": 1,
+      "rows": 113
+    },
+    {
+      "expiry": "2024-10-31",
+      "files": 1,
+      "rows": 156
+    },
+    {
+      "expiry": "2024-11-14",
+      "files": 1,
+      "rows": 126
+    },
+    {
+      "expiry": "2024-11-21",
+      "files": 1,
+      "rows": 99
+    },
+    {
+      "expiry": "2024-11-28",
+      "files": 1,
+      "rows": 162
+    },
+    {
+      "expiry": "2024-12-05",
+      "files": 1,
+      "rows": 128
+    },
+    {
+      "expiry": "2024-12-12",
+      "files": 1,
+      "rows": 129
+    },
+    {
+      "expiry": "2024-12-19",
+      "files": 1,
+      "rows": 125
+    },
+    {
+      "expiry": "2024-12-26",
+      "files": 1,
+      "rows": 155
+    },
+    {
+      "expiry": "2025-01-02",
+      "files": 1,
+      "rows": 199
+    },
+    {
+      "expiry": "2025-01-09",
+      "files": 1,
+      "rows": 223
+    },
+    {
+      "expiry": "2025-01-16",
+      "files": 1,
+      "rows": 235
+    },
+    {
+      "expiry": "2025-01-23",
+      "files": 1,
+      "rows": 216
+    },
+    {
+      "expiry": "2025-01-30",
+      "files": 1,
+      "rows": 243
+    },
+    {
+      "expiry": "2025-02-06",
+      "files": 1,
+      "rows": 231
+    },
+    {
+      "expiry": "2025-02-13",
+      "files": 1,
+      "rows": 220
+    },
+    {
+      "expiry": "2025-02-20",
+      "files": 1,
+      "rows": 120
+    },
+    {
+      "expiry": "2025-02-27",
+      "files": 1,
+      "rows": 109
+    },
+    {
+      "expiry": "2025-03-06",
+      "files": 1,
+      "rows": 127
+    },
+    {
+      "expiry": "2025-03-13",
+      "files": 1,
+      "rows": 114
+    },
+    {
+      "expiry": "2025-03-20",
+      "files": 1,
+      "rows": 106
+    },
+    {
+      "expiry": "2025-03-27",
+      "files": 1,
+      "rows": 137
+    },
+    {
+      "expiry": "2025-04-03",
+      "files": 1,
+      "rows": 123
+    },
+    {
+      "expiry": "2025-04-09",
+      "files": 1,
+      "rows": 117
+    },
+    {
+      "expiry": "2025-04-17",
+      "files": 1,
+      "rows": 137
+    },
+    {
+      "expiry": "2025-04-24",
+      "files": 1,
+      "rows": 131
+    },
+    {
+      "expiry": "2025-04-30",
+      "files": 1,
+      "rows": 134
+    },
+    {
+      "expiry": "2025-05-08",
+      "files": 1,
+      "rows": 151
+    },
+    {
+      "expiry": "2025-05-15",
+      "files": 1,
+      "rows": 147
+    },
+    {
+      "expiry": "2025-05-22",
+      "files": 1,
+      "rows": 123
+    },
+    {
+      "expiry": "2025-05-29",
+      "files": 1,
+      "rows": 145
+    },
+    {
+      "expiry": "2025-06-05",
+      "files": 1,
+      "rows": 146
+    },
+    {
+      "expiry": "2025-06-12",
+      "files": 1,
+      "rows": 114
+    },
+    {
+      "expiry": "2025-06-19",
+      "files": 1,
+      "rows": 108
+    },
+    {
+      "expiry": "2025-06-26",
+      "files": 1,
+      "rows": 148
+    },
+    {
+      "expiry": "2025-07-03",
+      "files": 1,
+      "rows": 118
+    },
+    {
+      "expiry": "2025-07-10",
+      "files": 1,
+      "rows": 115
+    },
+    {
+      "expiry": "2025-07-17",
+      "files": 1,
+      "rows": 117
+    },
+    {
+      "expiry": "2025-07-24",
+      "files": 1,
+      "rows": 101
+    },
+    {
+      "expiry": "2025-07-31",
+      "files": 1,
+      "rows": 123
+    },
+    {
+      "expiry": "2025-08-07",
+      "files": 1,
+      "rows": 113
+    },
+    {
+      "expiry": "2025-08-14",
+      "files": 1,
+      "rows": 131
+    },
+    {
+      "expiry": "2025-08-21",
+      "files": 1,
+      "rows": 87
+    },
+    {
+      "expiry": "2025-08-28",
+      "files": 1,
+      "rows": 105
+    },
+    {
+      "expiry": "2025-09-02",
+      "files": 1,
+      "rows": 90
+    },
+    {
+      "expiry": "2025-09-09",
+      "files": 1,
+      "rows": 111
+    },
+    {
+      "expiry": "2025-09-16",
+      "files": 1,
+      "rows": 110
+    },
+    {
+      "expiry": "2025-09-23",
+      "files": 1,
+      "rows": 118
+    },
+    {
+      "expiry": "2025-09-30",
+      "files": 1,
+      "rows": 124
+    },
+    {
+      "expiry": "2025-10-07",
+      "files": 1,
+      "rows": 92
+    },
+    {
+      "expiry": "2025-10-14",
+      "files": 1,
+      "rows": 99
+    },
+    {
+      "expiry": "2025-11-04",
+      "files": 1,
+      "rows": 124
+    },
+    {
+      "expiry": "2025-11-11",
+      "files": 1,
+      "rows": 99
+    },
+    {
+      "expiry": "2025-11-18",
+      "files": 1,
+      "rows": 110
+    },
+    {
+      "expiry": "2025-11-25",
+      "files": 1,
+      "rows": 124
+    },
+    {
+      "expiry": "2025-12-02",
+      "files": 1,
+      "rows": 115
+    },
+    {
+      "expiry": "2025-12-09",
+      "files": 1,
+      "rows": 110
+    },
+    {
+      "expiry": "2025-12-16",
+      "files": 1,
+      "rows": 108
+    },
+    {
+      "expiry": "2025-12-23",
+      "files": 1,
+      "rows": 103
+    },
+    {
+      "expiry": "2025-12-30",
+      "files": 1,
+      "rows": 118
+    },
+    {
+      "expiry": "2026-01-06",
+      "files": 1,
+      "rows": 113
+    },
+    {
+      "expiry": "2026-01-13",
+      "files": 1,
+      "rows": 104
+    },
+    {
+      "expiry": "2026-01-20",
+      "files": 1,
+      "rows": 106
+    },
+    {
+      "expiry": "2026-01-27",
+      "files": 1,
+      "rows": 120
+    },
+    {
+      "expiry": "2026-02-03",
+      "files": 1,
+      "rows": 131
+    },
+    {
+      "expiry": "2026-02-10",
+      "files": 1,
+      "rows": 134
+    },
+    {
+      "expiry": "2026-02-17",
+      "files": 1,
+      "rows": 120
+    },
+    {
+      "expiry": "2026-02-24",
+      "files": 1,
+      "rows": 137
+    },
+    {
+      "expiry": "2026-03-02",
+      "files": 1,
+      "rows": 115
+    },
+    {
+      "expiry": "2026-03-10",
+      "files": 1,
+      "rows": 141
+    },
+    {
+      "expiry": "2026-03-17",
+      "files": 1,
+      "rows": 158
+    },
+    {
+      "expiry": "2026-03-24",
+      "files": 1,
+      "rows": 159
+    },
+    {
+      "expiry": "2026-03-30",
+      "files": 1,
+      "rows": 162
+    },
+    {
+      "expiry": "2026-04-07",
+      "files": 1,
+      "rows": 127
+    },
+    {
+      "expiry": "2026-04-13",
+      "files": 1,
+      "rows": 136
+    },
+    {
+      "expiry": "2026-04-21",
+      "files": 1,
+      "rows": 145
+    },
+    {
+      "expiry": "2026-04-28",
+      "files": 1,
+      "rows": 190
+    },
+    {
+      "expiry": "2026-05-05",
+      "files": 1,
+      "rows": 127
+    },
+    {
+      "expiry": "2026-05-12",
+      "files": 1,
+      "rows": 129
+    },
+    {
+      "expiry": "2026-05-19",
+      "files": 1,
+      "rows": 141
+    }
+  ],
+  "no_interpolation": true
+}
