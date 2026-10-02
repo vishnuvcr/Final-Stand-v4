@@ -81,3 +81,10 @@
 - Added scripts/phase11/robustness.py and a GitHub Actions step to run the frozen-candidate robustness analysis.
 - The same analysis was reproduced from the committed 121-event table and its outputs were persisted to results/phase11_robustness.json and results/phase11_robustness.md.
 - The workflow-publishing race fix remains active; no research conclusion depends on an uncommitted runner artifact.
+
+
+## 2026-10-02 — Cross-source audit metric correction
+
+- During review of the completed premium-combination audit, the persisted summary was found to compute `median_relative_price_diff` from the mean-relative-difference column. The underlying event-level values were retained, but the summary statistic was mislabeled/computed incorrectly.
+- Correction: the summary now takes the median of the event-level `median_relative_price_diff` values, and frozen-candidate replication resolves realized direction using both expiry and observation timestamp rather than expiry alone.
+- This is a reporting/audit-code correction; it does not alter the primary event dataset or the previously reported premium-combination search results. The corrected audit must be re-executed before its replication metrics are used in the manuscript.
