@@ -31,7 +31,7 @@ All candidates are frozen before evaluation:
 ATR must be computed only from information available before entry; no future bars may enter the ATR calculation.
 
 ## Trigger convention
-For a PUT-selected structure, an adverse upward spot barrier is used; for a CALL-selected structure, an adverse downward spot barrier is used. This direction is defined from the short-option exposure of the selected 1:-1:-1 structure and will be verified against the option payoff mapping before backtest execution.
+For a PUT-selected structure, an adverse downward spot barrier is used; for a CALL-selected structure, an adverse upward spot barrier is used. This follows the piecewise expiry payoff of +1 PE(OTM6) - 1 PE(OTM7) - 1 PE(OTM8) and +1 CE(OTM6) - 1 CE(OTM7) - 1 CE(OTM8): below all put strikes the PUT structure has positive spot slope (downward is adverse), while above all call strikes the CALL structure has negative spot slope (upward is adverse). The direction is verified before backtest execution.
 
 A completed 1-minute NIFTY spot bar crossing the barrier triggers an exit at the first common executable next-minute option-bar open. If the target and spot stop are both signalled on the same completed minute, the earlier observable event ordering is applied; no intrabar look-ahead is permitted.
 
