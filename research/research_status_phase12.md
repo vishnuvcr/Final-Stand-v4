@@ -41,3 +41,6 @@ The workflow has now been hardened to remove in-run execution-marker pushes and 
 Run/observe the hardened Phase 12 workflow. Inspect the generated artifact and/or committed result files before proceeding. Required checks: available strikes per event, exact 10:00 coverage, OI/volume missingness, selected development model, 2026 holdout balanced accuracy/MCC, and permutation p-value.
 
 Then either proceed to independent replication or close the phase as negative/inconclusive. No further unconstrained feature mining is planned.
+
+## Current execution update
+Run 37009066361: acquisition SUCCESS; extraction SUCCESS; model analysis IN PROGRESS; publication PENDING. The current analysis includes the pre-specified development screening and 500-permutation multiple-testing diagnostic. No empirical performance figure is accepted until completion.
