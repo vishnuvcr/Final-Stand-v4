@@ -92,6 +92,10 @@ jobs:
         if: inputs.action == 'build' || github.event_name == 'push'
         run: python scripts/phase11/premium_combination_search.py
 
+      - name: Frozen-candidate robustness
+        if: inputs.action == 'build' || github.event_name == 'push'
+        run: python scripts/phase11/robustness.py
+
       - name: Commit derived event dataset
         if: inputs.action == 'build' || github.event_name == 'push'
         run: |
@@ -99,7 +103,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           # The research branch may advance while this workflow is running (for example from a concurrent log/status update).
           # Rebase before the first push and retry if another fast-forward lands between rebase and push.
-          git add results/phase11_events.csv results/phase11_events.json results/phase11_statistical_analysis.json results/phase11_statistical_analysis.md results/phase11_cross_source_audit.json results/phase11_premium_combination_search.json results/phase11_premium_combination_search.md
+          git add results/phase11_events.csv results/phase11_events.json results/phase11_statistical_analysis.json results/phase11_statistical_analysis.md results/phase11_cross_source_audit.json results/phase11_premium_combination_search.json results/phase11_premium_combination_search.md results/phase11_robustness.json results/phase11_robustness.md
           git diff --cached --quiet || git commit -m 'Build Phase 11 event dataset'
           for attempt in 1 2 3; do
             git fetch origin phase-11-premium-direction-predictor
