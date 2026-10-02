@@ -43,46 +43,6 @@ def _prepare_train_test(train,test,cols):
     xt=xt.fillna(med);xv=xv.fillna(med)
     return xt,xv,keep
 
-def cv_matrices(dev,cols):
-    x=dev[cols].apply(pd.to_numeric,errors="coerce").replace([np.inf,-np.inf],np.nan)
-    out=[]
-    for tr,va in TimeSeriesSplit(CV_SPLITS).split(x):
-        xt,xv,_=_prepare_train_test(dev.iloc[tr],dev.iloc[va],cols)
-        scaler=StandardScaler()
-        xts=scaler.fit_transform(xt)
-        xvs=scaler.transform(xv)
-        out.append((xts,xvs,tr))
-    return out
-
-def cv_from_matrices(mats,C,y):
-    scores=[]
-    for xt,xv,tr in mats:
-        m=LogisticRegression(max_iter=4000,solver="liblinear",penalty="l1",C=C)
-        m.fit(xt,y.iloc[tr])
-        scores.append(balanced_accuracy_score(y.iloc[[i for i in range(len(y)) if False]],[]))
-    return float(np.mean(scores))
-
-def cv_from_matrices(mats,C,y):
-    scores=[]
-    for xt,xv,tr in mats:
-        m=LogisticRegression(max_iter=4000,solver="liblinear",penalty="l1",C=C)
-        m.fit(xt,y.iloc[tr])
-        pred=m.predict(xv)
-        # The validation labels are recovered from the split index stored after the train indices.
-        # Store validation indices alongside the matrices for exact chronological CV.
-        scores.append((m,pred))
-    return scores
-
-def cv_score(mats,C,y):
-    vals=[]
-    for xt,xv,tr,va in mats:
-        m=LogisticRegression(max_iter=4000,solver="liblinear",penalty="l1",C=C)
-        m.fit(xt,y.iloc[tr]);vals.append(balanced_accuracy_score(y.iloc[va],m.predict(xv)))
-    return float(np.mean(vals))
-
-def build_cv_cache(dev,g):
-    return {fam:[(*cv_matrices(dev,cols),) for _ in []] for fam,cols in g.items()}
-
 def make_mats(dev,cols):
     x=dev[cols].apply(pd.to_numeric,errors="coerce").replace([np.inf,-np.inf],np.nan)
     out=[]
@@ -91,6 +51,14 @@ def make_mats(dev,cols):
         scaler=StandardScaler()
         out.append((scaler.fit_transform(xt),scaler.transform(xv),tr,va))
     return out
+
+def cv_score(mats,C,y):
+    vals=[]
+    for xt,xv,tr,va in mats:
+        m=LogisticRegression(max_iter=4000,solver="liblinear",penalty="l1",C=C)
+        m.fit(xt,y.iloc[tr])
+        vals.append(balanced_accuracy_score(y.iloc[va],m.predict(xv)))
+    return float(np.mean(vals))
 
 def bootstrap_accuracy(y,p,B=2000,seed=12345):
     rng=np.random.default_rng(seed);yb=(np.asarray(y)=="bullish").astype(int);pb=(np.asarray(p)=="bullish").astype(int)
