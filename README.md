@@ -53,3 +53,10 @@ This repository records the agreed research specification and implementation dec
 - [Premium combination search JSON](results/phase11_premium_combination_search.json)
 
 The leading research signal is a relative call-wing ratio: CE OTM6/OTM7 and CE OTM6/OTM8 log-ratios each reached 59.41% on development and 12/20 (60%) on the 2026 holdout. The 5,000-permutation maximum-threshold-accuracy diagnostic gave p=0.5118, and the holdout has only 20 observations. No trading strategy is authorized from this result. Phase 5 robustness/falsification will now freeze these candidates and test them chronologically, by regime/liquidity, and on the independent source.
+
+
+### Phase 11 robustness status
+- [Frozen-candidate robustness report](results/phase11_robustness.md)
+- [Frozen-candidate robustness JSON](results/phase11_robustness.json)
+
+**Phase 5 status:** IN PROGRESS. The two call-wing ratio candidates show 60% on the 20-event 2026 holdout but do not beat the 65% always-bearish baseline and weaken after the September 2025 expiry-convention boundary. No trading translation is authorized.
