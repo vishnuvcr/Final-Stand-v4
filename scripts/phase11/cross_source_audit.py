@@ -6,6 +6,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from scipy.stats import binomtest
 
 IST = "Asia/Kolkata"
 PRICE_COLS = [
@@ -68,6 +69,24 @@ def audit_file(path: Path, events: pd.DataFrame) -> list[dict]:
         valid = g.dropna(subset=["open"])
         if valid.empty:
             continue
+        price_map = {}
+        for _, row in valid.iterrows():
+            key = ("ce_otm" if row["option_type"] == "CE" else "pe_otm") + str(
+                int(round(abs(float(row["strike"]) - float(row["strike"])))) if False else ""
+            )
+        # Recover OTM index from the event's primary strike geometry. The merge
+        # contains exactly the six target contracts, so map by option type and
+        # distance from ATM using the original target table.
+        for _, row in valid.iterrows():
+            typ = str(row["option_type"]).upper()
+            dist = None
+            for _, t in targets[targets["event_id"] == event_id].iterrows():
+                if str(t["option_type"]).upper() == typ and abs(float(t["strike"]) - float(row["strike"])) < 1e-9:
+                    dist = int(round(abs(float(t["strike"]) - float(events.loc[events["expiry_date"].astype(str).eq(event_id.split("|")[0]), "atm_strike"].iloc[0])) / float(events.loc[events["expiry_date"].astype(str).eq(event_id.split("|")[0]), "strike_interval"].iloc[0])))
+                    break
+            if dist in (6, 7, 8):
+                price_map[("ce" if typ == "CE" else "pe") + "_otm" + str(dist)] = float(row["open"])
+
         out.append({
             "event_id": event_id,
             "matched_legs": int(len(valid)),
@@ -75,6 +94,7 @@ def audit_file(path: Path, events: pd.DataFrame) -> list[dict]:
             "mean_abs_price_diff": float(valid["abs_diff"].mean()),
             "median_abs_price_diff": float(valid["abs_diff"].median()),
             "mean_relative_price_diff": float(valid["rel_diff"].mean()),
+            "secondary_prices": price_map,
         })
     return out
 
@@ -106,6 +126,42 @@ def main() -> int:
             "events_with_all_six_legs": int((m["matched_legs"] == 6).sum()),
             "all_six_leg_rate_among_matched": float((m["matched_legs"] == 6).mean()),
         }
+
+        # Cross-source replication of the two frozen call-wing ratio candidates.
+        # Thresholds are taken from the primary-source development sample and
+        # are not re-fit on the secondary source.
+        dev_primary = events[events["expiry_date"] < pd.Timestamp("2026-01-01").date()].copy()
+        thresholds = {
+            "ce_otm6_ce_otm7_logratio": float(np.log(dev_primary["ce_otm6"] / dev_primary["ce_otm7"]).median()),
+            "ce_otm6_ce_otm8_logratio": float(np.log(dev_primary["ce_otm6"] / dev_primary["ce_otm8"]).median()),
+        }
+        replication = {}
+        full = m[m["matched_legs"] == 6].copy()
+        for name, a, b in [
+            ("ce_otm6_ce_otm7_logratio", "ce_otm6", "ce_otm7"),
+            ("ce_otm6_ce_otm8_logratio", "ce_otm6", "ce_otm8"),
+        ]:
+            correct = 0
+            n = 0
+            for _, row in full.iterrows():
+                prices = row.get("secondary_prices", {})
+                if a not in prices or b not in prices:
+                    continue
+                ratio = np.log(float(prices[a]) / float(prices[b]))
+                pred = "bullish" if ratio >= thresholds[name] else "bearish"
+                event_id = str(row["event_id"])
+                expiry = event_id.split("|")[0]
+                realized = str(events.loc[events["expiry_date"].astype(str).eq(expiry), "realized_direction"].iloc[0])
+                n += 1
+                correct += int(pred == realized)
+            replication[name] = {
+                "threshold_from_primary_development": thresholds[name],
+                "n": int(n),
+                "correct": int(correct),
+                "accuracy": float(correct / n) if n else None,
+                "exact_binomial_p_50": float(binomtest(correct, n, 0.5).pvalue) if n else None,
+            }
+        summary["frozen_candidate_replication"] = replication
     else:
         summary = {
             "eligible_events": int(len(events)),
