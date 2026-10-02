@@ -63,6 +63,7 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python -m pytest -q tests/test_phase10_strategy.py
       - run: python scripts/phase10_robustness.py
+      - run: python scripts/phase10_market_context.py
       - name: Record phase status
         run: |
           cat >> research/phase10_status.md <<'EOF'
