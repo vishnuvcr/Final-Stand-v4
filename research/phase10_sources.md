@@ -50,3 +50,7 @@
 
 ## Phase 10 source validation update — 2026-10-02
 Official NSE pages confirm that historical India VIX data, historical NIFTY/index data and FII/FPI/DII activity are available through NSE reporting interfaces. NSE describes India VIX as a near-term expected-volatility measure derived from NIFTY option prices and notes that FII/FPI activity data are provisional and subject to change. These series are therefore treated as context variables with provenance and missingness preserved; they are not used as new trading filters.
+
+
+## Corporate-action source validation — 2026-10-02
+NSE's current public Corporate Filings → Corporate Actions page exposes symbol-level purpose and ex-date/record-date fields, and NSE's research data-sharing catalogue identifies corporate-action data as a research data category. These sources are therefore retained as the authoritative source family for any reproducible corporate-action event indicator. The phase will not infer missing historical events from secondary sources. If automated acquisition fails, coverage will be reported as unavailable rather than substituted silently.
