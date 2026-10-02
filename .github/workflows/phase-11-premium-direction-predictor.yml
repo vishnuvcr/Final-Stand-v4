@@ -1,6 +1,15 @@
 name: Phase 11 Premium Direction Predictor
 
 on:
+  push:
+    branches:
+      - phase-11-premium-direction-predictor
+    paths:
+      - '.github/workflows/phase-11-premium-direction-predictor.yml'
+      - 'scripts/phase11/**'
+      - 'tests/phase11/**'
+      - 'research/**'
+      - 'logs/**'
   workflow_dispatch:
     inputs:
       action:
