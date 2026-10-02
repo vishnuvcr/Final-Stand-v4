@@ -38,7 +38,7 @@ def fetch_fii_history():
 
 def fetch_nifty_and_vix():
     try:
-        from nseindia import NiftyIndicesClient
+        from nseindiapy import NiftyIndicesClient
     except Exception as exc:
         raise RuntimeError("nseindiapy import failed") from exc
 
