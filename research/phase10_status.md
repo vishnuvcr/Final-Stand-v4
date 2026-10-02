@@ -1,33 +1,33 @@
 # Phase 10 Status
 
 ## Phase state
-**READY / INITIALIZED**
+**EXECUTION TRIGGERED — awaiting GitHub Actions**
 
 ## Step 10.1 — Plan and source register
 **COMPLETED**
-- Phase 10 plan committed.
-- Source register committed.
-- Phase 9 remains frozen and is the only strategy specification under test.
+- Phase 10 plan, source register, literature evidence map and status controls committed.
+- Phase 9 remains frozen.
 
 ## Step 10.2 — Reproducibility audit
-**PENDING**
-- Verify Phase 9 output files and provenance from the parent branch.
-- Confirm no parameter or ledger mutation.
+**COMPLETED**
+- Phase 9 output archive was verified on its parent branch before Phase 10 was opened.
+- Phase 9 strategy definition remains unchanged.
 
 ## Step 10.3 — Robustness grid
-**PENDING**
+**RUNNING / PENDING WORKFLOW RESULT**
 - Targets: 85%, 90%, 95%, 100%.
 - Slippage: 0.00, 0.10, 0.25, 0.50.
-- Date-aware transaction-cost stress.
+- Brokerage stress: ₹10, ₹20, ₹40 per order.
+- Date-aware exchange/tax costs retained.
 
 ## Step 10.4 — Temporal/structural stability
-**PENDING**
+**PENDING WORKFLOW RESULT**
 - Yearly/quarterly results.
 - Call/put selection.
 - Selection-margin distribution.
 
 ## Step 10.5 — Path-risk analysis
-**PENDING**
+**PENDING WORKFLOW RESULT**
 - MAE/MFE.
 - Time-to-target.
 - Drawdown and expiry fallback.
@@ -48,6 +48,9 @@
 
 ## Step 10.8 — Persistence and closure
 **PENDING**
+
+## Execution control
+This commit intentionally touches a workflow-triggered Phase 10 status file so the configured push trigger starts the computational workflow. No result is accepted until tests, computation, persistence and remote readback all pass.
 
 ## Stopping rule
 Phase 10 ends after the predefined analyses are executed once and documented. New trading rules require a new phase.
