@@ -69,3 +69,7 @@ The first computational run completed successfully, but review identified that t
 
 ## Trigger retry
 **2026-10-02:** No Actions run was associated with the previous trigger commit when checked. A new no-methodology-change status commit is being used solely to retrigger the configured push workflow; no research result is accepted from this retry until the run completes and remote outputs are read back.
+
+
+## Context-join correction
+**2026-10-02:** Added a reproducible lagged context join. Each trade is matched only to the prior available daily observation, preventing same-day close look-ahead. The workflow now persists `results/phase10_market_context.csv` and a coverage summary when source acquisition succeeds. Corporate/news variables remain source-coverage gated and will be reported as unavailable rather than inferred.
