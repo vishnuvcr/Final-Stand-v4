@@ -56,3 +56,13 @@
 - Cause: the cache key incorporated the workflow input `2024,2025,2026` literally.
 - Correction: removed the year-list suffix from the cache key and retained the research data-manifest hash as the cache identity.
 - This failure occurred before market-data acquisition; no empirical result was generated.
+
+
+## 2026-10-02 — Cross-source audit memory failure diagnosed
+
+- Two consecutive Phase 11 runs successfully completed acquisition and event construction (132 expiry candidates; 121 events).
+- Both runs then terminated during `cross_source_audit.py` while loading the secondary archive, with GitHub reporting a runner shutdown signal and operation cancellation.
+- The audit implementation loaded all 2024–2026 secondary option rows simultaneously. This created unnecessary memory pressure because the primary archive had already been loaded by the event builder.
+- Correction: the audit now processes one secondary year file at a time and reads only the five required columns.
+- Push-triggered runs now reuse the committed event dataset when it already exists; full event reconstruction remains available through manual `build`.
+- No statistical result was invalidated. The already-completed statistical analysis remains reproducible from the committed event dataset.
