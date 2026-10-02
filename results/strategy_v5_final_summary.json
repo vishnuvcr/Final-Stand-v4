@@ -1,0 +1,53 @@
+{
+  "strategy_version": "V5 credit-selected OTM6/7/8",
+  "run_id": 36966258307,
+  "status": "empirical_backtest_completed; repository_persistence_failed_and_requires_rerun",
+  "sample_window": [
+    "2025-01-01",
+    "2026-09-30"
+  ],
+  "candidate_trades_executed": 56,
+  "skipped_candidates": 26,
+  "target_fraction": 0.9,
+  "slippage_points_per_execution": 0.1,
+  "brokerage_per_order_inr": 10,
+  "stop_grid": [
+    0,
+    0.5,
+    0.75,
+    1,
+    1.25,
+    1.5
+  ],
+  "chronological_split": {
+    "development_pct": 0.6,
+    "validation_pct": 0.2,
+    "test_pct": 0.2,
+    "development_trades": 33,
+    "validation_trades": 11,
+    "test_trades": 12
+  },
+  "chosen_stop_multiple": 0,
+  "test": {
+    "trades": 12,
+    "mean_net_pnl_inr": 1626.727800964667,
+    "median_net_pnl_inr": 2646.3362896080007,
+    "total_net_pnl_inr": 19520.733611576004,
+    "win_rate": 0.9166666666666666,
+    "profit_factor": 2.2179483802315514,
+    "max_drawdown_inr": 0,
+    "target_hit_rate": 0.9166666666666666,
+    "stop_hit_rate": 0,
+    "expiry_rate": 0.08333333333333333,
+    "call_selection_rate": 0.25,
+    "put_selection_rate": 0.75,
+    "bootstrap_mean_95_ci_inr": [
+      -1946.433645304101,
+      3869.34230714405
+    ]
+  },
+  "interpretation": "On the untouched chronological test segment, the validation procedure selected the no-stop baseline rather than any tested stop multiple. The test sample has a positive realized mean, but the bootstrap confidence interval for the mean includes zero; the sample is small (12 trades), so no population-level edge conclusion is justified.",
+  "provenance": "GitHub Actions run 36966258307; unit tests passed; backtest grid completed. Final push failed only because the runner's locally-created results commit was rejected as non-fast-forward.",
+  "data_source": "rissin/nse-options-intraday, runtime-resolved dataset revision; technovusin/nifty50-historical-data underlying source",
+  "costs": "0.10 premium-point adverse slippage per execution; Paytm Money brokerage ₹10 per unique order; exchange/SEBI/stamp/STT/GST model as specified in research/strategy_spec_v5_credit_selected.md; exit fees use actual exit date."
+}
