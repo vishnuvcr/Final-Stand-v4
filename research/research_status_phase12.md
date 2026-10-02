@@ -1,7 +1,7 @@
 # Phase 12 Research Status
 
 **Branch:** phase-12-full-chain-oi-direction  
-**Status:** Phase 1 implementation complete; empirical full-chain extraction/model run initiated via GitHub Actions.  
+**Status:** Phase 1 implementation complete; empirical full-chain extraction/model run is blocked pending a GitHub Actions execution visible to the repository connector.  
 **Last updated:** 2026-10-02
 
 ## Scope
@@ -13,7 +13,7 @@ This phase expands the prior six-premium search to **all available NIFTY strikes
 | Phase | Status |
 |---|---|
 | 0 — Scope/protocol expansion | COMPLETE |
-| 1 — Full-chain extraction | CODE COMPLETE; CI RUN PENDING |
+| 1 — Full-chain extraction | CODE COMPLETE; CI EXECUTION NOT YET OBSERVED |
 | 2 — Feature engineering | CODE COMPLETE |
 | 3 — Model screening | CODE COMPLETE |
 | 4 — Holdout/multiple-testing | CODE COMPLETE |
@@ -50,9 +50,13 @@ The primary acquisition reuses the validated Phase 11 TradeMarkk NIFTY 1-minute 
 
 The extraction produces a compact event-level feature table; raw archives remain in the GitHub Actions cache rather than being copied into Git.
 
+## Current gate
+
+The workflow definition is corrected and includes artifact publication, but the repository connector currently exposes no observable Phase 12 Actions run and no derived result files. No empirical result is therefore reported.
+
 ## Next gate
 
-Run the Phase 12 manual workflow. After extraction, inspect:
+Execute the Phase 12 manual workflow from GitHub Actions. Once the run is observable, inspect the generated manifest and analysis before proceeding. After extraction, inspect:
 - number of available strikes per event;
 - exact 10:00 coverage;
 - OI/volume missingness;
