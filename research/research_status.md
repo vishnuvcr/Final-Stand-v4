@@ -184,3 +184,11 @@ The initial sample shows materially different observed aggregate P&L and tail-lo
 - Run 36966020688: **REJECTED**. Unit tests passed, but the requested 2026 option file was absent at the pinned HF revision; no research outputs were accepted.
 - Run 36966241453: **CANCELLED** by the concurrency guard after the data-source correction commit; it produced no accepted outputs.
 - Current run 36966258307: **IN PROGRESS** with HF revision resolution fixed and exit-date cost accounting fixed.
+
+## Phase 9 empirical checkpoint — 2026-10-02
+- **Backtest computation: PASS.** 56 executable trades and 26 skipped candidates were processed across the 2025-01-01 to 2026-09-30 window.
+- **Unit tests: PASS.**
+- **Stop-loss selection: no-stop baseline (0× initial credit) selected on validation.**
+- Untouched test: 12 trades; mean net P&L ₹1,626.73; median ₹2,646.34; total ₹19,520.73; win rate 91.67%; profit factor 2.22; target-hit 91.67%; expiry 8.33%; call selection 25%; put selection 75%.
+- Bootstrap 95% CI for test mean: ₹-1,946 to ₹3,869, so the interval includes zero.
+- **Persistence gate: FAIL.** The CI runner generated the result commit but its push was rejected as non-fast-forward. The numerical result above is preserved from the runner log, but the phase remains reproducibility-incomplete until the exact result files are persisted.
