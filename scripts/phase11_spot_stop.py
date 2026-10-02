@@ -88,7 +88,6 @@ def main():
         df=pd.read_csv(OUT/"phase11_runs"/label/"strategy_v5_trades.csv")
         df['entry_date']=pd.to_datetime(df['entry_date']).dt.date
         run_meta.append((label,kind,val,df))
-    sel=pd.read_json(ROOT/"results"/"strategy_v5_selection_meta.json")
     # JSON lists are easiest read directly.
     meta=json.loads((ROOT/"results"/"strategy_v5_selection_meta.json").read_text())
     dev=set(pd.to_datetime(meta["development_dates"]).date); val=set(pd.to_datetime(meta["validation_dates"]).date); test=set(pd.to_datetime(meta["test_dates"]).date)
