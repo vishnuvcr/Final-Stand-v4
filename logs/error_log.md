@@ -52,3 +52,8 @@
 ## Phase 8 source-audit tooling error — 2026-10-02
 - First attempt to create `research/phase8_data_source_audit.md` failed before any commit because the generated tool payload contained unescaped backtick delimiters inside a JavaScript template literal.
 - No repository state was changed by the failed attempt. The file was then created using a newline-array payload and committed successfully.
+
+
+## Phase 8B recovery execution — 2026-10-02
+- Added targeted recovery against the independent public TradeMarkk/Hugging Face NIFTY expiry-file dataset.
+- Recovery outputs are intentionally separate from Phase 7 and will not be merged until contract/timestamp validation passes.
