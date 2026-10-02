@@ -49,3 +49,5 @@ Evaluate the frozen stop on the final chronological test segment and run cost/ta
 
 ### Phase 9E — Manuscript and stopping rule
 Record results, inferences, limitations and future work. No further parameter search in this phase.
+
+<!-- Phase 9 execution trigger checkpoint: persistence-hardened workflow requires a fresh push-triggered run. -->
