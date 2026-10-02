@@ -126,3 +126,9 @@
 - Earlier connector checks incorrectly suggested that the push-triggered workflow might not have fired because the available workflow-run connector filters commit-associated results to pull-request-triggered runs.
 - User-provided GitHub Actions evidence confirms the Phase 10 workflow is in fact running/queued: an earlier closure run is **In progress** and the newest corrected closure trigger is **Pending**.
 - No scientific result was affected; this only corrects the execution-status interpretation.
+
+
+### Phase 10 execution-concurrency correction — 2026-10-02
+- The corrected closure workflow runs were repeatedly queued behind a stale long-running run (run 36975859064), while subsequent push-triggered runs were cancelled by the repository's `cancel-in-progress: false` concurrency setting.
+- This is an infrastructure/execution-control issue, not a research-methodology change. The Phase 10 workflow was changed to `cancel-in-progress: true` so the newest corrected closure run supersedes stale execution and can complete the predefined analysis.
+- No numerical result from the cancelled runs is accepted. Acceptance remains gated on tests, completion, persistence and remote readback.
