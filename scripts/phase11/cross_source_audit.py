@@ -22,8 +22,6 @@ def normalize_ts(series: pd.Series) -> pd.Series:
 
 
 def audit_file(path: Path, events: pd.DataFrame) -> list[dict]:
-    # Stream one year at a time to avoid holding the multi-year secondary
-    # archive alongside the primary archive in memory.
     df = pd.read_parquet(
         path,
         columns=["timestamp", "expiry", "strike", "option_type", "open"],
@@ -35,43 +33,49 @@ def audit_file(path: Path, events: pd.DataFrame) -> list[dict]:
     df["option_type"] = df["option_type"].astype(str).str.upper()
     df = df.dropna(subset=["ts", "expiry_date", "strike", "open"])
 
-    event_keys = set(zip(events["expiry_date"], events["observation_timestamp_ist"]))
-    df = df[df.apply(lambda r: (r["expiry_date"], r["ts"].isoformat()) in event_keys, axis=1)]
+    wanted_expiries = set(events["expiry_date"])
+    wanted_ts = set(pd.to_datetime(events["observation_timestamp_ist"]))
+    df = df[df["expiry_date"].isin(wanted_expiries) & df["ts"].isin(wanted_ts)].copy()
     if df.empty:
         return []
 
-    out = []
+    # Build the six exact target contracts for every eligible event, then
+    # perform one vectorized keyed merge rather than row-wise scans.
+    targets = []
     for _, e in events.iterrows():
-        snap = df[
-            (df["expiry_date"] == e["expiry_date"])
-            & (df["ts"] == pd.Timestamp(e["observation_timestamp_ist"]))
-        ]
-        if snap.empty:
-            continue
-        diffs = []
-        missing = 0
         for typ, col in PRICE_COLS:
             strike = float(e["atm_strike"]) + (1 if typ == "CE" else -1) * int(col[-1]) * float(e["strike_interval"])
-            r = snap[(snap["option_type"] == typ) & np.isclose(snap["strike"], strike, atol=1e-9)]
-            if r.empty:
-                missing += 1
-                continue
-            primary = float(e[col])
-            secondary_price = float(r.iloc[0]["open"])
-            diffs.append({
-                "abs": abs(primary - secondary_price),
-                "rel": abs(primary - secondary_price) / max(abs(primary), 1e-9),
+            targets.append({
+                "expiry_date": e["expiry_date"],
+                "ts": pd.Timestamp(e["observation_timestamp_ist"]),
+                "option_type": typ,
+                "strike": strike,
+                "primary_price": float(e[col]),
+                "event_id": f"{e['expiry_date']}|{e['observation_timestamp_ist']}",
             })
-        if diffs:
-            out.append({
-                "expiry_date": str(e["expiry_date"]),
-                "observation_date": str(e["observation_date"]),
-                "matched_legs": len(diffs),
-                "missing_legs": missing,
-                "mean_abs_price_diff": float(np.mean([d["abs"] for d in diffs])),
-                "median_abs_price_diff": float(np.median([d["abs"] for d in diffs])),
-                "mean_relative_price_diff": float(np.mean([d["rel"] for d in diffs])),
-            })
+    targets = pd.DataFrame(targets)
+    merged = targets.merge(
+        df,
+        on=["expiry_date", "ts", "option_type", "strike"],
+        how="left",
+        suffixes=("_primary", "_secondary"),
+    )
+    merged["abs_diff"] = (merged["primary_price"] - merged["open"]).abs()
+    merged["rel_diff"] = merged["abs_diff"] / merged["primary_price"].abs().clip(lower=1e-9)
+
+    out = []
+    for event_id, g in merged.groupby("event_id", sort=False):
+        valid = g.dropna(subset=["open"])
+        if valid.empty:
+            continue
+        out.append({
+            "event_id": event_id,
+            "matched_legs": int(len(valid)),
+            "missing_legs": int(6 - len(valid)),
+            "mean_abs_price_diff": float(valid["abs_diff"].mean()),
+            "median_abs_price_diff": float(valid["abs_diff"].median()),
+            "mean_relative_price_diff": float(valid["rel_diff"].mean()),
+        })
     return out
 
 
@@ -81,8 +85,8 @@ def main() -> int:
     events["observation_date"] = pd.to_datetime(events["observation_date"]).dt.date
     events["expiry_date"] = pd.to_datetime(events["expiry_date"]).dt.date
     events = events[events["observation_date"] >= pd.Timestamp("2024-10-01").date()].copy()
-    events["observation_timestamp_ist"] = events["observation_timestamp_ist"].map(
-        lambda x: pd.Timestamp(x).isoformat()
+    events["observation_timestamp_ist"] = pd.to_datetime(
+        events["observation_timestamp_ist"]
     )
 
     matched = []
