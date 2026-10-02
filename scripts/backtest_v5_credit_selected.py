@@ -3,7 +3,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import pyarrow.parquet as pq
-from huggingface_hub import hf_hub_download
+from huggingface_hub import hf_hub_download, HfApi
 
 YEARS=[int(x) for x in os.getenv('YEARS','2025,2026').split(',') if x.strip()]
 START=pd.Timestamp(os.getenv('START_DATE','2025-01-01')).date()
@@ -12,7 +12,8 @@ SLIP=float(os.getenv('SLIPPAGE_POINTS','0.10'))
 BROKER=float(os.getenv('BROKERAGE_PER_ORDER','10'))
 TARGET_FRAC=float(os.getenv('TARGET_FRAC','0.90'))
 STOP_MULT=float(os.getenv('STOP_MULT','0'))
-HF_REVISION=os.getenv('HF_REVISION','78b1c54')
+HF_REVISION=os.getenv('HF_REVISION','main')
+_RESOLVED_HF_REVISION=None
 DATA=Path('data_cache'); DATA.mkdir(exist_ok=True)
 OUT=Path(os.getenv('OUT_DIR','results')); OUT.mkdir(exist_ok=True)
 
@@ -24,8 +25,20 @@ STT_PRE=0.001
 STT_POST=0.0015
 GST_RATE=0.18
 
+def resolved_hf_revision():
+    global _RESOLVED_HF_REVISION
+    if _RESOLVED_HF_REVISION is not None:
+        return _RESOLVED_HF_REVISION
+    if HF_REVISION != 'main':
+        _RESOLVED_HF_REVISION=HF_REVISION
+    else:
+        info=HfApi(token=os.getenv('HF_TOKEN')).dataset_info('rissin/nse-options-intraday')
+        _RESOLVED_HF_REVISION=info.sha
+    return _RESOLVED_HF_REVISION
+
 def opt_file(y):
-    return Path(hf_hub_download(repo_id='rissin/nse-options-intraday', filename=f'upstox_intraday/NIFTY/NIFTY_{y}.parquet', repo_type='dataset', revision=HF_REVISION, token=os.getenv('HF_TOKEN'), cache_dir=str(DATA/'hf')))
+    rev=resolved_hf_revision()
+    return Path(hf_hub_download(repo_id='rissin/nse-options-intraday', filename=f'upstox_intraday/NIFTY/NIFTY_{y}.parquet', repo_type='dataset', revision=rev, token=os.getenv('HF_TOKEN'), cache_dir=str(DATA/'hf')))
 
 def spot_files(y):
     if y==2026:
@@ -191,7 +204,7 @@ def backtest_candidate(ex,entry,spot):
     else:
         exit_ts=expiry_ts if all((expiry_ts,float(k),typ) in idx and pd.notna(idx[(expiry_ts,float(k),typ)][0]) and float(idx[(expiry_ts,float(k),typ)][0])>0 for k,typ,_,_ in legs) else None
         exit_reason='expiry' if exit_ts is not None else 'missing_expiry_leg'
-    net_pnl,exit_fees,orders,reason=close_position(cash,signed,idx,exit_ts,lot,entry_fees,entry_ts)
+    net_pnl,exit_fees,orders,reason=close_position(cash,signed,idx,exit_ts,lot,entry_fees,exit_ts)
     if reason: return None,reason
     return {
         'expiry':str(ex),'entry_date':str(entry),'side':side,'selected_credit':raw_credit,'other_credit':(vals['ce7']+vals['ce8']-vals['ce6']) if side=='PUT' else (vals['pe7']+vals['pe8']-vals['pe6']),'selection_margin':abs((vals['ce7']+vals['ce8']-vals['ce6'])-(vals['pe7']+vals['pe8']-vals['pe6'])),'atm':atm(entry_spot),'entry_spot':entry_spot,'lot_size':lot,'target_fraction':TARGET_FRAC,'stop_multiple':STOP_MULT,'initial_net_credit_per_lot':initial_net_credit_per_lot,'target_rupees':target_rupees,'stop_rupees':stop_rupees if stop_rupees is not None else np.nan,'trigger_timestamp':str(trigger) if trigger is not None else '','exit_timestamp':str(exit_ts),'exit_reason':exit_reason,'trigger_pnl':trigger_value if trigger_value is not None else np.nan,'gross_pnl':float(net_pnl+entry_fees+exit_fees),'fees_proxy':float(entry_fees+exit_fees),'net_pnl':float(net_pnl),'peak_mtm':float(peak),'trough_mtm':float(trough),'runup_to_drawdown':float(peak-trough),'orders':len(orders)+3,'ce6':ks['ce6'],'ce7':ks['ce7'],'ce8':ks['ce8'],'pe6':ks['pe6'],'pe7':ks['pe7'],'pe8':ks['pe8']
@@ -227,7 +240,7 @@ def build_trade_rows():
 def main():
     rows,skips,meta=build_trade_rows()
     rows.to_csv(OUT/'strategy_v5_trades.csv',index=False)
-    q={'strategy_version':'V5 credit-selected OTM6/7/8','target_fraction':TARGET_FRAC,'stop_multiple':STOP_MULT,'trades':len(rows),'skips':skips,'per_year':meta,'source':'rissin/nse-options-intraday@'+HF_REVISION+' + technovusin/nifty50-historical-data','entry':'4 trading sessions before actual expiry at 10:00 IST','execution':'10:00 option-bar open; trigger on close; exit first common next open; otherwise 15:29 expiry open','cost_model':'Paytm Money + NSE/SEBI/STT/stamp/GST + slippage','positive_credit_filter':True}
+    q={'strategy_version':'V5 credit-selected OTM6/7/8','target_fraction':TARGET_FRAC,'stop_multiple':STOP_MULT,'trades':len(rows),'skips':skips,'per_year':meta,'source':'rissin/nse-options-intraday@'+resolved_hf_revision()+' + technovusin/nifty50-historical-data','entry':'4 trading sessions before actual expiry at 10:00 IST','execution':'10:00 option-bar open; trigger on close; exit first common next open; otherwise 15:29 expiry open','cost_model':'Paytm Money + NSE/SEBI/STT/stamp/GST + slippage','positive_credit_filter':True}
     (OUT/'strategy_v5_data_quality.json').write_text(json.dumps(q,indent=2,default=str))
     print(json.dumps({'trades':len(rows),'skips':len(skips)},indent=2))
 
