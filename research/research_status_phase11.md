@@ -1,7 +1,7 @@
 # Phase 11 Research Status
 
 **Branch:** phase-11-premium-direction-predictor  
-**Status:** Phase 0 — protocol initialized; literature review started; data acquisition not yet run.  
+**Status:** Phase 0 — protocol freeze / Phase 1 acquisition setup / Phase 2 engine bootstrap.  
 **Last updated:** 2026-10-02
 
 ## Phase status
@@ -9,8 +9,8 @@
 | Phase | Status |
 |---|---|
 | 0 — Protocol freeze | IN PROGRESS |
-| 1 — Data acquisition/validation | NOT STARTED |
-| 2 — Feature engineering | NOT STARTED |
+| 1 — Data acquisition/validation | ACQUISITION CODE READY; DATA NOT YET EXECUTED |
+| 2 — Feature engineering | CORE SIGNAL + EVENT BUILDER IMPLEMENTED; NOT YET EXECUTED |
 | 3 — Primary directional test | NOT STARTED |
 | 4 — Out-of-sample validation | NOT STARTED |
 | 5 — Robustness/falsification | NOT STARTED |
@@ -19,22 +19,27 @@
 
 ## Completed in this branch
 
-- Created a separate Phase 11 branch from main.
-- Recorded the user's predictor formula and exact directional mapping.
-- Preserved the project's 4-DTE / 10:00 IST convention.
-- Defined the outcome as movement from the 10:00 spot to expiry settlement.
-- Added a date-aware plan for the NSE Thursday-to-Tuesday expiry regime change.
-- Defined the primary statistics and robustness framework.
-- Identified Paytm Money execution-cost treatment as a secondary trading-translation phase.
+- Created a separate Phase 11 branch.
+- Recorded the exact user-specified premium formulas and directional mapping.
+- Completed an initial literature/source review.
+- Identified candidate intraday option and NIFTY spot sources.
+- Added cached data-acquisition code for NIFTY option Parquet files and NIFTY 1-minute spot CSV files.
+- Added the core predictor implementation with unit tests.
+- Added an event builder that constructs the 4-DTE/10:00 event table from cached data.
+- Added a manual GitHub Actions workflow with validate/acquire/build actions.
+- Adopted a point-in-time 10:00 bar-open convention for the primary predictor.
 
-## Latest execution note
+## Data coverage state
 
-- Initial workflow registration produced an immediate GitHub Actions failure with no exposed job details. The workflow was simplified to manual-run validation only; this is logged and does not affect research results.
+No historical event dataset has yet been executed or validated in this branch. Therefore there is **no performance result yet**.
 
 ## Current blockers
 
-Historical 10:00 IST option observations with reliable strike-level bid/ask/trade data must be acquired and validated before any performance conclusion is drawn.
+1. Run the manual acquisition workflow with the required historical years.
+2. Validate downloaded option/spot coverage and source schema.
+3. Build the event dataset and independently verify a sample of events.
+4. Only then run the statistical predictor tests.
 
-## Next execution gate
+## Research-completion rule
 
-Phase 0 exits only after the data schema, strike-selection function, timestamp tolerance, missing-data policy, and primary statistical protocol are implemented and tested.
+The study stops after the defined Phase 7 package. Conclusions will distinguish statistical evidence, economic magnitude, and data-quality uncertainty.
