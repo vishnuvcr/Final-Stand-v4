@@ -82,3 +82,18 @@ Preliminary development/holdout screening on the committed 121-event table found
 These are screening observations only. 12/20 has a two-sided exact binomial p-value around 0.50, and many candidate formulas are being searched, so no predictive edge is claimed. The formal multi-premium search in GitHub Actions will apply development-only model selection, chronological 2026 holdout testing, and a multiple-testing diagnostic.
 
 Literature review supports testing option-implied skew/relative-premium structures rather than only raw premiums: published research reports predictive information in IV skew/spreads and option-implied state-price measures, while also showing that predictive effects depend on horizon and construction. citeturn0search0turn0search5turn0search13
+
+
+## 2026-10-02 — Formal premium combination search completed
+
+The GitHub Actions search evaluated 78 engineered premium features, 156 threshold/mapping candidates, and all 63 non-empty raw-premium subsets. Development was restricted to 2024–2025; 2026 remained untouched until final holdout scoring.
+
+Results:
+- Best threshold candidates were CE OTM6/OTM7 and CE OTM6/OTM8 log-ratios, each 59.41% development accuracy and 12/20 (60%) on 2026 holdout.
+- Best subset logistic model used CE OTM6 + CE OTM7 + PE OTM7; development 5-fold CV accuracy was 50.38%; holdout was 12/20.
+- Maximum-threshold-accuracy permutation diagnostic p = 0.5118.
+- Holdout class balance was 35% bullish / 65% bearish, so always-bearish accuracy was 65%.
+
+Decision: treat call-wing ratios as a pre-specified Phase 5 research lead only. Do not promote them to trading. Freeze the candidate pair before additional robustness tests to avoid an expanding search.
+
+Full report: results/phase11_premium_combination_search.md; raw output: results/phase11_premium_combination_search.json.
