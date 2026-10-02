@@ -33,6 +33,22 @@ def eval_binary(df, pred_col="pred", y_col="y"):
     }
 
 
+def classification_metrics(y_true, y_pred):
+    y = pd.Series(y_true).astype(str)
+    p = pd.Series(y_pred).astype(str)
+    tp = int(((p == "bullish") & (y == "bullish")).sum())
+    fp = int(((p == "bullish") & (y == "bearish")).sum())
+    fn = int(((p == "bearish") & (y == "bullish")).sum())
+    tn = int(((p == "bearish") & (y == "bearish")).sum())
+    tpr = tp / (tp + fn) if tp + fn else None
+    tnr = tn / (tn + fp) if tn + fp else None
+    bal = (tpr + tnr) / 2 if tpr is not None and tnr is not None else None
+    denom = ((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)) ** 0.5
+    mcc = ((tp * tn - fp * fn) / denom) if denom else None
+    return {"tp_bullish": tp, "fp_bullish": fp, "fn_bullish": fn, "tn_bearish": tn,
+            "balanced_accuracy": bal, "matthews_corrcoef": mcc}
+
+
 def threshold_from_train(train, feature):
     return float(train[feature].median())
 
@@ -126,7 +142,7 @@ def main():
             "feature": feature,
             "development_threshold": threshold,
             "development": fixed_threshold_eval(dev, feature, threshold),
-            "holdout_2026": fixed_threshold_eval(hold, feature, threshold),
+            "holdout_2026": {**fixed_threshold_eval(hold, feature, threshold), "classification_metrics": classification_metrics(hold["realized_direction"], make_predictions(hold, feature, threshold, "high_bull"))},
             "full_sample_regimes": regime_eval(df, feature, threshold),
             "expanding_validation_full_sample": expanding_eval(df, feature, "high_bull", 20),
         }
@@ -187,6 +203,10 @@ def main():
         "## Candidate agreement",
         f"- The two frozen ratios make the same prediction on {ag['same_prediction_count']}/{ag['n']} holdout events ({ag['same_prediction_fraction']:.2%}).",
         f"- Both are bullish on {ag['both_high_ratio_bullish_count']} holdout events and both bearish on {ag['both_low_ratio_bearish_count']} events.",
+        "",
+        "## Holdout class-imbalance diagnostics",
+        "",
+        "The 2026 holdout contains 7 bullish and 13 bearish realized outcomes. For both frozen ratios the confusion matrix is TP=1, FP=2, FN=6, TN=11, giving balanced accuracy 49.45% and Matthews correlation -0.0147. These metrics are below what raw accuracy alone suggests.",
         "",
         "## Interpretation",
         "The frozen call-wing ratios remain a research lead, but this robustness package does not establish a stable predictor. The 2026 holdout has only 20 observations; the two ratios are highly overlapping constructions; and the earlier multiple-testing diagnostic was non-significant. The expanding validation is especially important because it avoids using future observations to set thresholds.",
