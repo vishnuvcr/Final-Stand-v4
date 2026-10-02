@@ -65,7 +65,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: data_cache/phase11
-          key: phase11-market-${{ runner.os }}-${{ hashFiles('research/data_manifest_phase11.json') }}-${{ inputs.years || '2024,2025,2026' }}
+          key: phase11-market-${{ runner.os }}-${{ hashFiles('research/data_manifest_phase11.json') }}
           restore-keys: |
             phase11-market-${{ runner.os }}-
 
