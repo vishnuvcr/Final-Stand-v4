@@ -53,3 +53,9 @@ def test_join_prefers_validated_context_files():
     assert "nse_nifty50_validated.csv" in script
     assert "nse_india_vix_validated.csv" in script
     assert "fii_dii_history.csv" in script
+
+
+def test_join_accepts_normalized_lowercase_context_columns():
+    script = Path("scripts/phase10_context_join.py").read_text()
+    assert '"date" in df.columns' in script
+    assert '"close" in df.columns' in script
