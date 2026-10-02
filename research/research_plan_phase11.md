@@ -259,3 +259,13 @@ The research stops after the defined phases above. It should conclude with one o
 
 The final conclusion must distinguish statistical significance, economic significance, and data-quality limitations.
 
+
+
+## Phase 1 implementation clarification — 2026-10-02
+
+- The primary 10:00 option observation uses the **10:00:00 one-minute bar OPEN**, not the 10:00 bar close, to avoid incorporating information from 10:00:01–10:00:59.
+- The primary NIFTY observation spot uses the **10:00:00 one-minute bar OPEN** from the cached spot series.
+- The expiry outcome uses the **latest available NIFTY CLOSE on the expiry trading date** as the expiry-value proxy. This is explicitly labelled as a settlement proxy until independently verified against official NSE settlement data.
+- Four-DTE dates are derived from the observed NIFTY trading-session calendar, counting four distinct prior sessions before the expiry date.
+- Historical events with missing exact 10:00 option bars are excluded from the primary dataset and counted in the coverage report; no silent minute-level forward fill is allowed.
+- The initial free intraday option candidate begins in October 2024, so the first reproducible sample naturally spans both the legacy Thursday-expiry and post-September-2025 Tuesday-expiry regimes.
