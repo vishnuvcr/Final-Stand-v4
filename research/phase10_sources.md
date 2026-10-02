@@ -30,3 +30,19 @@
 - The Phase 10 analysis will not claim complete coverage until each context series is downloaded, timestamp-validated and cached.
 - Web discovery establishes source availability; it does not by itself establish that a complete 2025-2026 historical extract has been acquired.
 - No context variable will be used as a new entry/exit filter in Phase 10.
+## Literature review — initial evidence map
+- Jain, Varma & Agarwalla (Journal of Futures Markets, 2019) study Indian equity options and report that implied volatility contains information about future volatility; they characterize the market as broadly supportive of efficiency while identifying option-risk-premium features. This supports including volatility and smile/risk-premium context without assuming exploitable mispricing.
+- Garg & Vipul (Journal of Futures Markets, 2015) study volatility risk premia in Indian options and report that transaction costs materially reduce the economic benefits of VRP strategies. This directly motivates the Phase 10 slippage and brokerage stress tests.
+- Mutum & Das (Indian Journal of Finance, 2019) test lower-boundary conditions in NIFTY index options and report that apparent mispricing was concentrated in thinly traded and near-expiry options, while much of it was not exploitable after liquidity considerations. This motivates explicit data-availability and execution-cost controls.
+- Vipul (Journal of Futures Markets, 2009) examines box-spread arbitrage efficiency in NIFTY index options using time-stamped transactions. The work is relevant to the broader market-efficiency question but does not validate the Phase 9 strategy.
+- A 2026 SSRN preprint by Sumin Pillai tests several NIFTY volatility-selling strategies with explicit frictions and reports that realistic costs are important to strategy economics. It is treated as recent secondary evidence, not as established consensus.
+- A 2026 SSRN preprint by Yash Agarwal analyzes NIFTY variance-risk-premium behavior using high-frequency options data and reports positive VRP on a majority of sampled days but substantial tail asymmetry and regime variation. It motivates regime/context analysis while requiring independent validation.
+- A 2026 research preprint by Ashwin R. John studies NIFTY volatility-risk-premium harvesting with realistic implementation costs and a post-2024 market-structure break. It is treated as a recent preprint rather than peer-reviewed evidence.
+- Broader options-market literature emphasizes the importance of liquidity, price impact, volatility state and intermediary risk premia. Phase 10 therefore reports these as explanatory/context variables rather than converting them into unvalidated trading filters.
+
+## Literature implications for Phase 10
+1. Transaction costs are a first-order robustness dimension, not an afterthought.
+2. Volatility regime is relevant to option-selling economics and should be measured independently of the strategy outcome.
+3. Apparent option mispricing can be concentrated in illiquid/near-expiry observations and may not be executable.
+4. Recent NIFTY research is heterogeneous and includes non-peer-reviewed preprints; claims from these sources will be explicitly labeled.
+5. The Phase 10 objective is robustness and explanation, not confirmation of a predetermined positive result.
