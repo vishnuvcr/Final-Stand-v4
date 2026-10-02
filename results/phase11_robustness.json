@@ -1,0 +1,136 @@
+{
+  "protocol": {
+    "development": "expiry before 2026-01-01",
+    "holdout": "expiry on/after 2026-01-01",
+    "candidate_mapping": "high ratio => bullish",
+    "threshold_rule": "development median; no holdout tuning",
+    "expanding_rule": "median of all prior observations; minimum training window 20 events",
+    "regime_splits": [
+      "calendar year",
+      "pre/post 2025-09-01 expiry-convention boundary"
+    ]
+  },
+  "candidates": {
+    "ce_otm6_ce_otm7_logratio": {
+      "feature": "logratio ce_otm6/ce_otm7",
+      "development_threshold": 0.23365719445845767,
+      "development": {
+        "n": 101,
+        "correct": 60,
+        "accuracy": 0.594059405940594,
+        "exact_binomial_p_50": 0.0727570068775242
+      },
+      "holdout_2026": {
+        "n": 20,
+        "correct": 12,
+        "accuracy": 0.6,
+        "exact_binomial_p_50": 0.5034446716308594
+      },
+      "regimes": {
+        "year_2024": {
+          "n": 50,
+          "correct": 32,
+          "accuracy": 0.64,
+          "p": 0.06490864707227217
+        },
+        "year_2025": {
+          "n": 51,
+          "correct": 28,
+          "accuracy": 0.5490196078431373,
+          "p": 0.5758493477318467
+        },
+        "year_2026": {
+          "n": 20,
+          "correct": 12,
+          "accuracy": 0.6,
+          "p": 0.5034446716308594
+        },
+        "pre_2025_09_01": {
+          "n": 85,
+          "correct": 53,
+          "accuracy": 0.6235294117647059,
+          "p": 0.029456361785778866
+        },
+        "post_2025_09_01": {
+          "n": 36,
+          "correct": 19,
+          "accuracy": 0.5277777777777778,
+          "p": 0.8679394004284404
+        }
+      },
+      "expanding": {
+        "n": 101,
+        "correct": 64,
+        "accuracy": 0.6336633663366337,
+        "exact_binomial_p_50": 0.009335048120644802
+      }
+    },
+    "ce_otm6_ce_otm8_logratio": {
+      "feature": "logratio ce_otm6/ce_otm8",
+      "development_threshold": 0.47640304878878154,
+      "development": {
+        "n": 101,
+        "correct": 60,
+        "accuracy": 0.594059405940594,
+        "exact_binomial_p_50": 0.0727570068775242
+      },
+      "holdout_2026": {
+        "n": 20,
+        "correct": 12,
+        "accuracy": 0.6,
+        "exact_binomial_p_50": 0.5034446716308594
+      },
+      "regimes": {
+        "year_2024": {
+          "n": 50,
+          "correct": 32,
+          "accuracy": 0.64,
+          "p": 0.06490864707227217
+        },
+        "year_2025": {
+          "n": 51,
+          "correct": 28,
+          "accuracy": 0.5490196078431373,
+          "p": 0.5758493477318467
+        },
+        "year_2026": {
+          "n": 20,
+          "correct": 12,
+          "accuracy": 0.6,
+          "p": 0.5034446716308594
+        },
+        "pre_2025_09_01": {
+          "n": 85,
+          "correct": 53,
+          "accuracy": 0.6235294117647059,
+          "p": 0.029456361785778866
+        },
+        "post_2025_09_01": {
+          "n": 36,
+          "correct": 19,
+          "accuracy": 0.5277777777777778,
+          "p": 0.8679394004284404
+        }
+      },
+      "expanding": {
+        "n": 101,
+        "correct": 63,
+        "accuracy": 0.6237623762376238,
+        "exact_binomial_p_50": 0.016505855701607595
+      }
+    }
+  },
+  "holdout_candidate_agreement": {
+    "n": 20,
+    "same_prediction_count": 20,
+    "same_prediction_fraction": 1,
+    "both_high_ratio_bullish_count": 3,
+    "both_low_ratio_bearish_count": 17,
+    "confusion_each": {
+      "pred_bullish_realized_bullish": 1,
+      "pred_bullish_realized_bearish": 2,
+      "pred_bearish_realized_bullish": 6,
+      "pred_bearish_realized_bearish": 11
+    }
+  }
+}
