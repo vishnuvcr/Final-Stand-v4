@@ -1,7 +1,7 @@
 # Phase 11 Research Status
 
 **Branch:** phase-11-premium-direction-predictor  
-**Status:** Phase 1 — multi-source acquisition executing via GitHub Actions; no empirical result claimed.  
+**Status:** Phase 5 — robustness/falsification in progress; primary and holdout directional tests completed; no trading translation yet.  
 **Last updated:** 2026-10-02
 
 ## Phase status
@@ -9,11 +9,11 @@
 | Phase | Status |
 |---|---|
 | 0 — Protocol freeze | COMPLETE |
-| 1 — Data acquisition/validation | IN PROGRESS — MULTI-SOURCE ACQUISITION ENABLED |
-| 2 — Feature engineering | CORE SIGNAL + EVENT BUILDER IMPLEMENTED; NOT YET EXECUTED |
-| 3 — Primary directional test | NOT STARTED |
-| 4 — Out-of-sample validation | NOT STARTED |
-| 5 — Robustness/falsification | NOT STARTED |
+| 1 — Data acquisition/validation | COMPLETE — PRIMARY + INDEPENDENT CROSS-SOURCE AUDIT |
+| 2 — Feature engineering | COMPLETE — 121 VALID EVENTS BUILT |
+| 3 — Primary directional test | COMPLETE — 61/121 CORRECT (50.41%) |
+| 4 — Out-of-sample validation | COMPLETE — 2026 HOLDOUT 9/20 (45.0%) |
+| 5 — Robustness/falsification | IN PROGRESS |
 | 6 — Trading translation | NOT STARTED |
 | 7 — Manuscript/conclusion | NOT STARTED |
 
@@ -78,3 +78,49 @@ The acquisition pipeline now:
 The GitHub Actions workflow now automatically performs acquisition and event building on pushes to this Phase 11 branch, while preserving manual `validate`, `acquire`, and `build` controls.
 
 No predictive accuracy, p-value, correlation, or trading result has been calculated yet.
+
+
+## 2026-10-02 — Phase 3/4 empirical results
+
+### Dataset coverage
+- 132 expiry candidates were evaluated.
+- 121 valid 4-DTE/10:00 events were built.
+- Exclusions: 1 missing required option leg, 3 missing 10:00 spot observations, 7 missing expiry-date spot observations.
+- Predictions: 101 bullish, 20 bearish.
+- Realized directions: 55 bullish, 66 bearish.
+
+### Primary directional test
+- Correct: 61/121.
+- Accuracy: 50.41%.
+- Exact two-sided binomial p-value against 50%: 1.000.
+- Bootstrap 95% CI: 41.32%–59.50%.
+- Always-bearish baseline: 54.55%; always-bullish baseline: 45.45%.
+- Therefore the pre-specified directional mapping does not show evidence of a reliable directional edge in this sample.
+
+### Continuous-score analysis
+- Pearson correlation between premium spread and expiry return: r = -0.2086, p = 0.02165.
+- Spearman correlation: rho = -0.1118, p = 0.22223.
+- Logistic slope for realized bullish direction: -0.01801, p = 0.22877; 95% CI [-0.04734, 0.01132].
+- The statistically smaller Pearson result is not supported by the rank correlation, logistic model, or chronological holdout, so it is not treated as robust evidence.
+
+### Chronological holdout
+- Development 2024–2025: 52/101 = 51.49%.
+- 2026 holdout: 9/20 = 45.0%.
+- 2026 holdout exact binomial p-value: 0.8238.
+- Holdout spread/return Pearson r = -0.0558, p = 0.8154.
+- Holdout logistic slope p = 0.6055.
+
+### Independent source audit
+The secondary Rissin/Upstox archive was checked for eligible events from October 2024 onward:
+- 82 eligible events.
+- 81/82 had at least one secondary price match (98.78%).
+- All 81 matched events had all six required CE/PE legs.
+- Mean absolute price difference: 0.1712 premium points.
+- Mean relative price difference: 0.3045%.
+
+This supports cross-source consistency of the point-in-time premium observations for the overlapping period, while not proving exchange-level correctness.
+
+### Current inference
+The Phase 11 primary hypothesis has **not** demonstrated stable out-of-sample directional predictive power. The isolated overall Pearson relationship is treated as exploratory because it does not survive the chronological holdout and is not corroborated by the rank/logistic tests.
+
+Phase 5 robustness/falsification remains required before any trading translation.
