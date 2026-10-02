@@ -120,3 +120,9 @@
 - Attempted a direct local clone of the Phase 10 branch to execute the corrected workflow outside GitHub Actions.
 - The execution environment could not resolve `github.com`, so the clone failed before data or repository contents were downloaded.
 - No calculations were accepted from this attempt. GitHub Actions remains the authoritative execution path for the cached-data research workflow.
+
+
+### Execution-status correction — 2026-10-02
+- Earlier connector checks incorrectly suggested that the push-triggered workflow might not have fired because the available workflow-run connector filters commit-associated results to pull-request-triggered runs.
+- User-provided GitHub Actions evidence confirms the Phase 10 workflow is in fact running/queued: an earlier closure run is **In progress** and the newest corrected closure trigger is **Pending**.
+- No scientific result was affected; this only corrects the execution-status interpretation.
