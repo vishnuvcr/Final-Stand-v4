@@ -97,9 +97,22 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          # The research branch may advance while this workflow is running (for example from a concurrent log/status update).
+          # Rebase before the first push and retry if another fast-forward lands between rebase and push.
           git add results/phase11_events.csv results/phase11_events.json results/phase11_statistical_analysis.json results/phase11_statistical_analysis.md results/phase11_cross_source_audit.json results/phase11_premium_combination_search.json results/phase11_premium_combination_search.md
           git diff --cached --quiet || git commit -m 'Build Phase 11 event dataset'
-          git push
+          for attempt in 1 2 3; do
+            git fetch origin phase-11-premium-direction-predictor
+            git rebase origin/phase-11-premium-direction-predictor || {
+              git rebase --abort
+              echo 'Rebase conflict while publishing derived results; leaving generated files in the runner for inspection.'
+              exit 1
+            }
+            git push origin HEAD:phase-11-premium-direction-predictor && exit 0
+            sleep $((attempt * 2))
+          done
+          echo 'Unable to publish derived results after three attempts.'
+          exit 1
 
       - name: Report acquisition footprint
         if: inputs.action == 'acquire' || github.event_name == 'push'
