@@ -1,7 +1,7 @@
 # Phase 11 Research Status
 
 **Branch:** phase-11-premium-direction-predictor  
-**Status:** Phase 0 — specification initialized; data acquisition not yet run.  
+**Status:** Phase 0 — protocol initialized; literature review started; data acquisition not yet run.  
 **Last updated:** 2026-10-02
 
 ## Phase status
@@ -26,6 +26,10 @@
 - Added a date-aware plan for the NSE Thursday-to-Tuesday expiry regime change.
 - Defined the primary statistics and robustness framework.
 - Identified Paytm Money execution-cost treatment as a secondary trading-translation phase.
+
+## Latest execution note
+
+- Initial workflow registration produced an immediate GitHub Actions failure with no exposed job details. The workflow was simplified to manual-run validation only; this is logged and does not affect research results.
 
 ## Current blockers
 
