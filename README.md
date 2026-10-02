@@ -39,3 +39,6 @@ A new research branch expands the Phase 11 search beyond OTM6/7/8 to the **full 
 - [Phase 12 workflow](https://github.com/vishnuvcr/Final-Stand-v4/blob/phase-12-full-chain-oi-direction/.github/workflows/phase-12-full-chain-oi-direction.yml)
 
 **Phase 12 status:** implementation complete; empirical GitHub Actions execution pending/completing. No trading conclusion has been drawn.
+
+
+**Phase 12 execution infrastructure:** The Phase 12 workflow is also registered on `main` so GitHub Actions recognizes the workflow while research execution remains isolated on `phase-12-full-chain-oi-direction`. The phase branch remains the sole location for Phase 12 research code/results.
