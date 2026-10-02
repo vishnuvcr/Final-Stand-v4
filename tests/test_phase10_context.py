@@ -38,3 +38,18 @@ def test_context_join_handles_unavailable_nse_json_and_nifty_fallback():
 def test_context_acquisition_includes_nifty_fallback():
     script = Path("scripts/phase10_market_context.py").read_text()
     assert '"^nsei", "stooq_nifty.csv"' in script
+
+
+def test_validated_context_repair_is_wired():
+    repair = Path("scripts/phase10_context_repair.py").read_text()
+    workflow = Path(".github/workflows/phase-10-v5-robustness-context.yml").read_text()
+    assert "NiftyIndicesClient" in repair
+    assert "MrChartist/fii-dii-data" in repair
+    assert "python scripts/phase10_context_repair.py" in workflow
+
+
+def test_join_prefers_validated_context_files():
+    script = Path("scripts/phase10_context_join.py").read_text()
+    assert "nse_nifty50_validated.csv" in script
+    assert "nse_india_vix_validated.csv" in script
+    assert "fii_dii_history.csv" in script
