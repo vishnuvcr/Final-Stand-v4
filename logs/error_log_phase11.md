@@ -46,3 +46,13 @@
 - Root cause: the repository did not explicitly package the `scripts` and `scripts/phase11` directories, and the CI test invocation did not force the repository root onto `PYTHONPATH`.
 - Correction: added `scripts/__init__.py`, `scripts/phase11/__init__.py`, and set `PYTHONPATH: ${{ github.workspace }}` at the Phase 11 job level.
 - No market-data result was produced by the failed run, so the research conclusions remain unaffected.
+
+
+## 2026-10-02 — CI cache-key failure diagnosed and corrected
+
+- The next run after the Python import fix reached all 8 unit tests successfully: **8 passed**.
+- It then failed in `actions/cache@v4` before acquisition.
+- Exact error: `Key Validation Error ... cannot contain commas`.
+- Cause: the cache key incorporated the workflow input `2024,2025,2026` literally.
+- Correction: removed the year-list suffix from the cache key and retained the research data-manifest hash as the cache identity.
+- This failure occurred before market-data acquisition; no empirical result was generated.
