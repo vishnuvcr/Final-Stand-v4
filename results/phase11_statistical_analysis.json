@@ -1,0 +1,203 @@
+{
+  "protocol": {
+    "primary_snapshot": "10:00:00 IST one-minute bar OPEN",
+    "expiry_value": "latest available NIFTY CLOSE on expiry date",
+    "direction_mapping": "call_score > put_score => bearish; put_score > call_score => bullish",
+    "holdout_boundary": "2026-01-01",
+    "bootstrap_seed": 20261002
+  },
+  "overall": {
+    "n": 121,
+    "correct": 61,
+    "accuracy": 0.5041322314049587,
+    "accuracy_bootstrap_95ci": [
+      0.4132231404958678,
+      0.5950413223140496
+    ],
+    "accuracy_exact_binomial_p": 1.0,
+    "always_bullish_baseline": 0.45454545454545453,
+    "always_bearish_baseline": 0.5454545454545454,
+    "mean_expiry_return": 0.00021397039119803332,
+    "median_expiry_return": -0.0017352156748454,
+    "pearson_spread_return": {
+      "r": -0.2086276203850306,
+      "p": 0.02165226478734914
+    },
+    "spearman_spread_return": {
+      "rho": -0.11177742740335668,
+      "p": 0.22223062064138885
+    },
+    "logistic_realized_bullish_on_spread": {
+      "intercept": -0.3394648554405853,
+      "slope": -0.01801097717109157,
+      "slope_se": 0.014965071155524173,
+      "z": -1.2035343490126365,
+      "p": 0.22876960743666364,
+      "ci95": [
+        -0.047342516635918944,
+        0.01132056229373581
+      ],
+      "odds_ratio_per_one_spread_unit": 0.9821502510677832
+    },
+    "prediction_counts": {
+      "bullish": 101,
+      "bearish": 20
+    },
+    "realized_counts": {
+      "bearish": 66,
+      "bullish": 55
+    }
+  },
+  "development_2024_2025": {
+    "n": 101,
+    "correct": 52,
+    "accuracy": 0.5148514851485149,
+    "accuracy_bootstrap_95ci": [
+      0.4158415841584158,
+      0.6138613861386139
+    ],
+    "accuracy_exact_binomial_p": 0.8423820985077438,
+    "always_bullish_baseline": 0.4752475247524752,
+    "always_bearish_baseline": 0.5247524752475248,
+    "mean_expiry_return": 0.0011221564698393732,
+    "median_expiry_return": -0.0009062962835395,
+    "pearson_spread_return": {
+      "r": -0.29619643417615,
+      "p": 0.002634260197936774
+    },
+    "spearman_spread_return": {
+      "rho": -0.13439837855823203,
+      "p": 0.18025748579467635
+    },
+    "logistic_realized_bullish_on_spread": {
+      "intercept": -0.4179911754981837,
+      "slope": -0.04281226421320564,
+      "slope_se": 0.022168952051010396,
+      "z": -1.9311812355719533,
+      "p": 0.05346064368146915,
+      "ci95": [
+        -0.08626341023318601,
+        0.0006388818067747312
+      ],
+      "odds_ratio_per_one_spread_unit": 0.9580912411972426
+    },
+    "prediction_counts": {
+      "bullish": 85,
+      "bearish": 16
+    },
+    "realized_counts": {
+      "bearish": 53,
+      "bullish": 48
+    }
+  },
+  "holdout_2026": {
+    "n": 20,
+    "correct": 9,
+    "accuracy": 0.45,
+    "accuracy_bootstrap_95ci": [
+      0.25,
+      0.65
+    ],
+    "accuracy_exact_binomial_p": 0.8238029479980469,
+    "always_bullish_baseline": 0.35,
+    "always_bearish_baseline": 0.65,
+    "mean_expiry_return": -0.004372369305940731,
+    "median_expiry_return": -0.0089109556800715,
+    "pearson_spread_return": {
+      "r": -0.05576433990859838,
+      "p": 0.8153661438370445
+    },
+    "spearman_spread_return": {
+      "rho": -0.08421052631578946,
+      "p": 0.7241036435108114
+    },
+    "logistic_realized_bullish_on_spread": {
+      "intercept": -0.41951680078774745,
+      "slope": 0.015067286126707121,
+      "slope_se": 0.02916943629258949,
+      "z": 0.5165436169410985,
+      "p": 0.6054747837363408,
+      "ci95": [
+        -0.04210480900676828,
+        0.07223938126018252
+      ],
+      "odds_ratio_per_one_spread_unit": 1.0151813699399814
+    },
+    "prediction_counts": {
+      "bullish": 16,
+      "bearish": 4
+    },
+    "realized_counts": {
+      "bearish": 13,
+      "bullish": 7
+    }
+  },
+  "spread_deciles": [
+    {
+      "decile": 1,
+      "n": 13,
+      "accuracy": 0.6153846153846154,
+      "mean_expiry_return": 0.01198487469453727
+    },
+    {
+      "decile": 2,
+      "n": 12,
+      "accuracy": 0.4166666666666667,
+      "mean_expiry_return": -0.004189700551515316
+    },
+    {
+      "decile": 3,
+      "n": 12,
+      "accuracy": 0.5833333333333334,
+      "mean_expiry_return": 0.005541328144820016
+    },
+    {
+      "decile": 4,
+      "n": 12,
+      "accuracy": 0.5833333333333334,
+      "mean_expiry_return": 0.003989723513551916
+    },
+    {
+      "decile": 5,
+      "n": 12,
+      "accuracy": 0.4166666666666667,
+      "mean_expiry_return": -0.0053897676406981605
+    },
+    {
+      "decile": 6,
+      "n": 12,
+      "accuracy": 0.3333333333333333,
+      "mean_expiry_return": -0.0023791544429661166
+    },
+    {
+      "decile": 7,
+      "n": 12,
+      "accuracy": 0.4166666666666667,
+      "mean_expiry_return": -0.004435943304046667
+    },
+    {
+      "decile": 8,
+      "n": 12,
+      "accuracy": 0.3333333333333333,
+      "mean_expiry_return": -0.0030571080324330578
+    },
+    {
+      "decile": 9,
+      "n": 12,
+      "accuracy": 0.75,
+      "mean_expiry_return": -0.0005122357052711829
+    },
+    {
+      "decile": 10,
+      "n": 12,
+      "accuracy": 0.5833333333333334,
+      "mean_expiry_return": -0.00039322145594329947
+    }
+  ],
+  "confusion_matrix": {
+    "bullish_prediction_bullish_realized": 48,
+    "bullish_prediction_bearish_realized": 53,
+    "bearish_prediction_bullish_realized": 7,
+    "bearish_prediction_bearish_realized": 13
+  }
+}
