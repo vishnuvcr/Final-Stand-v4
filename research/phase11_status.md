@@ -11,8 +11,8 @@ Can NIFTY spot movement define a useful stop-loss trigger for the Phase 9 strate
 - 11.1 Plan and branch: COMPLETED
 - 11.2 Data audit: COMPLETED
 - 11.3 Candidate grid: FROZEN; prior run cancelled before acceptance
-- 11.4 Validation selection: PENDING
-- 11.5 Untouched test: PENDING
+- 11.4 Validation selection: COMPLETED
+- 11.5 Untouched test: COMPLETED
 - 11.6 Synthesis and closure: PENDING
 
 No Phase 11 numerical result has been accepted. A directional-sign error was corrected before the rerun.

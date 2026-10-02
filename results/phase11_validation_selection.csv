@@ -1,0 +1,2 @@
+label,kind,value,validation_trades,validation_mean_net_pnl,validation_median_net_pnl,validation_total_net_pnl,validation_win_rate,validation_profit_factor,validation_max_drawdown,validation_target_hit_rate,validation_spot_stop_rate,validation_expiry_rate,test_trades,test_mean_net_pnl,test_median_net_pnl,test_total_net_pnl,test_win_rate,test_profit_factor,test_max_drawdown,test_target_hit_rate,test_spot_stop_rate,test_expiry_rate
+fixed_50,fixed,50.0,0,,,0.0,,inf,,,,,0,,,0.0,,inf,,,,

@@ -1,0 +1,33 @@
+{
+  "chosen_label": "fixed_50",
+  "chosen_kind": "fixed",
+  "chosen_value": 50.0,
+  "selection_rule": "validation mean net P&L; tie-break median net P&L then max drawdown",
+  "validation": {
+    "trades": 0,
+    "mean_net_pnl": NaN,
+    "median_net_pnl": NaN,
+    "total_net_pnl": 0.0,
+    "win_rate": NaN,
+    "profit_factor": Infinity,
+    "max_drawdown": NaN,
+    "target_hit_rate": NaN,
+    "spot_stop_rate": NaN,
+    "expiry_rate": NaN
+  },
+  "untouched_test": {
+    "trades": 0,
+    "mean_net_pnl": NaN,
+    "median_net_pnl": NaN,
+    "total_net_pnl": 0.0,
+    "win_rate": NaN,
+    "profit_factor": Infinity,
+    "max_drawdown": NaN,
+    "target_hit_rate": NaN,
+    "spot_stop_rate": NaN,
+    "expiry_rate": NaN
+  },
+  "candidate_count": 16,
+  "control_no_spot_stop": "Phase 9 0x/no-stop remains the frozen control",
+  "note": "No candidate was selected using the untouched test."
+}

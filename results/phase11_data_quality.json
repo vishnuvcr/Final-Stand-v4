@@ -1,0 +1,31 @@
+{
+  "candidate_families": {
+    "fixed_points": [
+      50,
+      75,
+      100,
+      125,
+      150,
+      200
+    ],
+    "percent": [
+      0.0025,
+      0.004,
+      0.005,
+      0.0075,
+      0.01
+    ],
+    "atr": [
+      0.5,
+      0.75,
+      1,
+      1.25,
+      1.5
+    ]
+  },
+  "target_fraction": 0.9,
+  "development_n": 33,
+  "validation_n": 11,
+  "test_n": 12,
+  "completed_candidates": 16
+}

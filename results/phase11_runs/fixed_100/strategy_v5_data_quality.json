@@ -1,0 +1,129 @@
+{
+  "strategy_version": "V5 credit-selected OTM6/7/8",
+  "target_fraction": 0.9,
+  "stop_multiple": 0.0,
+  "trades": 56,
+  "skips": [
+    [
+      "2025-01-02",
+      "insufficient_prior_trading_days"
+    ],
+    [
+      "2025-02-27",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2025-03-20",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2025-04-03",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2025-04-09",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2025-04-17",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2025-04-24",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2025-04-30",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2025-08-21",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2025-08-28",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2025-09-02",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2025-10-07",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2025-10-20",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2025-10-28",
+      "no_10am_spot"
+    ],
+    [
+      "2025-11-11",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2025-12-30",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2026-01-06",
+      "insufficient_prior_trading_days"
+    ],
+    [
+      "2026-01-20",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2026-01-27",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2026-03-02",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2026-03-30",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2026-04-07",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2026-04-13",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2026-05-05",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2026-06-02",
+      "not_nearest_expiry_on_entry"
+    ],
+    [
+      "2026-06-30",
+      "not_nearest_expiry_on_entry"
+    ]
+  ],
+  "per_year": [
+    {
+      "year": 2025,
+      "spot_rows": 93060,
+      "expiry_candidates": 53
+    },
+    {
+      "year": 2026,
+      "spot_rows": 69375,
+      "expiry_candidates": 29
+    }
+  ],
+  "source": "rissin/nse-options-intraday@8f7739cab3f38abdcbc6332a6d0a83e1341326e3 + technovusin/nifty50-historical-data",
+  "entry": "4 trading sessions before actual expiry at 10:00 IST",
+  "execution": "10:00 option-bar open; trigger on close; exit first common next open; otherwise 15:29 expiry open",
+  "cost_model": "Paytm Money + NSE/SEBI/STT/stamp/GST + slippage",
+  "positive_credit_filter": true
+}

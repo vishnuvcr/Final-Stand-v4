@@ -1,0 +1,1 @@
+expiry,entry_date,side,selected_credit,other_credit,selection_margin,atm,entry_spot,lot_size,target_fraction,stop_multiple,initial_net_credit_per_lot,target_rupees,stop_rupees,trigger_timestamp,exit_timestamp,exit_reason,trigger_pnl,gross_pnl,fees_proxy,net_pnl,peak_mtm,trough_mtm,runup_to_drawdown,orders,ce6,ce7,ce8,pe6,pe7,pe8
