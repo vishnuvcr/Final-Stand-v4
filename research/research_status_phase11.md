@@ -29,6 +29,10 @@
 - Added a manual GitHub Actions workflow with validate/acquire/build actions.
 - Adopted a point-in-time 10:00 bar-open convention for the primary predictor.
 
+## Latest validation note
+
+- Core signal tests and event-builder helper tests are committed. Direct local execution is unavailable in the current container because raw GitHub DNS resolution failed; GitHub Actions remains the execution environment for these tests.
+
 ## Data coverage state
 
 No historical event dataset has yet been executed or validated in this branch. Therefore there is **no performance result yet**.
