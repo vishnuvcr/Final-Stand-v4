@@ -1,0 +1,42 @@
+name: Phase 8B HF Recovery
+
+on:
+  push:
+    branches: [phase-8-option-data-source-recovery]
+    paths:
+      - "scripts/recover_hf_missing.py"
+      - ".github/workflows/phase-8-hf-recovery.yml"
+  workflow_dispatch:
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install pandas pyarrow huggingface_hub
+      - name: Recover missing trades from HF source
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python scripts/recover_hf_missing.py
+      - name: Validate outputs
+        run: |
+          python - <<'PY'
+          import json, pandas as pd
+          s=json.load(open("results/strategy_v4_recovery_summary_hf.json"))
+          assert s["candidates_checked"] >= s["recovered_trades"]
+          assert pd.read_csv("results/strategy_v4_recovery_coverage_hf.csv").shape[0] == s["candidates_checked"]
+          print(s)
+          PY
+      - name: Commit recovery outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/strategy_v4_recovered_trades_hf.csv results/strategy_v4_recovery_coverage_hf.csv results/strategy_v4_recovery_errors_hf.json results/strategy_v4_recovery_summary_hf.json
+          git diff --cached --quiet || git commit -m "Record Phase 8B HF recovery results"
+          git push
