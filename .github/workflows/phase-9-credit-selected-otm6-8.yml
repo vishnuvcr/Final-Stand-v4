@@ -81,4 +81,6 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add results research/research_status.md
           git diff --cached --quiet || git commit -m 'Record Phase 9 credit-selected OTM6-8 results [skip ci]'
-          git push
+          git fetch origin phase-9-credit-selected-otm6-8
+          git rebase origin/phase-9-credit-selected-otm6-8
+          git push origin HEAD:phase-9-credit-selected-otm6-8
