@@ -44,4 +44,6 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add results/phase11* research/phase11_status.md
           git diff --cached --quiet || git commit -m "Phase 11: persist NIFTY spot stop results"
-          git push
+          git fetch origin phase-11-nifty-spot-stop
+          git rebase origin/phase-11-nifty-spot-stop
+          git push origin HEAD:phase-11-nifty-spot-stop
