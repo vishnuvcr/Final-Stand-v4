@@ -16,3 +16,6 @@ Only user-visible requirements and decision summaries are stored; hidden chain-o
 
 ## 2026-10-02 — Corrected run in progress
 User said “Ok proceed”. GitHub Actions run 37009066361 completed acquisition and full-chain extraction successfully and is currently in model analysis. No empirical result is accepted until the run completes and generated outputs are inspected. The live log shows sklearn deprecation/inconsistency warnings but no new fatal exception.
+
+## 2026-10-02 — Timeout and computational correction
+The Phase 12 run timed out at 60 minutes during the 500-permutation multiple-testing stage. The scientific protocol is unchanged. The implementation was optimized by caching fold-specific preprocessing and parallelizing the independent label-permutation jobs; the workflow timeout was extended to 120 minutes. No result from the timed-out run is accepted.
