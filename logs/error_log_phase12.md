@@ -13,3 +13,6 @@ The Rissin/Upstox secondary archive documents an OI field but states that OI is 
 The full-chain phase deliberately limits model families and uses regularized logistic regression plus chronological cross-validation. This is necessary because the event sample is only 121 observations while the full-chain surface contains many potential variables.
 
 No empirical result has been generated yet.
+
+## 2026-10-02 — CI trigger correction
+The initial Phase 12 status-file commit did not match the workflow push-path filter, so it did not itself trigger Actions. The workflow was corrected to include the Phase 12 status/error files and to upload derived results as an artifact. A subsequent workflow-file commit now provides the push trigger.
