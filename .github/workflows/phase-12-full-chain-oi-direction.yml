@@ -7,6 +7,8 @@ on:
       - 'scripts/phase12/**'
       - 'research/**phase12*.md'
       - 'logs/decision_log_phase12.md'
+      - 'logs/error_log_phase12.md'
+      - 'research/research_status_phase12.md'
   workflow_dispatch:
     inputs:
       years:
@@ -50,6 +52,16 @@ jobs:
         run: python scripts/phase12/extract_full_chain.py
       - name: Analyze full-chain direction
         run: python scripts/phase12/analyze_full_chain.py
+      - name: Upload Phase 12 results
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase12-full-chain-results
+          path: |
+            results/phase12_full_chain_features.csv
+            results/phase12_full_chain_manifest.json
+            results/phase12_full_chain_analysis.json
+            results/phase12_full_chain_analysis.md
+
       - name: Publish derived results
         run: |
           git config user.name 'github-actions[bot]'
