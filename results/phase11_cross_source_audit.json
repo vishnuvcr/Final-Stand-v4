@@ -1,0 +1,11 @@
+{
+  "eligible_events": 82,
+  "events_with_any_secondary_match": 81,
+  "event_match_rate": 0.9878048780487805,
+  "mean_abs_price_diff": 0.17121399176954732,
+  "median_abs_price_diff": 0.0800000000000054,
+  "mean_relative_price_diff": 0.0030452603891299836,
+  "median_relative_price_diff": 0.002784342619444407,
+  "events_with_all_six_legs": 81,
+  "all_six_leg_rate_among_matched": 1.0
+}
