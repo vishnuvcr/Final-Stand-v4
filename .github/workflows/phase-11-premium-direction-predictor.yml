@@ -59,29 +59,29 @@ jobs:
         run: pytest -q tests/phase11
 
       - name: Cache Phase 11 market data
-        if: inputs.action == 'acquire' || inputs.action == 'build'
+        if: inputs.action == 'acquire' || github.event_name == 'push' || inputs.action == 'build' || github.event_name == 'push'
         uses: actions/cache@v4
         with:
           path: data_cache/phase11
-          key: phase11-market-${{ runner.os }}-${{ hashFiles('research/data_manifest_phase11.json') }}-${{ inputs.years }}
+          key: phase11-market-${{ runner.os }}-${{ hashFiles('research/data_manifest_phase11.json') }}-${{ inputs.years || '2024,2025,2026' }}
           restore-keys: |
             phase11-market-${{ runner.os }}-
 
       - name: Acquire candidate data
-        if: inputs.action == 'acquire'
+        if: inputs.action == 'acquire' || github.event_name == 'push'
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           python -m pip install --upgrade huggingface_hub
-          python scripts/phase11/acquire.py --years "${{ inputs.years }}" --output data_cache/phase11
+          python scripts/phase11/acquire.py --years "${{ inputs.years || '2024,2025,2026' }}" --output data_cache/phase11
 
       - name: Build Phase 11 event dataset
-        if: inputs.action == 'build'
+        if: inputs.action == 'build' || github.event_name == 'push'
         run: |
           python scripts/phase11/build_events.py --input data_cache/phase11 --output results/phase11_events.csv
 
       - name: Commit derived event dataset
-        if: inputs.action == 'build'
+        if: inputs.action == 'build' || github.event_name == 'push'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -90,6 +90,6 @@ jobs:
           git push
 
       - name: Report acquisition footprint
-        if: inputs.action == 'acquire'
+        if: inputs.action == 'acquire' || github.event_name == 'push'
         run: |
           find data_cache/phase11 -maxdepth 5 -type f -printf '%p %s bytes\n' | sort
