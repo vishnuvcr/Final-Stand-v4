@@ -138,8 +138,8 @@ def main() -> int:
     token = os.getenv("HF_TOKEN")
 
     for year in years:
-        path = download_option_year(year, out_dir, token)
-        print(f"downloaded options: {year} -> {path}")
+        paths = download_option_year(year, out_dir, token)
+        print(f"downloaded options: {year} -> {len(paths)} files (primary + secondary)")
 
     spot_files: list[Path] = []
     for year in years:
