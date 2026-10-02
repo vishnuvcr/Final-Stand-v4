@@ -88,12 +88,16 @@ jobs:
         if: inputs.action == 'build' || github.event_name == 'push'
         run: python scripts/phase11/analyze.py
 
+      - name: Premium combination search
+        if: inputs.action == 'build' || github.event_name == 'push'
+        run: python scripts/phase11/premium_combination_search.py
+
       - name: Commit derived event dataset
         if: inputs.action == 'build' || github.event_name == 'push'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add results/phase11_events.csv results/phase11_events.json results/phase11_statistical_analysis.json results/phase11_statistical_analysis.md results/phase11_cross_source_audit.json
+          git add results/phase11_events.csv results/phase11_events.json results/phase11_statistical_analysis.json results/phase11_statistical_analysis.md results/phase11_cross_source_audit.json results/phase11_premium_combination_search.json results/phase11_premium_combination_search.md
           git diff --cached --quiet || git commit -m 'Build Phase 11 event dataset'
           git push
 
