@@ -1,0 +1,78 @@
+{
+  "research_id": "phase11_premium_direction_predictor",
+  "branch": "phase-11-premium-direction-predictor",
+  "observation": {
+    "underlying": "NIFTY",
+    "timezone": "Asia/Kolkata",
+    "time": "10:00",
+    "lead_sessions": 4
+  },
+  "required_fields": [
+    "event_date",
+    "expiry_date",
+    "nifty_spot_1000",
+    "expiry_settlement",
+    "atm_strike",
+    "strike_interval",
+    "ce_otm6_price",
+    "ce_otm7_price",
+    "ce_otm8_price",
+    "pe_otm6_price",
+    "pe_otm7_price",
+    "pe_otm8_price"
+  ],
+  "preferred_optional_fields": [
+    "ce_otm6_bid",
+    "ce_otm6_ask",
+    "ce_otm7_bid",
+    "ce_otm7_ask",
+    "ce_otm8_bid",
+    "ce_otm8_ask",
+    "pe_otm6_bid",
+    "pe_otm6_ask",
+    "pe_otm7_bid",
+    "pe_otm7_ask",
+    "pe_otm8_bid",
+    "pe_otm8_ask",
+    "ce_otm6_volume",
+    "ce_otm7_volume",
+    "ce_otm8_volume",
+    "pe_otm6_volume",
+    "pe_otm7_volume",
+    "pe_otm8_volume",
+    "ce_otm6_oi",
+    "ce_otm7_oi",
+    "ce_otm8_oi",
+    "pe_otm6_oi",
+    "pe_otm7_oi",
+    "pe_otm8_oi",
+    "india_vix"
+  ],
+  "primary_formula": {
+    "call_score": "CE_OTM7 + CE_OTM8 - CE_OTM6",
+    "put_score": "PE_OTM7 + PE_OTM8 - PE_OTM6",
+    "spread": "call_score - put_score"
+  },
+  "primary_label": {
+    "spread_gt_0": "bearish",
+    "spread_lt_0": "bullish",
+    "spread_eq_0": "neutral"
+  },
+  "outcome": {
+    "return": "expiry_settlement / nifty_spot_1000 - 1",
+    "direction_positive": "bullish",
+    "direction_negative": "bearish",
+    "direction_zero": "neutral"
+  },
+  "source_priority": [
+    "NSE official",
+    "BSE official where relevant",
+    "reputable public historical repositories",
+    "GitHub",
+    "Kaggle",
+    "Hugging Face via HF_TOKEN",
+    "other reputable providers"
+  ],
+  "cache_policy": "Keep validated historical data in repository/cache artifacts; do not redownload complete history on every workflow run.",
+  "provenance_required": true
+}
