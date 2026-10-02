@@ -66,3 +66,11 @@
 - Correction: the audit now processes one secondary year file at a time and reads only the five required columns.
 - Push-triggered runs now reuse the committed event dataset when it already exists; full event reconstruction remains available through manual `build`.
 - No statistical result was invalidated. The already-completed statistical analysis remains reproducible from the committed event dataset.
+
+
+## 2026-10-02 — Premium-search result persistence / CI push race
+
+- The premium-combination analysis itself completed successfully: acquisition, independent source audit, statistical analysis, and premium search all passed.
+- The final CI commit step created the derived files in the runner but the subsequent git push failed with a non-fast-forward rejection because the branch had advanced concurrently.
+- This did not invalidate the analysis. The derived JSON/Markdown results were reconstructed from the completed Actions log and persisted directly to the branch through the GitHub file API.
+- Future workflow commit logic should rebase/pull or use a serialized write path before pushing derived results, to avoid concurrent-branch races.
