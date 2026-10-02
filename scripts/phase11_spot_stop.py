@@ -28,11 +28,11 @@ def patched_source():
         tr=pd.concat([(prior['high']-prior['low']).rename('a'),(prior['high']-prev_close).abs().rename('b'),(prior['low']-prev_close).abs().rename('c')],axis=1).max(axis=1)
         atr_value=float(tr.tail(14).mean())
     if SPOT_STOP_KIND=='fixed':
-        spot_barrier=entry_spot + SPOT_STOP_VALUE if side=='PUT' else entry_spot - SPOT_STOP_VALUE
+        spot_barrier=entry_spot - SPOT_STOP_VALUE if side=='PUT' else entry_spot + SPOT_STOP_VALUE
     elif SPOT_STOP_KIND=='pct':
-        spot_barrier=entry_spot*(1.0+SPOT_STOP_VALUE) if side=='PUT' else entry_spot*(1.0-SPOT_STOP_VALUE)
+        spot_barrier=entry_spot*(1.0-SPOT_STOP_VALUE) if side=='PUT' else entry_spot*(1.0+SPOT_STOP_VALUE)
     elif SPOT_STOP_KIND=='atr':
-        spot_barrier=entry_spot + SPOT_STOP_VALUE*atr_value if side=='PUT' else entry_spot - SPOT_STOP_VALUE*atr_value
+        spot_barrier=entry_spot - SPOT_STOP_VALUE*atr_value if side=='PUT' else entry_spot + SPOT_STOP_VALUE*atr_value
     else:
         spot_barrier=np.nan
 """
@@ -45,7 +45,7 @@ def patched_source():
             sr=spot.loc[spot.timestamp==t,'close']
             if len(sr):
                 current_spot=float(sr.iloc[0])
-                adverse=(current_spot >= spot_barrier) if side=='PUT' else (current_spot <= spot_barrier)
+                adverse=(current_spot <= spot_barrier) if side=='PUT' else (current_spot >= spot_barrier)
                 if adverse:
                     trigger=t; trigger_type='spot_stop'; trigger_value=m; break
         if m>=target_rupees:
