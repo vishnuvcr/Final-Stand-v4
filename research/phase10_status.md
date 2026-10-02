@@ -88,3 +88,10 @@ The active closure run had remained in progress while newer corrected runs were 
 
 ## Step 10.3 — computational robustness
 **COMPLETED** in GitHub Actions.
+
+
+## Context validation correction — 2026-10-02
+**CORRECTION IN EXECUTION**
+- Remote readback of the successful closure run showed that the first context join had no usable context columns because acquired NSE/Stooq payloads were not parseable/complete.
+- A validated fallback was added using NSE/Nifty-Indices historical interfaces for NIFTY 50 and India VIX and a public FII/DII historical archive. The fallback is wired into the Phase 10 workflow and tests.
+- Phase 10 scientific parameters remain frozen. Acceptance of context results is gated on the corrected workflow run and remote readback.
