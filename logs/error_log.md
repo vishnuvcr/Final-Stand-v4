@@ -132,3 +132,9 @@
 - The corrected closure workflow runs were repeatedly queued behind a stale long-running run (run 36975859064), while subsequent push-triggered runs were cancelled by the repository's `cancel-in-progress: false` concurrency setting.
 - This is an infrastructure/execution-control issue, not a research-methodology change. The Phase 10 workflow was changed to `cancel-in-progress: true` so the newest corrected closure run supersedes stale execution and can complete the predefined analysis.
 - No numerical result from the cancelled runs is accepted. Acceptance remains gated on tests, completion, persistence and remote readback.
+
+
+### Phase 10 test syntax error — 2026-10-02
+- Corrected closure run 36979199194 failed during pytest collection because `tests/test_phase10_context.py` contained an unescaped nested quote in the assertion for `direction="backward"`.
+- No Phase 10 numerical computation ran from this failed execution, so no result is accepted from it.
+- The test assertion will be corrected and the workflow rerun. Scientific methodology is unchanged.
