@@ -55,9 +55,23 @@ def load_options(root: Path) -> pd.DataFrame:
 
 
 def load_spot(root: Path) -> pd.DataFrame:
+    primary = root / "spot_primary" / "NIFTY.parquet"
+    if primary.exists():
+        df = pd.read_parquet(primary)
+        required = {"timestamp", "open", "close"}
+        missing = required.difference(df.columns)
+        if missing:
+            raise ValueError(f"{primary}: missing columns {sorted(missing)}")
+        df["ts"] = to_ist(df["timestamp"])
+        df["open"] = pd.to_numeric(df["open"], errors="coerce")
+        df["close"] = pd.to_numeric(df["close"], errors="coerce")
+        return df[["ts", "open", "close"]].dropna().drop_duplicates("ts").sort_values("ts").assign(
+            trade_date=lambda x: x["ts"].dt.date
+        )
+
     paths = sorted((root / "spot").glob("**/NIFTY50_1min_*.csv"))
     if not paths:
-        raise FileNotFoundError("No cached Phase 11 NIFTY spot CSV files found")
+        raise FileNotFoundError("No cached Phase 11 NIFTY spot files found")
     frames = []
     for path in paths:
         df = pd.read_csv(path)
@@ -67,7 +81,7 @@ def load_spot(root: Path) -> pd.DataFrame:
         df["ts"] = to_ist(df["Timestamp"])
         df["open"] = pd.to_numeric(df["Open"], errors="coerce")
         df["close"] = pd.to_numeric(df["Close"], errors="coerce")
-        frames.append(df[["ts", "open", "close"]].dropna(subset=["ts", "open", "close"]))
+        frames.append(df[["ts", "open", "close"]].dropna())
     out = pd.concat(frames, ignore_index=True).drop_duplicates(subset=["ts"]).sort_values("ts")
     out["trade_date"] = out["ts"].dt.date
     return out
