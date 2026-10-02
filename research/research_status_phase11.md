@@ -144,3 +144,16 @@ Inference: relative call-wing premium ratios are a useful research lead, but the
 4. Split by volatility/trend/expiry-week/event regimes and liquidity/volume/OI availability.
 5. Replicate on the independent secondary source for the same eligible events.
 6. Apply placebos/permutation tests and report multiple-testing corrections before any economic/trading translation.
+
+
+## 2026-10-02 — Phase 5 frozen-candidate robustness
+
+The two pre-specified call-wing ratio candidates (CE OTM6/OTM7 and CE OTM6/OTM8 log-ratios) were frozen and evaluated without holdout threshold tuning.
+
+- Both candidates: 59.41% development accuracy and 60.0% (12/20) on the 2026 holdout.
+- Both candidates produce identical classifications on the 2026 holdout: 3 bullish and 17 bearish.
+- Expanding walk-forward accuracy: 63.37% for CE OTM6/OTM7 and 62.38% for CE OTM6/OTM8; these p-values are unadjusted exploratory statistics.
+- Pre-September-2025 accuracy: 62.35%; post-September-2025 accuracy: 52.78%.
+- 2026 exact binomial p=0.5034; the always-bearish holdout baseline is 65%.
+
+The apparent historical walk-forward signal therefore deteriorates around the expiry-convention regime boundary and does not improve the final holdout baseline. Continue Phase 5 only with independent-source replication, liquidity/quote robustness, timestamp sensitivity, and placebo/multiple-testing controls. No trading translation.
