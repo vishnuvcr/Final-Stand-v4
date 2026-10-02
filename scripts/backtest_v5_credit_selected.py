@@ -204,10 +204,17 @@ def build_trade_rows():
         dates=sorted(pd.Series(spot.timestamp.dt.date.unique()).tolist())
         ydates=set(dates)
         exps=[e for e in discover_calendar(opt_file(y),y) if e in ydates]
+        exps_all=exps[:]
         for ex in exps:
             prev=[d for d in dates if d<ex]
-            if len(prev)<4: skips.append([str(ex),'insufficient_prior_trading_days']); continue
+            if len(prev)<4:
+                skips.append([str(ex),'insufficient_prior_trading_days']); continue
             entry=prev[-4]
+            if not (0 < (ex-entry).days <= 8):
+                skips.append([str(ex),'not_weekly_near_expiry']); continue
+            upcoming=[d for d in exps_all if d>=entry]
+            if not upcoming or upcoming[0] != ex:
+                skips.append([str(ex),'not_nearest_expiry_on_entry']); continue
             if entry<START or entry>END: continue
             if pd.Timestamp(entry).replace(hour=10,minute=0) not in set(spot.timestamp): skips.append([str(ex),'no_10am_spot']); continue
             r,reason=backtest_candidate(ex,entry,spot)
