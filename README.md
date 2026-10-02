@@ -130,3 +130,7 @@ Any new strike distance, target, stop, selection rule, regime filter, capital mo
 - Corrected closure workflow now includes the full 4×3 slippage×brokerage grid, selection-margin output, official/secondary context acquisition, and a lagged context-to-trade join.
 - Context is matched to the prior available daily observation to avoid same-day close look-ahead.
 - Closure remains open until GitHub Actions execution, persistence, and remote readback are verified.
+
+
+### Phase 10 execution-control correction — 2026-10-02
+The closure workflow was blocked by a stale long-running Actions run because concurrency used `cancel-in-progress: false`. This was changed to `true` so the newest corrected closure execution can supersede stale runs. This changes execution control only; Phase 9/10 scientific parameters remain frozen.
