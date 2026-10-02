@@ -29,18 +29,15 @@
 - Do not accept performance outputs until unit tests, data-quality checks and the final ledger are all present.
 - Documentation-only commits are excluded from the V4 workflow push-path trigger to avoid redundant long backtests.
 
-
 ## Phase 7 CI test error — 2026-10-02
 - GitHub Actions run 36928921436 failed in the V4 unit-test stage before the backtest because the expected PE strike values in test_v4_strategy.py were incorrect for entry spot 24,486.3.
 - Actual V4 mapping is ATM 24,500; PE16 = 23,700 and PE17 = 23,650. The erroneous test expected 23,650 and 23,600.
 - No performance output was produced by this failed run. The test expectation is corrected before rerun.
 
-
 ## Phase 7 data-loader error — 2026-10-02
 - GitHub Actions run 36929127871 passed all 15 unit tests and completed all 52 candidate expiries for 2025.
 - The backtest then failed at 2026 spot loading because the source repository no longer contains the previously used range filenames. The current public directory uses monthly files named NIFTY50_1min_2026-01.csv through NIFTY50_1min_2026-10.csv.
 - No V4 performance output is accepted from this run. The spot loader is being updated to the currently observed repository layout.
-
 
 ## Phase 7 accepted rerun — 2026-10-02
 - GitHub Actions run 36929461356 passed all 15 tests, completed the full 2025–2026 available sample, ran analysis, and committed outputs.
@@ -48,11 +45,9 @@
 - Validation confirmed 43 unique expiry trades, 8 orders per complete trade, expiry-only exits, and expected lot sizes.
 - The remaining data-quality limitation is historical source incompleteness, not an unresolved engine error.
 
-
 ## Phase 8 source-audit tooling error — 2026-10-02
-- First attempt to create `research/phase8_data_source_audit.md` failed before any commit because the generated tool payload contained unescaped backtick delimiters inside a JavaScript template literal.
+- First attempt to create research/phase8_data_source_audit.md failed before any commit because the generated tool payload contained unescaped backtick delimiters inside a JavaScript template literal.
 - No repository state was changed by the failed attempt. The file was then created using a newline-array payload and committed successfully.
-
 
 ## Phase 8B recovery execution — 2026-10-02
 - Added targeted recovery against the independent public TradeMarkk/Hugging Face NIFTY expiry-file dataset.
@@ -64,13 +59,11 @@
 - Public web research identified a complete commercial NIFTY 1-minute full-chain archive through Sep-2026 and official ICICI Breeze contract-level historical API documentation, but no authorized credentials/archive are available in the current session.
 - Preventive rule: never manufacture a recovery result or silently replace Phase 7 observations.
 
-
 ## Phase 9 initialization — 2026-10-02
 - The first GitHub file-write attempt for the stop-analysis script passed a JavaScript array instead of a string to the repository file API. The write was rejected before repository modification. No scientific output was affected.
 - The initial Phase 9 candidate-expiry implementation risked treating every expiry-date row in the options dataset as a near-weekly candidate, which could have introduced far-dated duplicates. Before any run, this was corrected to require (a) the expiry to be the nearest listed expiry on the entry date and (b) entry-to-expiry distance no greater than eight calendar days.
 - Preventive rule: never assume the current Tuesday NIFTY expiry convention for earlier 2025 contracts; historical contract expiry dates must come from the dataset or a date-effective exchange source.
 - Preventive rule: the primary target/stop grid is frozen before reading performance outputs; no post-hoc stop selection from the final holdout.
-
 
 ## Phase 9 data-source correction — 2026-10-02
 - GitHub Actions run 36966020688 failed because the pinned Hugging Face revision 78b1c54 did not contain upstox_intraday/NIFTY/NIFTY_2026.parquet. No strategy results were accepted.
@@ -82,4 +75,10 @@
 - Run 36966258307 completed the full Phase 9 computation and generated 11 result files in the runner workspace.
 - The workflow's final git push failed with a non-fast-forward rejection because the remote phase branch had advanced after checkout.
 - The generated numerical outputs were therefore not persisted to the repository. No numbers from this run should be treated as reproducibly archived until the persistence rerun succeeds.
-- Workflow correction committed: rebase the runner branch against origin/phase-9-credit-selected-otm6-8 before pushing.
+- Workflow correction committed: the Phase 9 commit step now fetches and rebases against origin/phase-9-credit-selected-otm6-8 before pushing.
+
+## Phase 9 persistence-trigger limitation — 2026-10-02
+- The connected GitHub integration exposes workflow reads and reruns but does not expose the workflow-dispatch POST action.
+- A branch-ref update to commit e307247ce41eba53448f884802a26860b5d36f0c was attempted after touching the workflow file, but the new commit has no Actions check run; therefore the persistence rerun cannot be claimed as started.
+- The scientific result remains usable as an empirical checkpoint, but exact trade-level/sensitivity files are still not reproducibly archived in the repository.
+- Preventive rule: do not advance to robustness/final-manuscript closure until the exact Phase 9 output archive is present and hash-verified.
