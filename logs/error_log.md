@@ -151,3 +151,10 @@
 - The join script previously treated that response as mandatory and raised JSONDecodeError.
 - The join was corrected to treat unavailable/malformed NSE context as missing rather than crashing, and to use the independently acquired Stooq NIFTY series as a validated secondary fallback for NIFTY close/realized-volatility context.
 - India VIX and FII/DII remain coverage-gated; unavailable series will be reported missing rather than fabricated.
+
+
+## Phase 10 context-source validation correction — 2026-10-02
+- The successful closure workflow persisted the context-join file, but remote readback showed it contained only the strategy ledger: the NSE JSON responses and Stooq CSV responses were syntactically acquired but did not parse into usable context series.
+- This is a data-acquisition/validation gap, not a change to the trading rule or backtest ledger. The gap is explicitly logged rather than treating an empty context join as evidence of no relationship.
+- Added a validated NSE/Nifty-Indices client fallback for NIFTY 50 and India VIX plus a public historical FII/DII JSON fallback. Normalized files are cached under `data_cache/phase10_context_raw` during the workflow and joined with the existing prior-observation, no-look-ahead rule.
+- Scientific parameters remain frozen; context remains descriptive only.
