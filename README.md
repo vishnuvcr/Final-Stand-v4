@@ -46,3 +46,10 @@ This repository records the agreed research specification and implementation dec
 - [Error log](logs/error_log_phase11.md)
 
 **Current scientific inference:** the pre-specified premium-direction mapping does not demonstrate stable out-of-sample directional predictive power. The isolated overall Pearson spread/return association is treated as exploratory because it is not supported by the rank/logistic tests or the 2026 chronological holdout. Phase 5 robustness/falsification remains before any trading translation.
+
+
+### Phase 11 current results — premium combinations
+- [Premium combination search](results/phase11_premium_combination_search.md)
+- [Premium combination search JSON](results/phase11_premium_combination_search.json)
+
+The leading research signal is a relative call-wing ratio: CE OTM6/OTM7 and CE OTM6/OTM8 log-ratios each reached 59.41% on development and 12/20 (60%) on the 2026 holdout. The 5,000-permutation maximum-threshold-accuracy diagnostic gave p=0.5118, and the holdout has only 20 observations. No trading strategy is authorized from this result. Phase 5 robustness/falsification will now freeze these candidates and test them chronologically, by regime/liquidity, and on the independent source.
