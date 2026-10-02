@@ -95,3 +95,9 @@ The active closure run had remained in progress while newer corrected runs were 
 - Remote readback of the successful closure run showed that the first context join had no usable context columns because acquired NSE/Stooq payloads were not parseable/complete.
 - A validated fallback was added using NSE/Nifty-Indices historical interfaces for NIFTY 50 and India VIX and a public FII/DII historical archive. The fallback is wired into the Phase 10 workflow and tests.
 - Phase 10 scientific parameters remain frozen. Acceptance of context results is gated on the corrected workflow run and remote readback.
+
+
+## Context-repair execution correction — 2026-10-02
+- Corrected closure run 36994239803 completed tests, robustness, and context acquisition but failed in the validated fallback because the script imported `nseindia` instead of the installed `nseindiapy` package.
+- The import has been corrected to the package's documented public API. This is a tooling correction only; scientific parameters remain frozen.
+- The newest workflow run must complete successfully and pass remote readback before Phase 10 context analysis is accepted.
