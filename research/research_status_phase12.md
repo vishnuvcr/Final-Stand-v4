@@ -44,3 +44,6 @@ Then either proceed to independent replication or close the phase as negative/in
 
 ## Current execution update
 Run 37009066361: acquisition SUCCESS; extraction SUCCESS; model analysis IN PROGRESS; publication PENDING. The current analysis includes the pre-specified development screening and 500-permutation multiple-testing diagnostic. No empirical performance figure is accepted until completion.
+
+## Current execution update
+Run 37009066361 was cancelled by the 60-minute timeout during model analysis; no empirical result was generated. The analysis implementation has since been optimized without changing the statistical protocol: fold preprocessing is cached, permutation evaluation is parallelized across up to two workers, and the workflow timeout is now 120 minutes. A fresh run is triggered by the optimized analysis commit.
