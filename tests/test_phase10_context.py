@@ -13,7 +13,7 @@ def test_context_join_script_exists():
 def test_context_join_uses_lagged_merge():
     text = SCRIPT.read_text()
     assert "allow_exact_matches=False" in text
-    assert "direction="backward"" in text
+    assert 'direction="backward"' in text
 
 
 def test_context_outputs_are_declared_in_workflow():
