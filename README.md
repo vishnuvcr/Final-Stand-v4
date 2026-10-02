@@ -111,3 +111,11 @@ The Phase 7 sample contains 49 skipped candidate expiries because required optio
 - Scientific status: **positive realized sample, but insufficient evidence for a stable edge; only 12 untouched test trades**.
 - Persistence status: the CI run generated the result files but its final push was rejected as non-fast-forward. A workflow rebase-before-push correction is committed; the exact trade-level result archive still needs one successful manual Phase 9 workflow dispatch.
 - [Phase 9 specification](research/strategy_spec_v5_credit_selected.md) · [research plan](research/research_plan_v5_credit_selected.md) · [interim manuscript](research/PHASE9_INTERIM_MANUSCRIPT.md) · [final summary](results/strategy_v5_final_summary.json)
+
+
+## Phase 9 latest persistence checkpoint
+- The Phase 9 numerical computation completed successfully in run 36966258307, but the runner's result push was rejected as non-fast-forward.
+- The workflow has now been hardened with a fetch/rebase-before-push step.
+- A connector-side ref-update trigger attempt did not create an Actions check run, because the connected GitHub integration does not expose workflow-dispatch POST.
+- **Current gate:** manual **Run workflow** on the Phase 9 workflow/branch is required to persist the exact trade-level and sensitivity outputs.
+- Do not treat the 12-trade test metrics as the final reproducible archive until that run succeeds.
