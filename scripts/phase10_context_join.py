@@ -23,11 +23,13 @@ def read_stooq(path, prefix):
     if not path.exists():
         return None
     df = pd.read_csv(path)
-    if "Date" not in df.columns or "Close" not in df.columns:
+    date_col = "Date" if "Date" in df.columns else ("date" if "date" in df.columns else None)
+    close_col = "Close" if "Close" in df.columns else ("close" if "close" in df.columns else None)
+    if date_col is None or close_col is None:
         return None
     d = pd.DataFrame({
-        "date": pd.to_datetime(df["Date"], errors="coerce").dt.normalize(),
-        prefix: pd.to_numeric(df["Close"], errors="coerce"),
+        "date": pd.to_datetime(df[date_col], errors="coerce").dt.normalize(),
+        prefix: pd.to_numeric(df[close_col], errors="coerce"),
     }).dropna()
     return d.drop_duplicates("date", keep="last").sort_values("date")
 
