@@ -138,3 +138,9 @@
 - Corrected closure run 36979199194 failed during pytest collection because `tests/test_phase10_context.py` contained an unescaped nested quote in the assertion for `direction="backward"`.
 - No Phase 10 numerical computation ran from this failed execution, so no result is accepted from it.
 - The test assertion will be corrected and the workflow rerun. Scientific methodology is unchanged.
+
+
+### Phase 10 robustness-run efficiency correction — 2026-10-02
+- Audit of the corrected closure runner found redundant full backtest executions: brokerage changes cannot affect target triggering because brokerage is charged after execution and the strategy has no stop.
+- The runner was therefore refactored to execute the four target cases and four distinct slippage cases, then derive the three brokerage levels exactly from each slippage ledger using the brokerage-plus-GST difference multiplied by the recorded order count.
+- This preserves the predefined 4×3 Cartesian economic scenarios while materially reducing repeated data processing. It is an execution optimization, not a strategy or parameter change.
