@@ -13,3 +13,11 @@
 - The first Phase 11 workflow run (run 1) completed with a failure immediately after the workflow file was added; the connector exposed no jobs for the run, so the exact runner-step failure was not available.
 - The workflow file itself was fetched back from the branch and reviewed; it was simplified to a manual-run-only validation workflow to reduce self-triggering and write-permission failure modes.
 - No market-data analysis was performed under the failed run, so no research result is affected.
+
+
+## 2026-10-02 — Local runtime validation limitation
+
+- An attempt to run the new Phase 11 Python tests directly in the model container could not download the branch files because DNS resolution for raw.githubusercontent.com is unavailable in that container.
+- This is an environment/network limitation, not a detected research-code failure.
+- The same tests are wired into the Phase 11 GitHub Actions workflow, where validation is intended to run.
+- No market-data result was generated or inferred from the failed local execution.
