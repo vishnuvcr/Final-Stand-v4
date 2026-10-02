@@ -5,6 +5,7 @@ from pathlib import Path
 import numpy as np,pandas as pd
 from scipy.stats import binomtest
 from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score,balanced_accuracy_score,matthews_corrcoef,roc_auc_score
 from sklearn.model_selection import TimeSeriesSplit
 from sklearn.pipeline import Pipeline
@@ -23,6 +24,20 @@ def cv(dev,cols,C,y):
  for tr,va in s.split(x):
   med=x.iloc[tr].median();xt=x.iloc[tr].fillna(med);xv=x.iloc[va].fillna(med);m=Pipeline([("scale",StandardScaler()),("logit",LogisticRegression(max_iter=4000,solver="liblinear",penalty="l1",C=C))]);m.fit(xt,y.iloc[tr]);sc.append(balanced_accuracy_score(y.iloc[va],m.predict(xv)))
  return float(np.mean(sc))
+def bootstrap_accuracy(y,p,B=2000,seed=12345):
+ rng=np.random.default_rng(seed);yb=(np.asarray(y)=="bullish").astype(int);pb=(np.asarray(p)=="bullish").astype(int)
+ if len(yb)==0:return [None,None]
+ vals=[]
+ for _ in range(B):
+  idx=rng.integers(0,len(yb),len(yb));vals.append(float((yb[idx]==pb[idx]).mean()))
+ return [float(np.quantile(vals,.025)),float(np.quantile(vals,.975))]
+
+def tree_holdout(train,test,cols,depth):
+ xt=train[cols].apply(pd.to_numeric,errors="coerce").replace([np.inf,-np.inf],np.nan);xv=test[cols].apply(pd.to_numeric,errors="coerce").replace([np.inf,-np.inf],np.nan)
+ med=xt.median();xt=xt.fillna(med);xv=xv.fillna(med);y=(train.realized_direction=="bullish").astype(int)
+ m=DecisionTreeClassifier(max_depth=depth,min_samples_leaf=8,random_state=12345,class_weight="balanced");m.fit(xt,y);pr=m.predict_proba(xv)[:,1]
+ return metrics(test.realized_direction,np.where(pr>=.5,"bullish","bearish"),pr)
+
 def fit(train,test,cols,C):
  xt=train[cols].apply(pd.to_numeric,errors="coerce").replace([np.inf,-np.inf],np.nan);xv=test[cols].apply(pd.to_numeric,errors="coerce").replace([np.inf,-np.inf],np.nan);med=xt.median();xt=xt.fillna(med);xv=xv.fillna(med);y=(train.realized_direction=="bullish").astype(int)
  m=Pipeline([("scale",StandardScaler()),("logit",LogisticRegression(max_iter=5000,solver="liblinear",penalty="l1",C=C))]);m.fit(xt,y);pr=m.predict_proba(xv)[:,1];return metrics(test.realized_direction,np.where(pr>=.5,"bullish","bearish"),pr)
@@ -31,7 +46,10 @@ def main():
  for fam,cols in g.items():
   if not cols:continue
   for C in [.01,.03,.1,.3,1.0]:cand.append({"family":fam,"C":C,"cv_balanced_accuracy":cv(dev,cols,C,y),"n_features":len(cols)})
- cand.sort(key=lambda z:(-z["cv_balanced_accuracy"],z["n_features"],z["family"]));best=cand[0];holdm=fit(dev,hold,g[best["family"]],best["C"])
+ cand.sort(key=lambda z:(-z["cv_balanced_accuracy"],z["n_features"],z["family"]));best=cand[0];holdm=fit(dev,hold,g[best["family"]],best["C"]); holdm["accuracy_bootstrap_95ci"]=bootstrap_accuracy(hold.realized_direction,np.where((fit(dev,hold,g[best["family"]],best["C"])).get("roc_auc",0)>=-1,"bullish","bullish")) if False else holdm.get("accuracy_bootstrap_95ci")
+ # Fit once more to retain predictions for the bootstrap interval.
+ xt=dev[g[best["family"]]].apply(pd.to_numeric,errors="coerce").replace([np.inf,-np.inf],np.nan);xv=hold[g[best["family"]]].apply(pd.to_numeric,errors="coerce").replace([np.inf,-np.inf],np.nan);med=xt.median();xt=xt.fillna(med);xv=xv.fillna(med);yy=(dev.realized_direction=="bullish").astype(int);mm=Pipeline([("scale",StandardScaler()),("logit",LogisticRegression(max_iter=5000,solver="liblinear",penalty="l1",C=best["C"]))]);mm.fit(xt,yy);ppred=np.where(mm.predict_proba(xv)[:,1]>=.5,"bullish","bearish");holdm["accuracy_bootstrap_95ci"]=bootstrap_accuracy(hold.realized_direction,ppred)
+ holdm["tree_depth2"]=tree_holdout(dev,hold,g[best["family"]],2)
  rng=np.random.default_rng(12345);obs=best["cv_balanced_accuracy"];perm=[]
  for _ in range(250):
   yp=pd.Series(rng.permutation(y.to_numpy()));mx=-np.inf
