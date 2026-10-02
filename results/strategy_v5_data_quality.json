@@ -1,6 +1,6 @@
 {
   "strategy_version": "V5 credit-selected OTM6/7/8",
-  "target_fraction": 1.0,
+  "target_fraction": 0.9,
   "stop_multiple": 0.0,
   "trades": 56,
   "skips": [
