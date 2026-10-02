@@ -1,0 +1,17 @@
+{
+  "expiry_candidates": 132,
+  "events_built": 121,
+  "skips": {
+    "missing_required_option": 1,
+    "missing_10am_spot": 3,
+    "missing_expiry_spot": 7
+  },
+  "prediction_counts": {
+    "bullish": 101,
+    "bearish": 20
+  },
+  "realized_counts": {
+    "bearish": 66,
+    "bullish": 55
+  }
+}
