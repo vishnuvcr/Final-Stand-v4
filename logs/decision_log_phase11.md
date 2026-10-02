@@ -32,3 +32,10 @@ Hidden chain-of-thought is not stored. This log stores requirements and implemen
 4. **Missing-data treatment:** exact 10:00 snapshots are required for the six option legs and spot. No silent forward fill.
 5. **Event construction:** nearest listed strike to the 10:00 spot is used as ATM; the observed strike interval is inferred from the contemporaneous strike grid, and OTM6/7/8 are six/seven/eight intervals away on the appropriate side.
 6. **Research source plan:** cache candidate NIFTY option Parquet data from the identified Hugging Face dataset and NIFTY spot 1-minute files from the identified open GitHub dataset; cross-check selected events using an independent source before final claims.
+
+
+## 2026-10-02 — Implementation checkpoint
+
+- Added signal calculator, event-builder, helper tests, and cached acquisition script.
+- Added manual workflow actions: validate, acquire, build.
+- Derived event data will be committed to `results/phase11_events.csv` and JSON coverage report when the build action is executed successfully.
