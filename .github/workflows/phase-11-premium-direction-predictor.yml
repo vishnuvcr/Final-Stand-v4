@@ -2,12 +2,26 @@ name: Phase 11 Premium Direction Predictor
 
 on:
   workflow_dispatch:
+    inputs:
+      action:
+        description: 'Phase 11 action'
+        required: true
+        default: 'validate'
+        type: choice
+        options:
+          - validate
+          - acquire
+      years:
+        description: 'Comma-separated NIFTY option years to cache'
+        required: true
+        default: '2024,2025,2026'
+        type: string
 
 permissions:
   contents: read
 
 jobs:
-  protocol-validation:
+  phase11:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,15 +40,31 @@ jobs:
           test -f research/data_manifest_phase11.json
           test -f logs/decision_log_phase11.md
           test -f logs/error_log_phase11.md
+          python -m json.tool research/data_manifest_phase11.json >/dev/null
 
-      - name: Validate JSON manifest
-        run: python -m json.tool research/data_manifest_phase11.json >/dev/null
-
-      - name: Validate phase11 Python tests when present
+      - name: Run core predictor unit tests
         run: |
-          if [ -d tests/phase11 ] && find tests/phase11 -type f -name 'test_*.py' | grep -q .; then
-            python -m pip install --upgrade pytest
-            pytest -q tests/phase11
-          else
-            echo 'Phase 11 computational tests are not initialized yet.'
-          fi
+          python -m pip install --upgrade pytest
+          pytest -q tests/phase11
+
+      - name: Cache Phase 11 market data
+        if: inputs.action == 'acquire'
+        uses: actions/cache@v4
+        with:
+          path: data_cache/phase11
+          key: phase11-market-\${{ runner.os }}-\${{ hashFiles('research/data_manifest_phase11.json') }}-\${{ inputs.years }}
+          restore-keys: |
+            phase11-market-\${{ runner.os }}-
+
+      - name: Acquire candidate data
+        if: inputs.action == 'acquire'
+        env:
+          HF_TOKEN: \${{ secrets.HF_TOKEN }}
+        run: |
+          python -m pip install --upgrade huggingface_hub
+          python scripts/phase11/acquire.py --years "\${{ inputs.years }}" --output data_cache/phase11
+
+      - name: Report acquisition footprint
+        if: inputs.action == 'acquire'
+        run: |
+          find data_cache/phase11 -maxdepth 4 -type f -printf '%p %s bytes\n' | sort
