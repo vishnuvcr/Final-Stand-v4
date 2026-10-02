@@ -102,3 +102,9 @@
 - Added `scripts/phase10_context_join.py` and workflow execution step so the planned `results/phase10_market_context.csv` is actually produced when validated source files are available.
 - Context joins are lagged to the prior available daily observation; missing variables are left missing and reported through coverage flags.
 - No corporate/news regime filter is inferred when reproducible historical coverage is unavailable.
+
+
+### Tooling error — 2026-10-02
+- Attempted to inspect the Phase 10 branch with the GitHub `fetch` tool using repository/ref arguments.
+- The tool contract requires a public GitHub URL, so the call was rejected before any repository modification.
+- No research data or methodology was affected. Future branch inspection will use the repository-specific file/run tools or an approved GitHub URL.
