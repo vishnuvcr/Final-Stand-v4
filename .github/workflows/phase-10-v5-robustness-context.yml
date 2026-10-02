@@ -1,0 +1,81 @@
+name: Phase 10 - V5 Robustness and Context
+
+on:
+  workflow_dispatch:
+    inputs:
+      years:
+        description: "Years to process"
+        required: false
+        default: "2025,2026"
+      start_date:
+        description: "Start date"
+        required: false
+        default: "2025-01-01"
+      end_date:
+        description: "End date"
+        required: false
+        default: "2026-09-30"
+  push:
+    branches:
+      - phase-10-v5-robustness-context
+    paths:
+      - "research/phase10_*.md"
+      - "scripts/phase10_*.py"
+      - "scripts/backtest_v5_credit_selected.py"
+      - "tests/test_phase10_*.py"
+      - ".github/workflows/phase-10-v5-robustness-context.yml"
+      - "requirements.txt"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase10-v5-robustness-context
+  cancel-in-progress: false
+
+jobs:
+  phase10:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      YEARS: ${{ github.event.inputs.years || '2025,2026' }}
+      START_DATE: ${{ github.event.inputs.start_date || '2025-01-01' }}
+      END_DATE: ${{ github.event.inputs.end_date || '2026-09-30' }}
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      HF_REVISION: main
+      SLIPPAGE_POINTS: "0.10"
+      BROKERAGE_PER_ORDER: "10"
+      TARGET_FRAC: "0.90"
+      STOP_MULT: "0.0"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            data_cache
+            ~/.cache/huggingface
+          key: phase10-v5-${{ runner.os }}-${{ hashFiles('requirements.txt') }}
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q tests/test_phase10_strategy.py
+      - run: python scripts/phase10_robustness.py
+      - name: Record phase status
+        run: |
+          cat >> research/phase10_status.md <<'EOF'
+
+          ## Step 10.3 — computational robustness
+          **COMPLETED** in GitHub Actions.
+          EOF
+      - name: Commit Phase 10 outputs
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results research/phase10_status.md
+          git diff --cached --quiet || git commit -m 'Record Phase 10 robustness outputs [skip ci]'
+          git fetch origin phase-10-v5-robustness-context
+          git rebase origin/phase-10-v5-robustness-context
+          git push origin HEAD:phase-10-v5-robustness-context
