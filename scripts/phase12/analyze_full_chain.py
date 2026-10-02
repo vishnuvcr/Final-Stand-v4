@@ -46,8 +46,8 @@ def main():
  for fam,cols in g.items():
   if not cols:continue
   for C in [.01,.03,.1,.3,1.0]:cand.append({"family":fam,"C":C,"cv_balanced_accuracy":cv(dev,cols,C,y),"n_features":len(cols)})
- cand.sort(key=lambda z:(-z["cv_balanced_accuracy"],z["n_features"],z["family"]));best=cand[0];holdm=fit(dev,hold,g[best["family"]],best["C"]); holdm["accuracy_bootstrap_95ci"]=bootstrap_accuracy(hold.realized_direction,np.where((fit(dev,hold,g[best["family"]],best["C"])).get("roc_auc",0)>=-1,"bullish","bullish")) if False else holdm.get("accuracy_bootstrap_95ci")
- # Fit once more to retain predictions for the bootstrap interval.
+ cand.sort(key=lambda z:(-z["cv_balanced_accuracy"],z["n_features"],z["family"]));best=cand[0];holdm=fit(dev,hold,g[best["family"]],best["C"])
+ # Refit the frozen development model to obtain holdout predictions for the bootstrap interval.
  xt=dev[g[best["family"]]].apply(pd.to_numeric,errors="coerce").replace([np.inf,-np.inf],np.nan);xv=hold[g[best["family"]]].apply(pd.to_numeric,errors="coerce").replace([np.inf,-np.inf],np.nan);med=xt.median();xt=xt.fillna(med);xv=xv.fillna(med);yy=(dev.realized_direction=="bullish").astype(int);mm=Pipeline([("scale",StandardScaler()),("logit",LogisticRegression(max_iter=5000,solver="liblinear",penalty="l1",C=best["C"]))]);mm.fit(xt,yy);ppred=np.where(mm.predict_proba(xv)[:,1]>=.5,"bullish","bearish");holdm["accuracy_bootstrap_95ci"]=bootstrap_accuracy(hold.realized_direction,ppred)
  holdm["tree_depth2"]=tree_holdout(dev,hold,g[best["family"]],2)
  rng=np.random.default_rng(12345);obs=best["cv_balanced_accuracy"];perm=[]
