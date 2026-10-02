@@ -144,3 +144,10 @@
 - Audit of the corrected closure runner found redundant full backtest executions: brokerage changes cannot affect target triggering because brokerage is charged after execution and the strategy has no stop.
 - The runner was therefore refactored to execute the four target cases and four distinct slippage cases, then derive the three brokerage levels exactly from each slippage ledger using the brokerage-plus-GST difference multiplied by the recorded order count.
 - This preserves the predefined 4×3 Cartesian economic scenarios while materially reducing repeated data processing. It is an execution optimization, not a strategy or parameter change.
+
+
+### Phase 10 context-join JSON parsing error — 2026-10-02
+- Corrected robustness execution 36980075489 completed the full computational robustness grid and market-context acquisition successfully, but context joining failed because the NSE NIFTY history response saved by the acquisition step was not valid JSON (NSE returned a non-JSON response in the automated environment).
+- The join script previously treated that response as mandatory and raised JSONDecodeError.
+- The join was corrected to treat unavailable/malformed NSE context as missing rather than crashing, and to use the independently acquired Stooq NIFTY series as a validated secondary fallback for NIFTY close/realized-volatility context.
+- India VIX and FII/DII remain coverage-gated; unavailable series will be reported missing rather than fabricated.
