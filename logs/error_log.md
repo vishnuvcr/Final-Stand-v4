@@ -164,3 +164,10 @@
 - Corrected closure run 36994239803 passed all Phase 10 tests and the full robustness/context-acquisition steps, but the validated context-repair step failed with `ModuleNotFoundError: No module named 'nseindia'`.
 - Root cause was an incorrect module name in the repair script: the installed package is `nseindiapy`, whose documented public import is `from nseindiapy import NiftyIndicesClient`.
 - The script was corrected without changing the source, strategy, parameters, or lagged context methodology. No context result from this failed run is accepted.
+
+
+## Phase 11 initialization — 2026-10-02
+- Opened separate branch `phase-11-nifty-spot-stop` to evaluate NIFTY spot-based stop barriers.
+- This is a new trading-rule family and therefore is intentionally separated from frozen Phase 9/10 outputs.
+- Candidate grid is frozen in advance: six fixed-point barriers, five percentage barriers, and five ATR-normalized barriers. No untouched-test parameter selection is permitted.
+- No Phase 11 numerical result is accepted until unit tests, workflow execution, persistence and remote readback succeed.
