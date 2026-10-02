@@ -51,7 +51,7 @@ jobs:
       SLIPPAGE_POINTS: ${{ github.event.inputs.slippage_points || '0.10' }}
       BROKERAGE_PER_ORDER: ${{ github.event.inputs.brokerage_per_order || '10' }}
       HF_TOKEN: ${{ secrets.HF_TOKEN }}
-      HF_REVISION: '78b1c54'
+      HF_REVISION: 'main'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
