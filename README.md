@@ -60,3 +60,21 @@ The leading research signal is a relative call-wing ratio: CE OTM6/OTM7 and CE O
 - [Frozen-candidate robustness JSON](results/phase11_robustness.json)
 
 **Phase 5 status:** IN PROGRESS. The two call-wing ratio candidates show 60% on the 20-event 2026 holdout but do not beat the 65% always-bearish baseline and weaken after the September 2025 expiry-convention boundary. No trading translation is authorized.
+
+
+## Phase 12 — Full-Chain Option Surface + OI Direction Research
+
+- Branch: [phase-12-full-chain-oi-direction](https://github.com/vishnuvcr/Final-Stand-v4/tree/phase-12-full-chain-oi-direction)
+- [Research plan](research/research_plan_phase12.md)
+- [Full-chain data requirements](research/full_chain_data_requirements_phase12.md)
+- [Research status](research/research_status_phase12.md)
+- [Decision log](logs/decision_log_phase12.md)
+- [Error log](logs/error_log_phase12.md)
+- [Conversation/decision summary](logs/conversation_log_phase12.md)
+- [Full-chain extraction](scripts/phase12/extract_full_chain.py)
+- [Full-chain analysis](scripts/phase12/analyze_full_chain.py)
+- [Manual workflow](.github/workflows/phase-12-full-chain-oi-direction.yml)
+
+**Phase 12 status:** The scope has been expanded from six pre-selected OTM premiums to the **complete available NIFTY option chain**, including all strikes, option premiums, open interest and volume at the exact 10:00 IST observation. Empirical execution is pending GitHub Actions. No trading translation is authorized.
+
+The primary TradeMarkk archive is being reused because it documents 1-minute NIFTY option records with strike, option type, OHLCV and open interest, while warning that far/illiquid strikes may be sparse. The phase will use ATM-relative surface features, OI walls/concentration, PCR/imbalance, volume and premium distributions, and regularized chronological models with permutation multiple-testing control.
