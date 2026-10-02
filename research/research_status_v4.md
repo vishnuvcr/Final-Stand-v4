@@ -1,7 +1,7 @@
 # Research Status — Phase 7 / Strategy V4
 
 ## Current status
-**PHASE COMPLETE — BACKTEST AND VALIDATION PASSED**
+**PHASE 8A COMPLETE — SOURCE DISCOVERY; ACQUISITION PENDING**
 
 ## Frozen specification
 - Buy 1 OTM16 CE.
@@ -63,3 +63,18 @@ The accepted complete-trade sample was profitable at expiry after modeled costs,
 
 ## Research stopping rule
 This phase is closed. New exit rules, strike distances, capital models, regime filters, or parameter searches require a new branch/phase.
+
+
+## Phase 8 — Option Data Source Recovery
+### Phase 8A — Source discovery
+**COMPLETE**
+- Reviewed official ICICI Breeze documentation for 1-minute NFO option history.
+- Reviewed TradeMarkk/Hugging Face 1-minute index-options data.
+- Reviewed commercial full-chain options data and Global Datafeeds.
+- Reviewed Zerodha-derived collectors and Dhan historical-data limitations.
+- No Phase 7 result has been altered.
+
+### Phase 8B — Targeted source acquisition
+**NOT STARTED**
+- Objective: recover the 49 skipped candidate expiries where the required 10:00 and/or 15:29 option observations are genuinely available from an independent source.
+- Acceptance requires contract/timestamp validation and source provenance.
