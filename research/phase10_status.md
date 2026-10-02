@@ -73,3 +73,7 @@ The first computational run completed successfully, but review identified that t
 
 ## Context-join correction
 **2026-10-02:** Added a reproducible lagged context join. Each trade is matched only to the prior available daily observation, preventing same-day close look-ahead. The workflow now persists `results/phase10_market_context.csv` and a coverage summary when source acquisition succeeds. Corporate/news variables remain source-coverage gated and will be reported as unavailable rather than inferred.
+
+
+## Automated execution trigger — 2026-10-02
+This status-only commit is an execution trigger for the configured push workflow. It introduces no methodological or parameter change. Acceptance remains gated on the complete Actions run and remote output verification.
