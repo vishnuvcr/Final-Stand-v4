@@ -39,7 +39,15 @@ Identify credible public, commercial, broker, community and exchange sources for
 - Other GitHub repositories contain collectors/backtesters, but code alone is not evidence of complete historical coverage.
 
 ## Source evidence
-- OptionsData.shop: citeturn1search6turn1search1
+- OptionsData.shop: https://optionsdata.shop/data/nifty-options-historical-data
+- MoneyTicks: https://moneyticks.com/
+- Shoonya/Cloud Trader Pro: https://shoonyatrader.in/free-historical-expired-options-contract-data/
+- Unfluke: https://unfluke.in/
+- Breeze pipeline: https://github.com/mukhilj/breeze_options_pipeline
+- Zerodha collector: https://github.com/i9-tradebot/NIFTY_Options_Historical_Data_Collector
+- Hugging Face TradeMarkk dataset: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m
+- Hugging Face Rissin dataset: https://huggingface.co/datasets/rissin/nse-options-intraday
+- NSE real-time data: https://www.nseindia.com/static/market-data/real-time-data-subscription
 - Unfluke: citeturn2search0
 - Breeze pipeline: citeturn1search4
 - Shoonya/Cloud Trader Pro: citeturn2search1turn2search11
