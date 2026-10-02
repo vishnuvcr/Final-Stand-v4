@@ -74,3 +74,10 @@
 - The final CI commit step created the derived files in the runner but the subsequent git push failed with a non-fast-forward rejection because the branch had advanced concurrently.
 - This did not invalidate the analysis. The derived JSON/Markdown results were reconstructed from the completed Actions log and persisted directly to the branch through the GitHub file API.
 - Future workflow commit logic should rebase/pull or use a serialized write path before pushing derived results, to avoid concurrent-branch races.
+
+
+## 2026-10-02 — Phase 5 CI extension
+
+- Added scripts/phase11/robustness.py and a GitHub Actions step to run the frozen-candidate robustness analysis.
+- The same analysis was reproduced from the committed 121-event table and its outputs were persisted to results/phase11_robustness.json and results/phase11_robustness.md.
+- The workflow-publishing race fix remains active; no research conclusion depends on an uncommitted runner artifact.
