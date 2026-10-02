@@ -106,3 +106,10 @@ The premium search lead was frozen to two call-wing ratios before additional tes
 Decision: retain as a research lead only. Next work must be replication/measurement robustness, not further unconstrained feature mining.
 
 Full report: results/phase11_robustness.md; raw output: results/phase11_robustness.json.
+
+
+## 2026-10-02 — Holdout imbalance diagnostic
+
+The frozen CE OTM6/OTM7 and CE OTM6/OTM8 call-wing ratios make identical 2026 predictions: 3 bullish and 17 bearish. Against 7 bullish and 13 bearish realized outcomes, the common confusion matrix is TP=1, FP=2, FN=6, TN=11. This corresponds to 49.45% balanced accuracy and approximately -0.0147 Matthews correlation, despite 60% raw accuracy.
+
+Decision: raw 60% holdout accuracy is not evidence of useful directional discrimination. The candidate remains a Phase 5 research lead only. Independent-source replication and measurement robustness remain required before any economic/trading translation.
