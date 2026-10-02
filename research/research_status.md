@@ -192,3 +192,11 @@ The initial sample shows materially different observed aggregate P&L and tail-lo
 - Untouched test: 12 trades; mean net P&L ₹1,626.73; median ₹2,646.34; total ₹19,520.73; win rate 91.67%; profit factor 2.22; target-hit 91.67%; expiry 8.33%; call selection 25%; put selection 75%.
 - Bootstrap 95% CI for test mean: ₹-1,946 to ₹3,869, so the interval includes zero.
 - **Persistence gate: FAIL.** The CI runner generated the result commit but its push was rejected as non-fast-forward. The numerical result above is preserved from the runner log, but the phase remains reproducibility-incomplete until the exact result files are persisted.
+
+
+## Phase 9 persistence gate — latest checkpoint — 2026-10-02
+- Workflow persistence hardening is committed: the output commit now fetches and rebases against the remote phase branch before push.
+- A ref-update trigger attempt was made after touching the workflow, but GitHub reports no Actions check run for the resulting commit.
+- Therefore the exact Phase 9 trade ledger/sensitivity archive is **still pending manual workflow dispatch**.
+- The completed empirical checkpoint remains: 56 executable trades, 26 skips; validation selected no-stop; untouched test 12 trades, mean net ₹1,626.73, total net ₹19,520.73, 91.67% win rate, profit factor 2.22; bootstrap 95% CI ₹-1,946 to ₹3,869.
+- Do not open the robustness/final-closure phase until the Phase 9 result files are persisted and hash-verified.
