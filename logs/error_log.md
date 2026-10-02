@@ -47,3 +47,8 @@
 - Final accepted results: 43 complete trades, 49 documented skips, total net P&L INR 84,698.69.
 - Validation confirmed 43 unique expiry trades, 8 orders per complete trade, expiry-only exits, and expected lot sizes.
 - The remaining data-quality limitation is historical source incompleteness, not an unresolved engine error.
+
+
+## Phase 8 source-audit tooling error — 2026-10-02
+- First attempt to create `research/phase8_data_source_audit.md` failed before any commit because the generated tool payload contained unescaped backtick delimiters inside a JavaScript template literal.
+- No repository state was changed by the failed attempt. The file was then created using a newline-array payload and committed successfully.
