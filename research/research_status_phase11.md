@@ -1,7 +1,7 @@
 # Phase 11 Research Status
 
 **Branch:** phase-11-premium-direction-predictor  
-**Status:** Phase 0 — protocol freeze / Phase 1 acquisition setup / Phase 2 engine bootstrap.  
+**Status:** Phase 1 — data acquisition BLOCKED by execution environment; no empirical result claimed.  
 **Last updated:** 2026-10-02
 
 ## Phase status
@@ -28,6 +28,14 @@
 - Added an event builder that constructs the 4-DTE/10:00 event table from cached data.
 - Added a manual GitHub Actions workflow with validate/acquire/build actions.
 - Adopted a point-in-time 10:00 bar-open convention for the primary predictor.
+
+## Latest execution checkpoint — 2026-10-02
+
+- The primary public intraday candidate was independently verified: NIFTY 1-minute option data begins in October 2024 and is partitioned by year. citeturn2search0turn2search3
+- Direct acquisition from this chat runtime failed because external DNS/network access to Hugging Face is unavailable.
+- The GitHub connector can inspect Actions runs but does not expose the workflow-dispatch write endpoint; the new Phase 11 workflow therefore could not be programmatically started from this chat.
+- Existing project/library NIFTY option artifacts were inspected. They are primarily EOD/contract-wise and therefore are not substituted for the required point-in-time 10:00 intraday observations.
+- No performance result has been generated or inferred.
 
 ## Latest validation note
 
