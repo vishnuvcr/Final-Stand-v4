@@ -141,11 +141,29 @@ def main() -> int:
         paths = download_option_year(year, out_dir, token)
         print(f"downloaded options: {year} -> {len(paths)} files (primary + secondary)")
 
+    # TradeMarkk also publishes the NIFTY 1-minute spot series in the same
+    # dataset, eliminating dependence on a second spot provider for the
+    # primary event study.
+    spot_target = out_dir / "spot_primary" / "NIFTY.parquet"
+    spot_target.parent.mkdir(parents=True, exist_ok=True)
+    downloaded_spot = hf_hub_download(
+        repo_id=HF_DATASET_PRIMARY,
+        filename="index/NIFTY.parquet",
+        repo_type="dataset",
+        token=token,
+        local_dir=str(out_dir / "hf_primary"),
+    )
+    src_spot = Path(downloaded_spot)
+    if src_spot.resolve() != spot_target.resolve():
+        spot_target.write_bytes(src_spot.read_bytes())
+    print(f"downloaded primary spot -> {spot_target}")
+
+    # Retain the legacy public spot source as an independent cross-check.
     spot_files: list[Path] = []
     for year in years:
         downloaded = download_spot_year(year, out_dir)
         spot_files.extend(downloaded)
-        print(f"downloaded spot files: {year} -> {len(downloaded)}")
+        print(f"downloaded secondary spot files: {year} -> {len(downloaded)}")
 
     manifest = write_spot_manifest(years, out_dir, spot_files)
     print(f"spot manifest: {manifest}")
