@@ -35,7 +35,10 @@ def read_stooq(path, prefix):
 def read_nse_json(path, value_candidates, prefix):
     if not path.exists():
         return None
-    obj = json.loads(path.read_text())
+    try:
+        obj = json.loads(path.read_text())
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return None
     data = obj.get("data", obj) if isinstance(obj, dict) else obj
     if not isinstance(data, list) or not data:
         return None
@@ -54,7 +57,10 @@ def read_nse_json(path, value_candidates, prefix):
 def load_fii_dii(path):
     if not path.exists():
         return None
-    obj = json.loads(path.read_text())
+    try:
+        obj = json.loads(path.read_text())
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return None
     data = obj.get("data", obj) if isinstance(obj, dict) else obj
     if not isinstance(data, list) or not data:
         return None
@@ -83,6 +89,8 @@ vix = read_nse_json(Path("data_cache/phase10_context_raw/nse_india_vix_history.j
                     ["CLOSE", "Close", "close", "EOD_CLOSE_INDEX_VAL"], "india_vix")
 fii = load_fii_dii(Path("data_cache/phase10_context_raw/nse_fii_dii.json"))
 
+if nifty is None:
+    nifty = read_stooq(Path("data_cache/phase10_context_raw/stooq_nifty.csv"), "nifty_close")
 if nifty is not None:
     nifty["nifty_return_1d"] = nifty["nifty_close"].pct_change()
     nifty["nifty_realized_vol_5d"] = nifty["nifty_return_1d"].rolling(5).std() * (252 ** 0.5)
