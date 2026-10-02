@@ -1,0 +1,83 @@
+name: Phase 9 Credit-Selected OTM6-8
+
+on:
+  push:
+    branches: [phase-9-credit-selected-otm6-8]
+    paths:
+      - 'scripts/backtest_v5_credit_selected.py'
+      - 'scripts/select_v5_stop_and_analyze.py'
+      - 'tests/test_v5_strategy.py'
+      - '.github/workflows/phase-9-credit-selected-otm6-8.yml'
+      - 'research/strategy_spec_v5_credit_selected.md'
+      - 'research/research_plan_v5_credit_selected.md'
+      - 'research/data_manifest_v5.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Cache large market data
+        uses: actions/cache@v4
+        with:
+          path: data_cache
+          key: phase9-data-${{ runner.os }}-${{ hashFiles('research/data_manifest_v5.json') }}
+          restore-keys: phase9-data-${{ runner.os }}-
+      - name: Install dependencies
+        run: pip install pandas numpy pyarrow huggingface_hub pytest
+      - name: Unit tests
+        run: pytest -q tests/test_v5_strategy.py
+      - name: Stop-loss grid
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          rm -f results/strategy_v5_trades_grid.csv
+          for s in 0 0.50 0.75 1.00 1.25 1.50; do
+            STOP_MULT=$s TARGET_FRAC=0.90 HF_TOKEN=$HF_TOKEN python scripts/backtest_v5_credit_selected.py
+            STOP_MULT=$s python - <<'PY'
+import os, pandas as pd
+s=os.environ['STOP_MULT']
+df=pd.read_csv('results/strategy_v5_trades.csv')
+df['stop_multiple']=float(s)
+df.to_csv('results/strategy_v5_trades_grid.csv',index=False,mode='w' if s=='0' else 'a',header=(s=='0'))
+PY
+          done
+      - name: Target sensitivity
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          rm -f results/strategy_v5_target_grid.csv
+          for f in 0.85 0.90 0.95 1.00; do
+            STOP_MULT=0 TARGET_FRAC=$f HF_TOKEN=$HF_TOKEN python scripts/backtest_v5_credit_selected.py
+            TARGET_FRAC=$f python - <<'PY'
+import os, pandas as pd
+f=os.environ['TARGET_FRAC']
+df=pd.read_csv('results/strategy_v5_trades.csv')
+df['target_fraction']=float(f)
+df.to_csv('results/strategy_v5_target_grid.csv',index=False,mode='w' if f=='0.85' else 'a',header=(f=='0.85'))
+PY
+          done
+      - name: Select stop and generate statistics
+        run: python scripts/select_v5_stop_and_analyze.py
+      - name: Write run marker
+        run: |
+          python - <<'PY'
+from pathlib import Path
+from datetime import datetime, timezone
+Path('results/strategy_v5_run_completed_utc.txt').write_text(datetime.now(timezone.utc).isoformat())
+PY
+      - name: Commit outputs
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/strategy_v5_*.csv results/strategy_v5_*.json results/strategy_v5_run_completed_utc.txt
+          git diff --cached --quiet || git commit -m 'Run Phase 9 credit-selected OTM6-8 research'
+          git push
+# Phase 9 execution bootstrap push
