@@ -61,3 +61,7 @@ Phase 10 ends after the predefined analyses are executed once and documented. Ne
 
 ## Step 10.3/10.4/10.5 closure correction
 The first computational run completed successfully, but review identified that the promised full 4x3 slippage-by-brokerage Cartesian grid had not been persisted and market-context acquisition was still pending. These are being completed before Phase 10 closure.
+
+
+## Closure workflow trigger
+**2026-10-02:** Corrected Cartesian cost stress and market-context acquisition are ready for GitHub Actions execution. Acceptance remains gated on tests, computation, persistence and remote readback.
