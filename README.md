@@ -76,3 +76,11 @@ Phase 7 is closed after specification, backtest, validation, descriptive/statist
 
 ## Phase 8 — Option Data Source Recovery
 The Phase 7 sample contains 49 skipped candidate expiries because required option observations were unavailable in the accepted source. Phase 8 is investigating independent sources before accepting that coverage limitation as final. No Phase 7 result has been changed yet.
+
+
+### Phase 8B recovery outputs
+- [HF recovered trade ledger](results/strategy_v4_recovered_trades_hf.csv)
+- [HF recovery coverage](results/strategy_v4_recovery_coverage_hf.csv)
+- [HF recovery summary](results/strategy_v4_recovery_summary_hf.json)
+- [HF recovery errors](results/strategy_v4_recovery_errors_hf.json)
+- [HF recovery workflow](.github/workflows/phase-8-hf-recovery.yml)
