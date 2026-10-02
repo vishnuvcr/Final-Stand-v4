@@ -78,3 +78,11 @@ This phase is closed. New exit rules, strike distances, capital models, regime f
 **NOT STARTED**
 - Objective: recover the 49 skipped candidate expiries where the required 10:00 and/or 15:29 option observations are genuinely available from an independent source.
 - Acceptance requires contract/timestamp validation and source provenance.
+
+
+## Phase 8B — Public HF targeted recovery
+**RUNNING / PENDING CI RESULT**
+- Added a targeted recovery script using the public `thetrademarkk/india-index-options-1m` dataset.
+- Recovery checks only the 49 Phase 7 `missing_entry_leg` candidates.
+- Outputs are isolated from the accepted Phase 7 ledger.
+- Acceptance requires exact contract identity and exact 10:00 / 15:29 minute observations; no interpolation.
