@@ -171,3 +171,11 @@
 - This is a new trading-rule family and therefore is intentionally separated from frozen Phase 9/10 outputs.
 - Candidate grid is frozen in advance: six fixed-point barriers, five percentage barriers, and five ATR-normalized barriers. No untouched-test parameter selection is permitted.
 - No Phase 11 numerical result is accepted until unit tests, workflow execution, persistence and remote readback succeed.
+
+
+## Phase 11 methodology correction — 2026-10-02
+- Before accepting the first Phase 11 computation, an audit found the adverse spot-direction mapping was reversed in the implementation and plan.
+- For +1 PE(OTM6) - 1 PE(OTM7) - 1 PE(OTM8), the payoff below all strikes has positive slope with respect to spot, so a sufficiently downward spot move is adverse.
+- For +1 CE(OTM6) - 1 CE(OTM7) - 1 CE(OTM8), the payoff above all strikes has negative slope with respect to spot, so a sufficiently upward spot move is adverse.
+- The Phase 11 engine, research plan and unit tests were corrected before accepting any numerical output. The cancelled run therefore produces no accepted Phase 11 result.
+- Preventive rule: derive stop direction from the actual piecewise payoff of each multi-leg structure and unit-test the sign before execution; do not infer direction from a generic “short-option exposure” label.
