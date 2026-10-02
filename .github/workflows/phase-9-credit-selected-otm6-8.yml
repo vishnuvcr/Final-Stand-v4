@@ -1,83 +1,84 @@
-name: Phase 9 Credit-Selected OTM6-8
+name: Phase 9 - Credit-Selected OTM6/7/8
 
 on:
+  workflow_dispatch:
+    inputs:
+      years:
+        description: Comma-separated years
+        required: false
+        default: '2025,2026'
+      target_fraction:
+        description: Primary flatline target fraction
+        required: false
+        default: '0.90'
+      slippage_points:
+        description: Premium slippage per option execution in points
+        required: false
+        default: '0.10'
+      brokerage_per_order:
+        description: Brokerage per executed option order in INR
+        required: false
+        default: '10'
   push:
-    branches: [phase-9-credit-selected-otm6-8]
+    branches:
+      - phase-9-credit-selected-otm6-8
     paths:
       - 'scripts/backtest_v5_credit_selected.py'
       - 'scripts/select_v5_stop_and_analyze.py'
+      - 'scripts/run_v5_research.py'
       - 'tests/test_v5_strategy.py'
-      - '.github/workflows/phase-9-credit-selected-otm6-8.yml'
       - 'research/strategy_spec_v5_credit_selected.md'
       - 'research/research_plan_v5_credit_selected.md'
-      - 'research/data_manifest_v5.json'
-  workflow_dispatch:
+      - '.github/workflows/phase-9-credit-selected-otm6-8.yml'
+      - 'requirements.txt'
 
 permissions:
   contents: write
 
+concurrency:
+  group: phase9-credit-selected
+  cancel-in-progress: true
+
 jobs:
-  backtest:
+  phase9:
     runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      YEARS: ${{ github.event.inputs.years || '2025,2026' }}
+      START_DATE: '2025-01-01'
+      END_DATE: '2026-09-30'
+      TARGET_FRAC: ${{ github.event.inputs.target_fraction || '0.90' }}
+      SLIPPAGE_POINTS: ${{ github.event.inputs.slippage_points || '0.10' }}
+      BROKERAGE_PER_ORDER: ${{ github.event.inputs.brokerage_per_order || '10' }}
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      HF_REVISION: '78b1c54'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-      - name: Cache large market data
-        uses: actions/cache@v4
+          python-version: '3.12'
+      - uses: actions/cache@v4
         with:
-          path: data_cache
-          key: phase9-data-${{ runner.os }}-${{ hashFiles('research/data_manifest_v5.json') }}
-          restore-keys: phase9-data-${{ runner.os }}-
-      - name: Install dependencies
-        run: pip install pandas numpy pyarrow huggingface_hub pytest
-      - name: Unit tests
-        run: pytest -q tests/test_v5_strategy.py
-      - name: Stop-loss grid
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: |
-          rm -f results/strategy_v5_trades_grid.csv
-          for s in 0 0.50 0.75 1.00 1.25 1.50; do
-            STOP_MULT=$s TARGET_FRAC=0.90 HF_TOKEN=$HF_TOKEN python scripts/backtest_v5_credit_selected.py
-            STOP_MULT=$s python - <<'PY'
-import os, pandas as pd
-s=os.environ['STOP_MULT']
-df=pd.read_csv('results/strategy_v5_trades.csv')
-df['stop_multiple']=float(s)
-df.to_csv('results/strategy_v5_trades_grid.csv',index=False,mode='w' if s=='0' else 'a',header=(s=='0'))
-PY
-          done
-      - name: Target sensitivity
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: |
-          rm -f results/strategy_v5_target_grid.csv
-          for f in 0.85 0.90 0.95 1.00; do
-            STOP_MULT=0 TARGET_FRAC=$f HF_TOKEN=$HF_TOKEN python scripts/backtest_v5_credit_selected.py
-            TARGET_FRAC=$f python - <<'PY'
-import os, pandas as pd
-f=os.environ['TARGET_FRAC']
-df=pd.read_csv('results/strategy_v5_trades.csv')
-df['target_fraction']=float(f)
-df.to_csv('results/strategy_v5_target_grid.csv',index=False,mode='w' if f=='0.85' else 'a',header=(f=='0.85'))
-PY
-          done
-      - name: Select stop and generate statistics
-        run: python scripts/select_v5_stop_and_analyze.py
-      - name: Write run marker
+          path: |
+            data_cache
+            ~/.cache/huggingface
+          key: phase9-v5-hf-${{ runner.os }}-${{ hashFiles('requirements.txt','research/data_manifest_v5.json','scripts/backtest_v5_credit_selected.py') }}
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q tests/test_v5_strategy.py
+      - run: python scripts/run_v5_research.py
+      - name: Record phase status
         run: |
           python - <<'PY'
-from pathlib import Path
-from datetime import datetime, timezone
-Path('results/strategy_v5_run_completed_utc.txt').write_text(datetime.now(timezone.utc).isoformat())
-PY
-      - name: Commit outputs
+          from pathlib import Path
+          import json
+          p=Path('research/research_status.md')
+          s=json.loads(Path('results/strategy_v5_final_summary.json').read_text())
+          p.write_text(p.read_text()+f"\n\n## Phase 9 execution — completed\n- Status: EXECUTED\n- Chosen stop multiple: {s.get('chosen_stop_multiple')}\n- Test trades: {s.get('test_trades')}\n- Test mean net P&L: {s.get('mean_net_pnl')}\n- Test total net P&L: {s.get('total_net_pnl')}\n")
+          PY
+      - name: Commit Phase 9 outputs
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add results/strategy_v5_*.csv results/strategy_v5_*.json results/strategy_v5_run_completed_utc.txt
-          git diff --cached --quiet || git commit -m 'Run Phase 9 credit-selected OTM6-8 research'
+          git add results research/research_status.md
+          git diff --cached --quiet || git commit -m 'Record Phase 9 credit-selected OTM6-8 results [skip ci]'
           git push
-# Phase 9 registered workflow
