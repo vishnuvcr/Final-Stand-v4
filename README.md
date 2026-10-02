@@ -141,3 +141,21 @@ The closure workflow was blocked by a stale long-running Actions run because con
 - Remote readback showed that the first context join had no usable context columns because the acquired NSE/Stooq payloads did not parse into validated daily series.
 - A no-methodology-change correction now uses validated NSE/Nifty-Indices interfaces for NIFTY 50 and India VIX plus a public historical FII/DII archive. The corrected workflow caches normalized context inputs and applies the same prior-observation/no-look-ahead join.
 - No context variable is used as a new trading filter. Phase 10 remains open until the corrected workflow succeeds and its context outputs are remotely read back.
+
+
+## Phase 11 — NIFTY Spot-Based Stop-Loss Research
+A new branch `phase-11-nifty-spot-stop` was opened to test whether NIFTY spot movement can define an exit barrier independently of option premium/P&L. This does not alter the frozen Phase 9 or Phase 10 methodology.
+
+Predefined candidate families:
+- Fixed adverse spot movement: 50, 75, 100, 125, 150, 200 points.
+- Percentage adverse movement: 0.25%, 0.40%, 0.50%, 0.75%, 1.00%.
+- Pre-entry 14-day ATR-normalized movement: 0.50, 0.75, 1.00, 1.25, 1.50 ATR.
+
+Selection is chronological: development 60%, validation 20%, untouched test 20%. Parameters are selected only on validation using mean net P&L, then median and drawdown tie-breakers. The untouched test is evaluated once after the candidate is frozen.
+
+NIFTY 50 is an NSE Indices-managed index and is used as the underlying reference for NIFTY derivatives; NSE documents its real-time calculation and historical index data availability. citeturn0search0turn0search2
+
+Phase 11 workflow: [.github/workflows/phase-11-nifty-spot-stop.yml](.github/workflows/phase-11-nifty-spot-stop.yml)
+Phase 11 plan: [research/phase11_research_plan.md](research/phase11_research_plan.md)
+Phase 11 status: [research/phase11_status.md](research/phase11_status.md)
+Phase 11 engine: [scripts/phase11_spot_stop.py](scripts/phase11_spot_stop.py)
