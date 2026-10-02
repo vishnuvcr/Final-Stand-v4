@@ -71,6 +71,7 @@ records.append(nse_api(
 # Independent daily validation/context source family for global markets,
 # USDINR and gold. These are context variables only.
 for symbol, name in [
+    ("^nsei", "stooq_nifty.csv"),
     ("^spx", "stooq_sp500.csv"),
     ("^ndq", "stooq_nasdaq.csv"),
     ("^dji", "stooq_dow.csv"),
