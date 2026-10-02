@@ -99,3 +99,15 @@ The Phase 7 sample contains 49 skipped candidate expiries because required optio
 - [V5 backtest engine](scripts/backtest_v5_credit_selected.py)
 - [V5 stop/analysis engine](scripts/select_v5_stop_and_analyze.py)
 - [V5 workflow](.github/workflows/phase-9-credit-selected-otm6-8.yml)
+
+
+## Phase 9 empirical result checkpoint
+- Computation completed in GitHub Actions run **36966258307** after all unit tests passed.
+- 56 executable trades were processed; 26 candidates were skipped by data/eligibility gates.
+- The pre-specified stop grid selected **0× initial credit (no stop)** on the 20% validation segment.
+- Untouched 12-trade test: mean net P&L **₹1,626.73/trade**, median **₹2,646.34**, total **₹19,520.73**, win rate **91.67%**, profit factor **2.22**.
+- Exit mix: **91.67% target**, **0% stop**, **8.33% expiry**. Selection: **75% puts / 25% calls**.
+- Bootstrap 95% CI for test mean: **₹-1,946 to ₹3,869**, which includes zero.
+- Scientific status: **positive realized sample, but insufficient evidence for a stable edge; only 12 untouched test trades**.
+- Persistence status: the CI run generated the result files but its final push was rejected as non-fast-forward. A workflow rebase-before-push correction is committed; the exact trade-level result archive still needs one successful manual Phase 9 workflow dispatch.
+- [Phase 9 specification](research/strategy_spec_v5_credit_selected.md) · [research plan](research/research_plan_v5_credit_selected.md) · [interim manuscript](research/PHASE9_INTERIM_MANUSCRIPT.md) · [final summary](results/strategy_v5_final_summary.json)
