@@ -41,3 +41,8 @@ NSE's live option-chain schema includes OI, change in OI, volume, IV, LTP and bi
 ## Research boundary
 
 This phase will stop after the defined full-chain feature/model/replication protocol. It will not become an unrestricted feature-mining exercise.
+
+
+## 2026-10-02 — Model protocol hardening
+
+Before accepting any empirical Phase 12 result, the analysis now includes a shallow depth-2 decision-tree benchmark and a bootstrap 95% CI for the frozen 2026 holdout accuracy. This was added to match the pre-specified model/reporting plan and reduce reliance on a single model family.
