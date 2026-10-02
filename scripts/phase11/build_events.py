@@ -22,17 +22,22 @@ def to_ist(series: pd.Series) -> pd.Series:
 
 
 def load_options(root: Path) -> pd.DataFrame:
-    paths = sorted((root / "options").glob("NIFTY_*.parquet"))
+    primary = sorted((root / "options_primary").glob("*.parquet"))
+    secondary = sorted((root / "options_secondary").glob("NIFTY_*.parquet"))
+    paths = primary if primary else secondary
     if not paths:
         raise FileNotFoundError("No cached Phase 11 option parquet files found")
     frames = []
     for path in paths:
         df = pd.read_parquet(path)
-        required = {"timestamp", "expiry", "strike", "option_type", "open", "underlying"}
+        required = {"timestamp", "expiry", "strike", "option_type", "open"}
         missing = required.difference(df.columns)
         if missing:
             raise ValueError(f"{path}: missing columns {sorted(missing)}")
-        df = df[df["underlying"].astype(str).str.upper().eq("NIFTY")].copy()
+        if "underlying" in df.columns:
+            df = df[df["underlying"].astype(str).str.upper().eq("NIFTY")].copy()
+        elif "symbol" in df.columns:
+            df = df[df["symbol"].astype(str).str.upper().str.contains("NIFTY")].copy()
         if "granularity" in df.columns:
             df = df[df["granularity"].astype(str).str.lower().str.contains("1m")].copy()
         df["ts"] = to_ist(df["timestamp"])
@@ -41,8 +46,12 @@ def load_options(root: Path) -> pd.DataFrame:
         df["option_type"] = df["option_type"].astype(str).str.upper()
         df["strike"] = pd.to_numeric(df["strike"], errors="coerce")
         df["open"] = pd.to_numeric(df["open"], errors="coerce")
+        df["source_file"] = path.name
         frames.append(df.dropna(subset=["ts", "expiry_date", "strike", "open"]))
-    return pd.concat(frames, ignore_index=True)
+    out = pd.concat(frames, ignore_index=True)
+    # Keep one source for the primary event build. The secondary archive is
+    # retained separately for cross-source validation.
+    return out
 
 
 def load_spot(root: Path) -> pd.DataFrame:
