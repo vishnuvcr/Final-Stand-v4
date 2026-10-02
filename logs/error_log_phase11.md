@@ -27,3 +27,12 @@
 
 - One early attempt to write the acquisition/build code failed due to an unescaped template/interpolation token in the orchestration script; no repository file was corrupted by that attempt.
 - The write was corrected and the intended files were committed successfully.
+
+
+## 2026-10-02 — Phase 1 acquisition blocker
+
+- Direct Hugging Face access from the execution container failed with DNS resolution error for huggingface.co.
+- GitHub Actions workflow dispatch is not available through the connected GitHub action surface, so the Phase 11 acquisition workflow could not be manually launched from this chat.
+- A push-triggered version of the Phase 11 workflow was committed, but no corresponding Phase 11 run appeared in the accessible workflow-run list at the checkpoint.
+- Existing project-library NIFTY option artifacts were considered and rejected as substitutes because they are EOD/contract-wise rather than the required 10:00 intraday option observations.
+- This is a data-access/execution blocker, not a statistical result. The study remains open at Phase 1.
