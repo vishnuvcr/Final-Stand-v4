@@ -1,15 +1,15 @@
 # Phase 11 Research Status
 
 **Branch:** phase-11-premium-direction-predictor  
-**Status:** Phase 1 — data acquisition BLOCKED by execution environment; no empirical result claimed.  
+**Status:** Phase 1 — multi-source acquisition executing via GitHub Actions; no empirical result claimed.  
 **Last updated:** 2026-10-02
 
 ## Phase status
 
 | Phase | Status |
 |---|---|
-| 0 — Protocol freeze | IN PROGRESS |
-| 1 — Data acquisition/validation | ACQUISITION CODE READY; DATA NOT YET EXECUTED |
+| 0 — Protocol freeze | COMPLETE |
+| 1 — Data acquisition/validation | IN PROGRESS — MULTI-SOURCE ACQUISITION ENABLED |
 | 2 — Feature engineering | CORE SIGNAL + EVENT BUILDER IMPLEMENTED; NOT YET EXECUTED |
 | 3 — Primary directional test | NOT STARTED |
 | 4 — Out-of-sample validation | NOT STARTED |
@@ -62,3 +62,19 @@ The study stops after the defined Phase 7 package. Conclusions will distinguish 
 A broad public-web search identified multiple independent 1-minute NIFTY option sources. Strong candidates now include OptionsData.shop, Unfluke, ICICI Direct Breeze pipelines, Shoonya/Cloud Trader Pro, MoneyTicks, and community archives; institutional candidates include NSE snapshot feeds, TrueData and Global Datafeeds. Broker APIs including Zerodha, Upstox, Angel One and DhanHQ were also catalogued with their expired-contract limitations. Full inventory: research/phase11/source_inventory.md.
 
 Next gate: acquire and sample-audit at least two independent sources before selecting the Phase 11 primary dataset. Required checks are exact 10:00 IST coverage, expired contracts, CE/PE strikes, timestamp semantics, duplicates/missing bars, and cross-source price agreement.
+
+
+## 2026-10-02 — Multi-source acquisition upgrade
+
+A second independent public 1-minute archive was identified and incorporated: Hugging Face `thetrademarkk/india-index-options-1m`. Its dataset documentation reports 377M rows, NIFTY/BANKNIFTY/SENSEX 1-minute option bars, IST timestamps, OHLCV+OI, expiry-partitioned Parquet files, and a NIFTY 1-minute spot Parquet file. Option coverage is explicitly described as partial for illiquid/far strikes, so the Phase 11 event coverage audit remains mandatory.
+
+The acquisition pipeline now:
+1. downloads TradeMarkk NIFTY expiry-partitioned files for requested years as the primary source;
+2. downloads TradeMarkk NIFTY 1-minute spot as the primary spot source;
+3. retains the Rissin/Upstox archive as an independent secondary option cross-check;
+4. retains the previous public spot source as an independent spot cross-check;
+5. builds events from the primary source only unless a cross-source audit explicitly promotes/changes the source.
+
+The GitHub Actions workflow now automatically performs acquisition and event building on pushes to this Phase 11 branch, while preserving manual `validate`, `acquire`, and `build` controls.
+
+No predictive accuracy, p-value, correlation, or trading result has been calculated yet.
