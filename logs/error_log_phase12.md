@@ -39,3 +39,8 @@ The workflow log showed the failure at scripts/phase12/analyze_full_chain.py wit
 
 ## 2026-10-02 — Corrected run monitoring
 The corrected run 37009066361 entered model analysis successfully after the all-missing-feature fix. Current logs show sklearn deprecation/inconsistency warnings only; no new fatal error has been observed. This remains an execution status, not a research result.
+
+## 2026-10-02 — Phase 12 analysis timeout
+Run 37009066361 reached the 60-minute job timeout while the model-analysis step was still executing. Acquisition and extraction had succeeded; no empirical result was produced. This is an execution-performance failure, not a research finding.
+
+Correction: invariant fold-specific imputation/scaling is now cached once per feature family, the 500-permutation diagnostic remains unchanged, permutations are parallelized across up to two workers, and the workflow analysis timeout is extended to 120 minutes. These are computational optimizations only; the statistical protocol remains 5-fold chronological CV with 500 label permutations and an untouched 2026 holdout.
