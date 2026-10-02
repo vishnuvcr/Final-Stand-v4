@@ -54,3 +54,9 @@ Official NSE pages confirm that historical India VIX data, historical NIFTY/inde
 
 ## Corporate-action source validation — 2026-10-02
 NSE's current public Corporate Filings → Corporate Actions page exposes symbol-level purpose and ex-date/record-date fields, and NSE's research data-sharing catalogue identifies corporate-action data as a research data category. These sources are therefore retained as the authoritative source family for any reproducible corporate-action event indicator. The phase will not infer missing historical events from secondary sources. If automated acquisition fails, coverage will be reported as unavailable rather than substituted silently.
+
+
+## Validated fallback source update — 2026-10-02
+- The Phase 10 context repair uses the public `nseindiapy` client (v0.1.0) to access Nifty Indices historical NIFTY 50 OHLC and India VIX daily snapshots. The package documentation states that these endpoints are public and that the client auto-paginates long historical price ranges; the project source was inspected before use.
+- FII/DII fallback uses the public MrChartist/FII-DII historical archive. Its documented data flow identifies NSE as the upstream source and preserves daily FII/DII net fields.
+- These fallbacks are validation/recovery tooling only. The Phase 9 option ledger and Phase 10 strategy parameters are unchanged.
