@@ -44,6 +44,14 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add results/phase11* research/phase11_status.md
           git diff --cached --quiet || git commit -m "Phase 11: persist NIFTY spot stop results"
-          git fetch origin phase-11-nifty-spot-stop
-          git rebase origin/phase-11-nifty-spot-stop
-          git push origin HEAD:phase-11-nifty-spot-stop
+          for attempt in 1 2 3 4 5; do
+            git fetch origin phase-11-nifty-spot-stop
+            git rebase origin/phase-11-nifty-spot-stop
+            if git push origin HEAD:phase-11-nifty-spot-stop; then
+              exit 0
+            fi
+            git rebase --abort || true
+            sleep 5
+          done
+          echo "Unable to persist Phase 11 outputs after 5 push attempts" >&2
+          exit 1

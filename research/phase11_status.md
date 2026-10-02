@@ -1,6 +1,6 @@
 # Phase 11 Status — NIFTY Spot-Based Stop-Loss
 
-State: **PARTITIONING CORRECTED / RE-RUN QUEUED**
+State: **PERSISTENCE RACE CORRECTED / CLEAN RERUN QUEUED**
 
 Branch: `phase-11-nifty-spot-stop`
 
@@ -30,3 +30,9 @@ No Phase 11 numerical result has been accepted. The previous candidate-grid summ
 - Root cause: split metadata dates represent expiry dates; the Phase 11 engine used entry dates for `isin()` partitioning.
 - Corrected in commit 471c81d6a7cdf3f07db30646d7593a298b05dfea.
 - No numerical result from the invalid partition was accepted. Re-run acceptance requires nonzero validation/test counts, persisted outputs, and remote readback.
+
+
+## Persistence correction — 2026-10-02
+- Run 37035419480 completed the corrected computation with nonzero expiry-date validation/test partitions (11/12), but its final push was rejected because the remote branch advanced during the run.
+- The computed numbers remain unaccepted until the outputs are persisted and remotely read back.
+- The workflow commit/push stage has been hardened with repeated fetch/rebase/push attempts. The rerun is intended to reproduce the same frozen 16-candidate computation and archive the outputs.

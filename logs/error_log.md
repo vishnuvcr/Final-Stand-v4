@@ -194,3 +194,10 @@
 - This was a partitioning/data-label error, not an accepted scientific result. The per-candidate raw runs contained 56 trades and correctly triggered spot stops.
 - Corrected `scripts/phase11_spot_stop.py` to partition development/validation/test using `expiry_date` from each trade, matching the Phase 9 selection metadata semantics.
 - Prevention: all future split joins must use the exact date field documented by the frozen split metadata and be checked for expected nonzero counts before acceptance.
+
+
+### Phase 11 persistence race — 2026-10-02
+- Run 37035419480 (attempt 2) completed the corrected 16-candidate spot-stop grid successfully; unit tests passed 4/4 and the expiry-date partition produced 11 validation and 12 untouched-test trades.
+- The numerical result was not accepted as archived because the workflow's final git push was rejected as non-fast-forward after the remote branch advanced during execution. The runner workspace therefore contained the result, but the result files were not persisted to the remote branch.
+- No scientific result is changed by this event. The workflow persistence step is being hardened with repeated fetch/rebase/push attempts, and the grid will be rerun so that the result is reproducibly archived and remotely read back.
+- Preventive rule: do not update the Phase 11 branch manually while the long-running computational workflow is executing; all status/error-log changes needed before execution are committed atomically before triggering the rerun.
