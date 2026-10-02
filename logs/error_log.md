@@ -114,3 +114,9 @@
 - Attempted to query the repository Actions workflow-run collection through the generic GitHub URL fetcher.
 - The connector rejected the Actions API URL as outside its allowed public-repository endpoint set.
 - No repository modification occurred. Workflow execution therefore remains unverified through the available tooling.
+
+
+### Infrastructure limitation — 2026-10-02
+- Attempted a direct local clone of the Phase 10 branch to execute the corrected workflow outside GitHub Actions.
+- The execution environment could not resolve `github.com`, so the clone failed before data or repository contents were downloaded.
+- No calculations were accepted from this attempt. GitHub Actions remains the authoritative execution path for the cached-data research workflow.
