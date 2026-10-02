@@ -109,7 +109,7 @@ def main() -> int:
             "mean_abs_price_diff": float(m["mean_abs_price_diff"].mean()),
             "median_abs_price_diff": float(m["median_abs_price_diff"].median()),
             "mean_relative_price_diff": float(m["mean_relative_price_diff"].mean()),
-            "median_relative_price_diff": float(m["mean_relative_price_diff"].median()),
+            "median_relative_price_diff": float(m["median_relative_price_diff"].median()),
             "events_with_all_six_legs": int((m["matched_legs"] == 6).sum()),
             "all_six_leg_rate_among_matched": float((m["matched_legs"] == 6).mean()),
         }
@@ -138,7 +138,8 @@ def main() -> int:
                 pred = "bullish" if ratio >= thresholds[name] else "bearish"
                 event_id = str(row["event_id"])
                 expiry = event_id.split("|")[0]
-                realized = str(events.loc[events["expiry_date"].astype(str).eq(expiry), "realized_direction"].iloc[0])
+                event_key = events["expiry_date"].astype(str).eq(expiry) & events["observation_timestamp_ist"].astype(str).eq(event_id.split("|", 1)[1])
+                realized = str(events.loc[event_key, "realized_direction"].iloc[0])
                 n += 1
                 correct += int(pred == realized)
             replication[name] = {
@@ -147,6 +148,7 @@ def main() -> int:
                 "correct": int(correct),
                 "accuracy": float(correct / n) if n else None,
                 "exact_binomial_p_50": float(binomtest(correct, n, 0.5).pvalue) if n else None,
+                "development_n": int(sum((events["expiry_date"] < pd.Timestamp("2026-01-01").date()) & events["expiry_date"].astype(str).isin([x.split("|")[0] for x in full["event_id"]]))),
             }
         summary["frozen_candidate_replication"] = replication
     else:
