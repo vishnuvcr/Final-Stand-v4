@@ -108,3 +108,9 @@
 - Attempted to inspect the Phase 10 branch with the GitHub `fetch` tool using repository/ref arguments.
 - The tool contract requires a public GitHub URL, so the call was rejected before any repository modification.
 - No research data or methodology was affected. Future branch inspection will use the repository-specific file/run tools or an approved GitHub URL.
+
+
+### Tooling limitation — 2026-10-02
+- Attempted to query the repository Actions workflow-run collection through the generic GitHub URL fetcher.
+- The connector rejected the Actions API URL as outside its allowed public-repository endpoint set.
+- No repository modification occurred. Workflow execution therefore remains unverified through the available tooling.
