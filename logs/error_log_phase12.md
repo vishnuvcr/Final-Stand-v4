@@ -36,3 +36,6 @@ The first full-chain computation successfully completed acquisition and feature 
 This was a genuine analysis-code defect, not a data/result finding. The correction drops only features with no finite training observations within each fold, then median-imputes remaining missing values using the training fold. The same training-derived feature filtering is applied to holdout fitting and the tree benchmark. No outcomes or holdout observations are used to decide feature availability.
 
 The workflow log showed the failure at scripts/phase12/analyze_full_chain.py with ValueError: Input X contains NaN. No empirical Phase 12 result from that run is accepted.
+
+## 2026-10-02 — Corrected run monitoring
+The corrected run 37009066361 entered model analysis successfully after the all-missing-feature fix. Current logs show sklearn deprecation/inconsistency warnings only; no new fatal error has been observed. This remains an execution status, not a research result.
