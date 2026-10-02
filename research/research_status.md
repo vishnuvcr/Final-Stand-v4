@@ -200,3 +200,11 @@ The initial sample shows materially different observed aggregate P&L and tail-lo
 - Therefore the exact Phase 9 trade ledger/sensitivity archive is **still pending manual workflow dispatch**.
 - The completed empirical checkpoint remains: 56 executable trades, 26 skips; validation selected no-stop; untouched test 12 trades, mean net ₹1,626.73, total net ₹19,520.73, 91.67% win rate, profit factor 2.22; bootstrap 95% CI ₹-1,946 to ₹3,869.
 - Do not open the robustness/final-closure phase until the Phase 9 result files are persisted and hash-verified.
+
+
+## Phase 9 execution — completed
+- Status: EXECUTED
+- Chosen stop multiple: 0.0
+- Test trades: 12
+- Test mean net P&L: 1626.727800964667
+- Test total net P&L: 19520.733611576004
