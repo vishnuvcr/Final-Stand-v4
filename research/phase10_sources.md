@@ -46,3 +46,7 @@
 3. Apparent option mispricing can be concentrated in illiquid/near-expiry observations and may not be executable.
 4. Recent NIFTY research is heterogeneous and includes non-peer-reviewed preprints; claims from these sources will be explicitly labeled.
 5. The Phase 10 objective is robustness and explanation, not confirmation of a predetermined positive result.
+
+
+## Phase 10 source validation update — 2026-10-02
+Official NSE pages confirm that historical India VIX data, historical NIFTY/index data and FII/FPI/DII activity are available through NSE reporting interfaces. NSE describes India VIX as a near-term expected-volatility measure derived from NIFTY option prices and notes that FII/FPI activity data are provisional and subject to change. These series are therefore treated as context variables with provenance and missingness preserved; they are not used as new trading filters.
