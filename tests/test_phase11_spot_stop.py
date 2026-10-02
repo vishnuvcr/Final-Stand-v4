@@ -14,7 +14,8 @@ def test_adverse_direction_matches_payoff():
     assert "entry_spot - SPOT_STOP_VALUE if side=='PUT' else entry_spot + SPOT_STOP_VALUE" in s
     assert "entry_spot*(1.0-SPOT_STOP_VALUE) if side=='PUT' else entry_spot*(1.0+SPOT_STOP_VALUE)" in s
     assert "entry_spot - SPOT_STOP_VALUE*atr_value if side=='PUT' else entry_spot + SPOT_STOP_VALUE*atr_value" in s
-    assert "(current_spot <= spot_barrier) if side=='PUT' else (current_spot >= spot_barrier)" in s
+    assert "float(bar['low']) <= spot_barrier" in s
+    assert "float(bar['high']) >= spot_barrier" in s
 
 def test_phase11_plan_freezes_holdout():
     s=Path("research/phase11_research_plan.md").read_text()
