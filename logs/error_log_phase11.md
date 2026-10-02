@@ -36,3 +36,13 @@
 - A push-triggered version of the Phase 11 workflow was committed, but no corresponding Phase 11 run appeared in the accessible workflow-run list at the checkpoint.
 - Existing project-library NIFTY option artifacts were considered and rejected as substitutes because they are EOD/contract-wise rather than the required 10:00 intraday option observations.
 - This is a data-access/execution blocker, not a statistical result. The study remains open at Phase 1.
+
+
+## 2026-10-02 — CI failure diagnosed and corrected
+
+- Workflow run for commit `542b972ce226cf0d5a0b9773b3ed414215112883` was accessed directly through the GitHub Actions check-run/job logs.
+- Run completed in ~17 seconds and failed during **pytest collection**, before any market-data acquisition.
+- Exact error: both `tests/phase11/test_event_helpers.py` and `tests/phase11/test_signal.py` raised `ModuleNotFoundError: No module named 'scripts'`.
+- Root cause: the repository did not explicitly package the `scripts` and `scripts/phase11` directories, and the CI test invocation did not force the repository root onto `PYTHONPATH`.
+- Correction: added `scripts/__init__.py`, `scripts/phase11/__init__.py`, and set `PYTHONPATH: ${{ github.workspace }}` at the Phase 11 job level.
+- No market-data result was produced by the failed run, so the research conclusions remain unaffected.
