@@ -39,3 +39,8 @@ Hidden chain-of-thought is not stored. This log stores requirements and implemen
 - Added signal calculator, event-builder, helper tests, and cached acquisition script.
 - Added manual workflow actions: validate, acquire, build.
 - Derived event data will be committed to `results/phase11_events.csv` and JSON coverage report when the build action is executed successfully.
+
+
+## 2026-10-02 — Acquisition gate decision
+
+The Phase 11 primary hypothesis requires point-in-time 10:00 option premiums. EOD option archives cannot answer it. Therefore no EOD-derived proxy, synthetic reconstruction, or unrelated prior backtest result will be used as a substitute. The research remains at the Phase 1 gate until the specified intraday data can actually be acquired and validated.
