@@ -1,7 +1,7 @@
 # Phase 12 Research Status
 
 **Branch:** phase-12-full-chain-oi-direction  
-**Status:** Phase 1 implementation complete; empirical full-chain extraction/model run pending GitHub Actions execution.  
+**Status:** Phase 1 implementation complete; empirical full-chain extraction/model run initiated via GitHub Actions.  
 **Last updated:** 2026-10-02
 
 ## Scope
