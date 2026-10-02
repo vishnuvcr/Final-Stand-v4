@@ -70,3 +70,10 @@
 - The initial Phase 9 candidate-expiry implementation risked treating every expiry-date row in the options dataset as a near-weekly candidate, which could have introduced far-dated duplicates. Before any run, this was corrected to require (a) the expiry to be the nearest listed expiry on the entry date and (b) entry-to-expiry distance no greater than eight calendar days.
 - Preventive rule: never assume the current Tuesday NIFTY expiry convention for earlier 2025 contracts; historical contract expiry dates must come from the dataset or a date-effective exchange source.
 - Preventive rule: the primary target/stop grid is frozen before reading performance outputs; no post-hoc stop selection from the final holdout.
+
+
+## Phase 9 data-source correction — 2026-10-02
+- GitHub Actions run 36966020688 failed because the pinned Hugging Face revision 78b1c54 did not contain upstox_intraday/NIFTY/NIFTY_2026.parquet. No strategy results were accepted.
+- The engine was corrected to resolve the current dataset commit SHA from HF at runtime, then download both annual files at that same resolved revision. The resolved SHA is recorded in the output provenance.
+- During the same audit, exit transaction charges were found to be using the entry date. The engine was corrected so exit fees use the actual exit timestamp/date, which matters for the March/April 2026 fee-rate changes.
+- Preventive rule: a source revision is not accepted merely because a prior README mentioned it; the exact requested file paths must be validated at runtime.
