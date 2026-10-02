@@ -25,3 +25,23 @@ Models are selected using development-period 5-fold cross-validation only. The 2
 - Permutation p-value for maximum threshold accuracy across the entire engineered feature library: 0.511800
 
 The holdout result is the relevant out-of-sample result. No candidate is promoted to a trading strategy merely because it ranked highly during development.
+
+
+## Single-premium screen
+
+Using each raw premium alone with a development-median threshold and choosing the better of high-bull/high-bear mappings:
+
+| Premium | Development | 2026 holdout |
+|---|---:|---:|
+| CE OTM6 | 54.46% | 55% (11/20) |
+| CE OTM7 | 52.48% | 55% (11/20) |
+| CE OTM8 | 54.46% | 55% (11/20) |
+| PE OTM6 | 51.49% | 50% (10/20) |
+| PE OTM7 | 51.49% | 50% (10/20) |
+| PE OTM8 | 51.49% | 50% (10/20) |
+
+No single premium shows useful standalone directional performance on the final holdout.
+
+## Combination interpretation
+
+The main improvement in the search is not from absolute premium levels. It comes from **relative call-wing shape**, especially CE OTM6 relative to CE OTM7/OTM8. However, the two leading ratios produce identical 2026 classifications, so this is effectively one signal in the current sample rather than two independent discoveries.
