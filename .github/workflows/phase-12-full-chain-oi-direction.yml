@@ -28,6 +28,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Record execution start
+        run: |
+          mkdir -p results
+          date -u +%Y-%m-%dT%H:%M:%SZ > results/phase12_execution_started_utc.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/phase12_execution_started_utc.txt
+          git commit -m 'Mark Phase 12 execution start' || true
+          git push origin HEAD:phase-12-full-chain-oi-direction
+
       - name: Validate research files
         run: |
           set -e
@@ -61,6 +71,19 @@ jobs:
             results/phase12_full_chain_manifest.json
             results/phase12_full_chain_analysis.json
             results/phase12_full_chain_analysis.md
+
+      - name: Record execution failure
+        if: failure()
+        run: |
+          mkdir -p results
+          date -u +%Y-%m-%dT%H:%M:%SZ > results/phase12_execution_failed_utc.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/phase12_execution_failed_utc.txt
+          git commit -m 'Mark Phase 12 execution failure' || true
+          git fetch origin phase-12-full-chain-oi-direction
+          git rebase origin/phase-12-full-chain-oi-direction || git rebase --abort
+          git push origin HEAD:phase-12-full-chain-oi-direction || true
 
       - name: Publish derived results
         run: |
