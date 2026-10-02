@@ -29,3 +29,12 @@ def test_context_output_schema_if_present():
     required = {"entry_date", "side", "net_pnl"}
     assert required.issubset(df.columns)
     assert len(df) > 0
+
+def test_context_join_handles_unavailable_nse_json_and_nifty_fallback():
+    script = Path("scripts/phase10_context_join.py").read_text()
+    assert "json.JSONDecodeError" in script
+    assert "stooq_nifty.csv" in script
+
+def test_context_acquisition_includes_nifty_fallback():
+    script = Path("scripts/phase10_market_context.py").read_text()
+    assert '"^nsei", "stooq_nifty.csv"' in script
