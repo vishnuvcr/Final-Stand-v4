@@ -46,3 +46,6 @@ This phase will stop after the defined full-chain feature/model/replication prot
 ## 2026-10-02 — Model protocol hardening
 
 Before accepting any empirical Phase 12 result, the analysis now includes a shallow depth-2 decision-tree benchmark and a bootstrap 95% CI for the frozen 2026 holdout accuracy. This was added to match the pre-specified model/reporting plan and reduce reliance on a single model family.
+
+## 2026-10-02 — Permutation diagnostic tightened
+The predefined multiple-testing diagnostic was increased from 250 to 500 development-label permutations. The model families, holdout boundary, feature groups and chronological CV protocol remain unchanged; this only improves Monte Carlo resolution.
