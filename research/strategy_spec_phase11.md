@@ -85,3 +85,19 @@ Controls are secondary; the primary predictor remains the premium construction s
 ## Structural calendar break
 
 NSE changed NIFTY weekly expiry from Thursday to Tuesday for new contracts expiring from September 2025 onward. The data engine must use the historical convention applicable to each contract and must report results separately across this structural break.
+
+
+## 2026-10-02 — Execution protocol clarification
+
+### Point-in-time price field
+The primary option premium is the **OPEN of the 10:00:00–10:00:59 IST one-minute bar**. Using the close of the 10:00 bar as the primary observation would introduce up to 59 seconds of post-observation information.
+
+The NIFTY spot used in the directional outcome is likewise the **OPEN of the 10:00:00–10:00:59 IST one-minute index bar**.
+
+The expiry value is currently a **settlement proxy** equal to the latest NIFTY 1-minute CLOSE on the expiry trading session. A later validation step must compare this against an official NSE expiry settlement field before the final manuscript labels the outcome as official settlement.
+
+### Four-DTE calendar
+The observation date is the fourth distinct NIFTY trading session immediately preceding the actual weekly expiry date. This is calendar-driven from observed NIFTY sessions, not a simple subtraction of four calendar days.
+
+### Missing-data rule
+The primary event set requires exact 10:00 option bars for all six required contracts and exact 10:00 NIFTY spot data. Missing contracts, stale timestamps, or absent bars cause an event to be excluded from the primary sample and counted in the coverage/skip report. Sensitivity analyses may later test conservative fallback prices, but they must be separately labelled.
